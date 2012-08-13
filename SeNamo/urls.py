@@ -2,6 +2,10 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
+# Setting
+from django.conf import settings
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -21,4 +25,10 @@ urlpatterns = patterns('',
     url(r'^category/new$', 'app.views.add_category'),
     url(r'^category/(?P<category_id>\d+)/edit$', 'app.views.edit_category'),
 
+)
+
+#Media
+urlpatterns += patterns('',
+    (r'^media/(?P<path>.*)$', 'django.views.static.serve',
+         {'document_root': settings.MEDIA_ROOT}),
 )

@@ -102,7 +102,7 @@ ROOT_URLCONF = 'SeNamo.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'SeNamo.wsgi.application'
 
-TEMPLATE_DIRS = ('C:/Users/Admin/PycharmProjects/SeNamo/templates',)
+TEMPLATE_DIRS = ('templates',)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
