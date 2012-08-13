@@ -8,7 +8,7 @@
     {% if form_error_msg %}
         {{ form_error_msg }}
     {% endif %}
-    <form action="/product/{{ cid }}/edit" method="POST">
+    <form enctype="multipart/form-data" action="/product/{{ cid }}/edit" method="POST">
         {% csrf_token %}
         <p>edit product: {{ cid }}</p>
         <p>name: {{ form.name }}</p>

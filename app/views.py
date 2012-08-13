@@ -98,7 +98,7 @@ def edit_product(request, product_id):
             product.point = data['point']
             product.category = data['category']
             product.description = data['description']
-            if data['image'] is not None:
+            if request.FILES['image'] is not None:
                 product.image = request.FILES['image']
             product.save()
             return HttpResponseRedirect('/product/%d' % product.id)
