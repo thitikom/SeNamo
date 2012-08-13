@@ -80,11 +80,11 @@ def edit_product(request, product_id):
         })
         return render_to_response('edit_product.html', context)
     else:
-        anpf = add_product_form(request.POST)
-        data = anpf.data
+        apf = add_product_form(request.POST)
+        data = apf.data
 
-        if anpf.is_valid():
-            data = anpf.cleaned_data
+        if apf.is_valid():
+            data = apf.cleaned_data
 
             if data['image'] is not None:
                 # file type validation
