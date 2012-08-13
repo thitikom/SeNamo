@@ -80,31 +80,37 @@ def edit_product(request, product_id):
         })
         return render_to_response('edit_product.html', context)
     else:
-        apf = add_product_form(request.POST)
-        data = apf.data
-
+        apf = add_product_form(request.POST, request.FILES, instance=product)
+        #data = apf.data
         if apf.is_valid():
-            data = apf.cleaned_data
-
-            if data['image'] is not None:
-                # file type validation
-                file_type = data['image'].content_type.split('/')[0]
-                if file_type != 'image':
-                    context = update_product_context(context, data, 'file_type_error', 'image file only!')
-                    return render_to_response('edit_product.html', context)
-
-            product.name = data['name']
-            product.price = data['price']
-            product.point = data['point']
-            product.category = data['category']
-            product.description = data['description']
-            if request.FILES['image'] is not None:
-                product.image = request.FILES['image']
-            product.save()
-            return HttpResponseRedirect('/product/%d' % product.id)
+            apf.save()
         else:
-            context = update_product_context(context, data, 'form_error', 'please fill all required informations')
-            return render_to_response('edit_product.html', context)
+            apf = add_product_form(instance=product)
+
+        return HttpResponseRedirect('/product/%d' % product.id)
+            #data = apf.cleaned_data
+            #if data['image'] is not None:
+            #    print('confused')
+            #    print(data['image'])
+            #    # file type validation
+            #    file_type = data['image'].content_type.split('/')[0]
+            #    if file_type != 'image':
+            #        context = update_product_context(context, data, 'file_type_error', 'image file only!')
+            #        return render_to_response('edit_product.html', context)
+
+            #product.name = data['name']
+            #product.price = data['price']
+            #product.point = data['point']
+            #product.category = data['category']
+            #product.description = data['description']
+            #if request.FILES['image'] is not None:
+            #    print('hello')
+            #    product.image = request.FILES['image']
+            #product.save()
+            #return HttpResponseRedirect('/product/%d' % product.id)
+        #else:
+        #    context = update_product_context(context, data, 'form_error', 'please fill all required informations')
+        #    return render_to_response('edit_product.html', context)
 
 def add_category(request):
     context = RequestContext(request, {'form': add_category_form})
