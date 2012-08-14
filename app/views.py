@@ -1,8 +1,9 @@
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from app.models import Product, Category
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from app.forms import add_product_form, add_category_form
+from django.contrib import messages
 
 def index(request):
     return HttpResponse("Hello, world. You're at the category index.")
@@ -169,3 +170,13 @@ def edit_category(request, category_id):
                 'cid': category.id
             })
             return render_to_response('edit_category.html', context)
+
+def delete_product(request,product_id):
+    product = get_object_or_404(Product,id=product_id)
+    product.delete()
+
+    messages.add_message(request,messages.SUCCESS,'Successfully delete product.')
+    context = RequestContext(request,{
+        messages : messages
+    })
+    return render_to_response('delete_product.html',context)
