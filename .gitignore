@@ -1,0 +1,10 @@
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+# PyCharm Setting
+.idea/
+
+.DS_Store
