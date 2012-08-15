@@ -9,7 +9,7 @@
 {% if products_list %}
     <ul>
         {% for product in products_list %}
-            <p><p><a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}"/></a></p><p>{{ product.name }}
+            <p><p><a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a></p><p>{{ product.name }}
             <br>Price : {{ product.price }} Point : {{ product.point }}</p>
         {% endfor %}
     </ul>

@@ -12,7 +12,7 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     price = models.IntegerField(default=0)
     point = models.IntegerField(default=0)
-    category = models.ForeignKey(Category,blank=True)
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     description = models.TextField(max_length=300)
     image = models.FileField(upload_to='product_img/')
 

@@ -22,14 +22,12 @@ urlpatterns = patterns('',
     url(r'^category/(?P<category_id>\d+)/$', 'app.views.view_category'),
     url(r'^category/new$', 'app.views.add_category'),
     url(r'^category/(?P<category_id>\d+)/edit$', 'app.views.edit_category'),
+    url(r'^category/(?P<category_id>\d+)/delete$', 'app.views.delete_category'),
 
     url(r'^product/(?P<product_id>\d+)/$', 'app.views.view_product'),
     url(r'^product/new$', 'app.views.add_product'),
     url(r'^product/(?P<product_id>\d+)/edit$', 'app.views.edit_product'),
     url(r'^product/(?P<product_id>\d+)/delete$','app.views.delete_product'),
-
-
-
 
 )
 
