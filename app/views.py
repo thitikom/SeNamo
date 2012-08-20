@@ -4,6 +4,8 @@ from app.models import Product, Category
 from django.http import HttpResponse, HttpResponseRedirect
 from app.forms import add_product_form, add_category_form
 from django.contrib import messages
+from django.contrib import auth
+from django.core.context_processors import csrf
 
 def index(request):
     return HttpResponse("Hello, world. You're at the category index.")
@@ -167,3 +169,38 @@ def delete_category(request, category_id):
         messages : messages
     })
     return render_to_response('delete_product.html', context)
+
+def register_user(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        return render_to_response('register_user.html')
+
+def login(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/")
+    state = "Please log in below..."
+    username = ""
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                state = "You're successfully logged in!"
+            else:
+                state = "Your account is not active, please contact the site admin."
+        else:
+            state = "Your username and/or password were incorrect."
+    c = {'state':state, 'username': username}
+    c.update(csrf(request))
+    return render_to_response('login_user.html',c)
+
+def logout(request):
+    if request.user.is_authenticated():
+        auth.logout(request)
+        return HttpResponseRedirect("/")
+    else:
+        return HttpResponseRedirect("/login")

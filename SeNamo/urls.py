@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
+    url(r'^$', 'app.views.index'),
     url(r'^category/(?P<category_id>\d+)/$', 'app.views.view_category'),
     url(r'^category/new$', 'app.views.add_category'),
     url(r'^category/(?P<category_id>\d+)/edit$', 'app.views.edit_category'),
@@ -29,6 +30,11 @@ urlpatterns = patterns('',
     url(r'^product/(?P<product_id>\d+)/edit$', 'app.views.edit_product'),
     url(r'^product/(?P<product_id>\d+)/delete$','app.views.delete_product'),
 
+    url(r'^register$','app.views.register_user'),
+    #url(r'^login$','django.contrib.auth.views.login',{'template_name': 'login_user.html'}),
+    url(r'^login$','app.views.login'),
+    url(r'^logout$','app.views.logout'),
+    #url(r'^logout$','django.contrib.auth.views.logout',{'template_name': 'logout_user.html'}),
 )
 
 #Media
