@@ -5,7 +5,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from app.forms import add_product_form, add_category_form
 from django.contrib import messages
 from django.contrib import auth
-from django.core.context_processors import csrf
 
 def index(request):
     return HttpResponse("Hello, world. You're at the category index.")
@@ -178,9 +177,10 @@ def register_user(request):
 
 def login(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect("/")
-    state = "Please log in below..."
-    username = ""
+        if request.method == 'GET' and request.GET.get('next'):
+            HttpResponseRedirect(request.GET['next'])
+        else:
+            return HttpResponseRedirect('/')
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -189,18 +189,29 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                state = "You're successfully logged in!"
+                messages.add_message(request, messages.INFO, 'Successfully Logged in.')
             else:
-                state = "Your account is not active, please contact the site admin."
+                messages.add_message(request, messages.ERROR, 'Your account is inactive. Please contact Administrator.')
         else:
-            state = "Your username and/or password were incorrect."
-    c = {'state':state, 'username': username}
-    c.update(csrf(request))
-    return render_to_response('login_user.html',c)
+            messages.add_message(request, messages.ERROR, 'Incorrect username or password.')
+        if request.POST['next']:
+            return HttpResponseRedirect(request.POST['next'])
+        else:
+            return HttpResponseRedirect('/')
+    if request.method == 'GET' and request.GET.get('next'):
+        context = RequestContext(request, {
+            'messages': messages, 'next': request.GET['next']})
+    else:
+        context = RequestContext(request, {
+            'messages': messages})
+    return render_to_response('login_user.html',context)
 
 def logout(request):
     if request.user.is_authenticated():
         auth.logout(request)
-        return HttpResponseRedirect("/")
+        if request.method == 'GET' and request.GET.get('next'):
+            HttpResponseRedirect(request.GET['next'])
+        else:
+            return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect("/login")
