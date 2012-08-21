@@ -215,3 +215,32 @@ def logout(request):
             return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect("/login")
+
+def manage_cart(request):
+    if not request.session['product_in_cart']:
+        request.session['product_in_cart'] = []
+    context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
+    return render_to_response('manage_cart.html',context)
+
+def add_session(request):
+    if not request.session['product_in_cart']:
+        request.session['product_in_cart'] = []
+    tmp = request.session['product_in_cart']
+    tmp.append(2)
+    tmp.append(3)
+    tmp.append(4)
+    request.session['product_in_cart'] = tmp
+    context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
+    return render_to_response('manage_cart.html',context)
+
+def add_cart(request,product_id):
+    if not request.session['product_in_cart']:
+        request.session['product_in_cart'] = []
+    tmp = request.session['product_in_cart']
+    tmp.append(Product.objects.get(id=product_id))
+    request.session['product_in_cart'] = tmp
+    return HttpResponseRedirect("/product/"+product_id)
+
+def clear_cart(request):
+    request.session['product_in_cart'] = []
+    return HttpResponseRedirect("/")

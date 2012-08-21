@@ -31,10 +31,13 @@ urlpatterns = patterns('',
     url(r'^product/(?P<product_id>\d+)/delete$','app.views.delete_product'),
 
     url(r'^register$','app.views.register_user'),
-    #url(r'^login$','django.contrib.auth.views.login',{'template_name': 'login_user.html'}),
     url(r'^login$','app.views.login'),
     url(r'^logout$','app.views.logout'),
-    #url(r'^logout$','django.contrib.auth.views.logout',{'template_name': 'logout_user.html'}),
+
+    url(r'^cart$','app.views.manage_cart'),
+    url(r'^testcart$','app.views.add_session'),
+    url(r'^clear_cart$','app.views.clear_cart'),
+    url(r'^product/(?P<product_id>\d+)/add_to_cart$', 'app.views.add_cart'),
 )
 
 #Media
