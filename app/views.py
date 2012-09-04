@@ -194,10 +194,14 @@ def login(request):
                 messages.add_message(request, messages.ERROR, 'Your account is inactive. Please contact Administrator.')
         else:
             messages.add_message(request, messages.ERROR, 'Incorrect username or password.')
-        if request.POST['next']:
+
+        if request.POST.get('next') and user is not None:
             return HttpResponseRedirect(request.POST['next'])
-        else:
+        elif user is not None:
             return HttpResponseRedirect('/')
+        else:
+            return HttpResponseRedirect('/login')
+
     if request.method == 'GET' and request.GET.get('next'):
         context = RequestContext(request, {
             'messages': messages, 'next': request.GET['next']})
@@ -234,7 +238,7 @@ def add_session(request):
     return render_to_response('manage_cart.html',context)
 
 def add_cart(request,product_id):
-    if not request.session['product_in_cart']:
+    if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
     tmp = request.session['product_in_cart']
     tmp.append(Product.objects.get(id=product_id))
