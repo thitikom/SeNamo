@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.core.urlresolvers import  reverse
 from django.contrib.auth.models import  User
 
 class AuthTestCase(TestCase):
@@ -6,6 +7,14 @@ class AuthTestCase(TestCase):
         pass
     def tearDown(self):
         pass
+
+    def test_login(self):
+        username = 'mark'
+        password = 'mark'
+        email = 'mark.z@facebook.com'
+        member = User.objects.create_user(username,email,password)
+        response = self.client.login(username=username,password=password)
+        self.assertTrue(response)
 
     def test_logout(self):
         username = 'mark'
