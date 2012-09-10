@@ -48,8 +48,8 @@ class AuthTestCase(TestCase):
             'confirm_email' : email
         }
 
-        client = Client(enforce_csrf_checks=False)
-        response = client.post(url,params,follow=True)
+        #client = Client(enforce_csrf_checks=False)
+        response = self.client.post(url,params,follow=True)
 
         print(response)
         self.assertIn(User.objects.get(username=username),User.objects.all())
