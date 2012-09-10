@@ -6,6 +6,8 @@ from django.contrib import admin
 # Setting
 from django.conf import settings
 
+
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -32,7 +34,7 @@ urlpatterns = patterns('',
 
     url(r'^register$','app.views.register_user'),
     url(r'^login$','app.views.login'),
-    url(r'^logout$','app.views.logout'),
+    url(r'^logout$','django.contrib.auth.views.logout_then_login'),
 
     url(r'^cart$','app.views.manage_cart'),
     url(r'^testcart$','app.views.add_session'),
