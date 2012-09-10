@@ -16,9 +16,9 @@
 
 <form action='/checkout/payment' method="post">
     {% csrf_token %}
-    <input type="radio" name="creditcart" value="old">Use existing: {% if oldcard %}<span id="oldcard">{{ oldcard }}</span> {% else %} no existing card {% endif %}</input>
+    <input type="radio" name="creditcart" value="old"/>Use existing: {% if oldcard %}<span id="oldcard">{{ oldcard }}</span> {% else %} no existing card {% endif %}
     <br>
-    <input type="radio" name="creditcart" value="new">Create New: </input>
+    <input type="radio" name="creditcart" value="new"/>Create New:
 
     {{ form.as_p }}
 <input type="submit" value='back' formaction="/cart" formmethod="get">
