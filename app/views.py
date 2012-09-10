@@ -211,15 +211,6 @@ def login(request):
             'messages': messages})
     return render_to_response('login_user.html',context)
 
-def logout(request):
-    if request.user.is_authenticated():
-        auth.logout(request)
-        if request.method == 'GET' and request.GET.get('next'):
-            HttpResponseRedirect(request.GET['next'])
-        else:
-            return HttpResponseRedirect('/')
-    else:
-        return HttpResponseRedirect("/login")
 
 def view_cart(request):
     if not request.session.get('product_in_cart'):
