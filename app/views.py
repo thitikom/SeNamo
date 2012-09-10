@@ -23,7 +23,8 @@ def view_category(request, category_id):
 def view_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return render_to_response('view_product.html', {'product': product},
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request,{
+            'messages': messages}))
 
 #update context of forms
 def update_product_context(context, data, error_type, error_msg):
@@ -218,9 +219,10 @@ def view_cart(request):
     cart_list = request.session['product_in_cart']
     total_price = 0
     total_point = 0
-    for product in cart_list:
-        total_price += int(product[2])
-        total_point += int(product[3])
+    if len(cart_list) != 0:
+        for product in cart_list:
+            total_price += int(product[2])
+            total_point += int(product[3])
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart'],
                                        'total_price':total_price,
                                        'total_point':total_point})
@@ -249,6 +251,7 @@ def add_cart(request,product_id):
         tmp = request.session['product_in_cart']
         tmp.append(added_product)
         request.session['product_in_cart'] = tmp
+        messages.add_message(request, messages.INFO, 'Successfully Added to cart.')
     return HttpResponseRedirect("/product/"+product_id)
 
 def clear_cart(request):
