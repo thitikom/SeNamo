@@ -2,9 +2,10 @@ from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from app.models import Product, Category
 from django.http import HttpResponse, HttpResponseRedirect
-from app.forms import add_product_form, add_category_form
+from app.forms import add_product_form, add_category_form, RegisterForm
 from django.contrib import messages
 from django.contrib import auth
+from django.contrib.auth.models import User
 
 def index(request):
     return HttpResponse("Hello, world. You're at the category index.")
@@ -175,7 +176,29 @@ def register_user(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
-        return render_to_response('register_user.html')
+        if request.method=="POST" :
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                email = form.cleaned_data['email']
+                user = User.objects.create_user(username,email,password)
+                messages.add_message(request, messages.SUCCESS, "You've successfully registered.")
+                context = RequestContext(request,{
+                    'messages' : messages
+                })
+                return HttpResponseRedirect('/login')
+            else:
+
+                context = RequestContext(request,{
+                    'form' : RegisterForm()
+                })
+                return render_to_response('register_user.html',context)
+        else:
+            context = RequestContext(request,{
+                'form' : RegisterForm()
+            })
+            return render_to_response('register_user.html',context)
 
 def login(request):
     if request.user.is_authenticated():

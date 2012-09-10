@@ -1,5 +1,7 @@
 from django import forms
 from app.models import Category, Product
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 #class add_product_form(forms.Form):
 #    name = forms.CharField(max_length=50)
@@ -16,3 +18,41 @@ class add_product_form(forms.ModelForm):
 class add_category_form(forms.Form):
     name = forms.CharField(max_length=50)
     description = forms.CharField(widget=forms.Textarea, required=False)
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.EmailField()
+    confirm_email = forms.EmailField()
+
+    def clean_confirm_password(self):
+        if 'password' in self.cleaned_data:
+            password = self.cleaned_data['password']
+            confirm_password = self.cleaned_data['confirm_password']
+            if password == confirm_password:
+                return confirm_password
+        raise forms.ValidationError("Password do not match.")
+
+    def clean_confirm_email(self):
+        if 'email' in self.cleaned_data:
+            email = self.cleaned_data['email']
+            confirm_email = self.cleaned_data['confirm_email']
+            if email == confirm_email:
+                return confirm_email
+        raise forms.ValidationError("email do not match.")
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            user = User.objects.get(username=username)
+            raise forms.ValidationError("Username '%s' has already been used." % username)
+        except ObjectDoesNotExist:
+            return username
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        try:
+            user = User.objects.get(email=email)
+            raise forms.ValidationError("Email '%s' has already been used." % username)
+        except ObjectDoesNotExist:
+            return email
