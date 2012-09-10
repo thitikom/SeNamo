@@ -43,10 +43,11 @@ post_save.connect(create_user_profile, sender=User)
 class Order(models.Model):
     user = models.ForeignKey(User)
     status = models.CharField(max_length=50)
-    timestamp = models.TimeField()
+    timestamp = models.TimeField(auto_now_add=True)
 
 class ProductInOrder(models.Model):
     product = models.ForeignKey(Product)
     amount = models.IntegerField(default=0)
     status = models.CharField(max_length=50)
+    ship_time = models.TimeField()
     order = models.ForeignKey(Order)
