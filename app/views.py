@@ -2,7 +2,7 @@ from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from app.models import Product, Category
 from django.http import HttpResponse, HttpResponseRedirect
-from app.forms import add_product_form, add_category_form, RegisterForm
+from app.forms import *
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -280,3 +280,13 @@ def add_cart(request,product_id):
 def clear_cart(request):
     request.session['product_in_cart'] = []
     return HttpResponseRedirect("/")
+
+def checkout_payment(request):
+    if request.method == 'GET':
+        return render_to_response('checkout_payment.html',{'form': address_form()})
+def checkout_shipping(request):
+    pass
+def checkout_finish(request):
+    pass
+def checkout_problem(request):
+    pass

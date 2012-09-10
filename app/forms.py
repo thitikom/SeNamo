@@ -1,7 +1,5 @@
 from django import forms
 from app.models import Category, Product
-from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 
 #class add_product_form(forms.Form):
 #    name = forms.CharField(max_length=50)
@@ -10,6 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 #    category = forms.ModelChoiceField(Category.objects.all())
 #    description = forms.CharField(widget=forms.Textarea, required=False)
 #    image = forms.FileField(required=False)
+
 
 class add_product_form(forms.ModelForm):
     class Meta:
@@ -56,3 +55,12 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("Email '%s' has already been used." % username)
         except ObjectDoesNotExist:
             return email
+
+country_list = [("Thailand",'Thailand'),("Hong Kong",'Hong Kong')]
+
+class address_form(forms.Form):
+    first_line = forms.CharField(max_length=100)
+    second_line = forms.CharField(max_length=100,required=False)
+    town = forms.CharField(max_length=100)
+    country = forms.ChoiceField(choices=country_list)
+    zip_code = forms.CharField(max_length=20)
