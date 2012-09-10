@@ -48,4 +48,5 @@ class Order(models.Model):
 class ProductInOrder(models.Model):
     product = models.ForeignKey(Product)
     amount = models.IntegerField(default=0)
+    status = models.CharField(max_length=50)
     order = models.ForeignKey(Order)
