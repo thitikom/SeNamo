@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     url(r'^login$','app.views.login'),
     url(r'^logout$','django.contrib.auth.views.logout_then_login'),
 
-    url(r'^cart$','app.views.manage_cart'),
+    url(r'^cart$', 'app.views.view_cart'),
     url(r'^testcart$','app.views.add_session'),
     url(r'^clear_cart$','app.views.clear_cart'),
     url(r'^product/(?P<product_id>\d+)/add_to_cart$', 'app.views.add_cart'),

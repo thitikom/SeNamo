@@ -22,7 +22,8 @@ def view_category(request, category_id):
 
 def view_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    return render_to_response('view_product.html', {'product': product})
+    return render_to_response('view_product.html', {'product': product},
+        context_instance=RequestContext(request))
 
 #update context of forms
 def update_product_context(context, data, error_type, error_msg):
@@ -220,14 +221,22 @@ def logout(request):
     else:
         return HttpResponseRedirect("/login")
 
-def manage_cart(request):
-    if not request.session['product_in_cart']:
+def view_cart(request):
+    if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
-    context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
-    return render_to_response('manage_cart.html',context)
+    cart_list = request.session['product_in_cart']
+    total_price = 0
+    total_point = 0
+    for product in cart_list:
+        total_price += int(product[2])
+        total_point += int(product[3])
+    context = RequestContext(request, {'product_in_cart': request.session['product_in_cart'],
+                                       'total_price':total_price,
+                                       'total_point':total_point})
+    return render_to_response('view_cart.html',context)
 
 def add_session(request):
-    if not request.session['product_in_cart']:
+    if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
     tmp = request.session['product_in_cart']
     tmp.append(2)
@@ -235,14 +244,20 @@ def add_session(request):
     tmp.append(4)
     request.session['product_in_cart'] = tmp
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
-    return render_to_response('manage_cart.html',context)
+    return render_to_response('view_cart.html',context)
 
 def add_cart(request,product_id):
+    product_amount = 0;
     if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
-    tmp = request.session['product_in_cart']
-    tmp.append(Product.objects.get(id=product_id))
-    request.session['product_in_cart'] = tmp
+    if request.method == 'POST':
+        product_amount = request.POST.get('amount')
+        added_product = (Product.objects.get(id=product_id),product_amount,
+                         int(product_amount)*int(Product.objects.get(id=product_id).price),
+                         int(product_amount)*int(Product.objects.get(id=product_id).point))
+        tmp = request.session['product_in_cart']
+        tmp.append(added_product)
+        request.session['product_in_cart'] = tmp
     return HttpResponseRedirect("/product/"+product_id)
 
 def clear_cart(request):

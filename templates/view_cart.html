@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>TEMP CART VIEW</title>
+</head>
+<body>
+<table border="1">
+    <tr><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td></tr>
+    {% for product in product_in_cart %}
+        <tr><td>{{ product.0.name }}</td>
+            <td>{{ product.0.price }}</td>
+            <td>{{ product.0.point }}</td>
+            <td>{{ product.1 }}</td>
+            <td>${{ product.2 }}/{{ product.3 }}pts</td></tr>
+    {% endfor %}
+</table>
+Total: ${{ total_price }}/{{ total_point }}pts
+<p>Add some more! <a href="/cart/checkout">Checkout</a></p>
+</body>
+</html>
