@@ -16,8 +16,6 @@
     <img src="/media/{{ product.image }}"/>
     <p>description: {{ product.description }}</p>
     <p>price: {{ product.price }} $  point: {{ product.point }} pt.</p>
-    <p><a href="/product/{{ product.id }}/add_to_cart">Add to cart!</a></p>
-
     <form action="/product/{{ product.id }}/add_to_cart" method="post">
         {% csrf_token %}
         Amount:
