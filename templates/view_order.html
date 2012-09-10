@@ -2,9 +2,16 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title></title>
+    <title>Order History</title>
 </head>
 <body>
-    Jellopy 1 ea
+<table border="1">
+    <tr><td>Order no.</td><td>Date</td><td>Status</td></tr>
+    {% for order in order_list %}
+        <tr><td><a href="/order/{{ order.id }}">{{ order.id }}</a></td>
+            <td>{{ order.timestamp }}</td>
+            <td>{{ order.status }}</td></tr>
+    {% endfor %}
+</table>
 </body>
 </html>
