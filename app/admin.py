@@ -34,7 +34,7 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order, OrderAdmin)
-admin.site.register(ProductInOrder, ProductInOrderAdmin)admin.site.register(Category, CategoryAdmin)
+admin.site.register(ProductInOrder, ProductInOrderAdmin)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

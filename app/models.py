@@ -35,17 +35,16 @@ class UserProfile(models.Model):
     creditcard = models.CharField(max_length=50)
     point = models.IntegerField(default=0)
 
-    # for those who are employee
-    manager = models.BooleanField(default = False)
-    clerk = models.BooleanField(default = False)
-
-
     #address
     addr_firstline = models.CharField(max_length=100)
     addr_secondline = models.CharField(max_length=100)
     addr_town = models.CharField(max_length=50)
     addr_country = models.CharField(max_length=50)
     addr_zipcode = models.CharField(max_length=15)
+
+    # for those who are employee
+    manager = models.BooleanField(default = False)
+    clerk = models.BooleanField(default = False)
 
     def get_address(self):
         return {'firstline':self.addr_firstline,

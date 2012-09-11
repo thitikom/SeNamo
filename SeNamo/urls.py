@@ -48,6 +48,11 @@ urlpatterns = patterns('',
     url(r'^checkout/finish', 'app.views.checkout_finish'),
     url(r'^checkout/problem', 'app.views.checkout_problem'),
 
+
+    #url for backOffice
+    url(r'^backoffice/login$','app.backOffice.login'),
+    url(r'^backoffice/managestock$','app.backOffice.managestock'),
+
 )
 
 #Media

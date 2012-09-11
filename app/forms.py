@@ -71,3 +71,7 @@ class address_form(forms.Form):
 class credit_card_form(forms.Form):
     card_number = forms.CharField(max_length=19, required=False)
     ccv = forms.CharField(max_length=4,label='ccv')
+
+class loginEmp_form(forms.Form):
+    username = forms.CharField(max_length=20)
+    password = forms.CharField(widget=forms.PasswordInput)

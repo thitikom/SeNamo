@@ -16,6 +16,7 @@ class AuthTestCase(TestCase):
         response = self.client.login(username=username,password=password)
         self.assertTrue(response)
 
+
     def test_logout(self):
         username = 'mark'
         password = 'mark'
