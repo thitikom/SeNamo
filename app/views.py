@@ -315,13 +315,17 @@ def view_order_detail(request, order_id):
             })
 
 #Checkout
+def verify(card_no,ccv,total_price):
+    if card_no and ccv == '123' and total_price:
+        return 'success'
+    return 'failed'
 
 @login_required
 def checkout_payment(request):
     user = request.user
+    user_profile = user.get_profile()
+    (total_price,total_point) = calc_price_point(request)
     if request.method == 'GET':
-        user_profile = user.get_profile()
-        (total_price,total_point) = calc_price_point(request)
         context = RequestContext(request, {'form': credit_card_form(),
                                            'oldcard': user_profile.creditcard,
                                            'total_price': total_price,
@@ -329,14 +333,49 @@ def checkout_payment(request):
                                            })
         return render_to_response('checkout_payment.html',context)
     else: #POST
-        #request.POST.get('select_card')
-        return HttpResponse("OK GOOD")
+        select_card = request.POST.get('select_card')
+        if not select_card:
+            messages.add_message(request, messages.ERROR, 'Please select credit card')
+            return HttpResponseRedirect('/checkout/payment')
+        ccv = request.POST.get('ccv')
+        if not ccv:
+            messages.add_message(request, messages.ERROR, 'Please enter correct ccv number')
+            return HttpResponseRedirect('/checkout/payment')
+
+        if select_card == 'old':
+            card_no = user_profile.creditcard
+        else:
+            card_no = request.POST.get('card_number')
+            if not card_no:
+                messages.add_message(request, messages.ERROR, 'Please enter credit card number')
+                return HttpResponseRedirect('/checkout/payment')
+
+        #verify total point
+        if total_point > user_profile.point:
+            messages.add_message(request, messages.ERROR, 'Not enough points, you got %d pts.'%(user_profile.point))
+            return HttpResponseRedirect('/cart')
+
+        #verify card_no ccv total_price with bank
+        v = verify(card_no,ccv,total_price)
+        if v == 'success':
+            messages.add_message(request, messages.INFO, 'Payment accepted')
+            request.session['checkout'] = {'card_no': card_no,
+                                          'ccv' : ccv,
+                                          'total_price' : total_price,
+                                          'total_point' : total_point,}
+            return HttpResponseRedirect('/checkout/shipping')
+        else:
+            messages.add_message(request, messages.ERROR, 'Payment rejected by bank')
+            return HttpResponseRedirect("/checkout/payment")
 
 @login_required(redirect_field_name='/cart')
 def checkout_shipping(request):
+    checkout = request.session['checkout']
+    if not checkout:
+        return HttpResponseRedirect("/checkout/payment")
     user = request.user
+    user_profile = user.get_profile()
     if request.method == 'GET':
-        user_profile = user.get_profile()
         (total_price,total_point) = calc_price_point(request)
         context = RequestContext(request, {'form': address_form(),
                                            'oldaddress': user_profile.get_address(),
@@ -345,11 +384,88 @@ def checkout_shipping(request):
                                            })
         return render_to_response('checkout_shipping.html',context)
 
+    else: #POST
+        select_address = request.POST.get('select_address')
+        if not select_address:
+            messages.add_message(request, messages.ERROR, 'Please select shipping address')
+            return HttpResponseRedirect('/checkout/shipping')
+
+        if select_address == 'old':
+            address = user_profile.get_address()
+        else:
+            address = {}
+            address['firstline'] = request.POST.get('first_line')
+            address['secondline'] = request.POST.get('second_line')
+            address['town'] = request.POST.get('town')
+            address['country'] = request.POST.get('country')
+            address['zipcode'] = request.POST.get('zip_code')
+
+            if not (address['zipcode'] and address['country'] and address['town'] and address['firstline']):
+
+                messages.add_message(request, messages.ERROR, 'Please enter address')
+                return HttpResponseRedirect('/checkout/shipping')
+
+        #messages.add_message(request, messages.INFO, 'Your order is placed')
+
+        request.session['checkout']['address'] = address
+        request.session.modified = True
+
+        return HttpResponseRedirect('/checkout/finish')
+
+
 def checkout_finish(request):
-    pass
+    user = request.user
+    user_profile = user.get_profile()
+    checkout = request.session['checkout']
+#    if True:
+#        return HttpResponse(repr(checkout))
+    address = checkout['address']
+
+    if not address:
+        return HttpResponseRedirect("/checkout/payment")
+    card_no = checkout['card_no']
+    ccv = checkout['ccv']
+    total_price = checkout['total_price']
+    total_point = checkout['total_point']
+    product_list = request.session['product_in_cart']
+
+    fraud = ((not (total_price,total_point) == calc_price_point(request) )
+             or total_point > user_profile.point
+             or (not verify(card_no,ccv,total_price)))
+
+    if fraud:
+        messages.add_message(request, messages.ERROR, 'FRAUD DETECTED!!')
+        return HttpResponseRedirect('/checkout/problem')
+
+    #TODO: pay to bank
+
+    #deduct points
+    user_profile.point -= total_point
+    user_profile.save()
+
+    #create order
+    order = Order.objects.create(user=user,status='placed',
+        total_price = total_price,
+        total_point = total_point,
+        addr_firstline = address['firstline'],
+        addr_secondline=address['secondline'],
+        addr_town=address['town'],
+        addr_country=address['country'],
+        addr_zipcode=address['zipcode'])
+
+    for product_tuple in product_list:
+        (product,amount,x,y) = product_tuple
+        ProductInOrder.objects.create(product=product,amount=amount,
+                                        status='placed',order=order)
+
+    request.session['checkout'] = {}
+    request.session['product_in_cart'] = []
+
+    return render_to_response('checkout_finish.html',{'order':order})
 
 def checkout_problem(request):
-    pass
+    request.session['checkout'] = None
+    return render_to_response('problem.html',RequestContext(request))
 
 def view_order_history(request):
     user_account = request.user

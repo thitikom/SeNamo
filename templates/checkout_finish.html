@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order placed</title>
+</head>
+<body>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<h1>We recieve your order! on {{ order.timestamp }}</h1>
+<h2>Your order ID is {{ order.id }}</h2>
+<h2>${{ order.total_price }} was charged from your credit card</h2>
+<h2>{{ order.total_point }} pts. was deduct from your account</h2>
+<h2>Thankyou for shopping with us!!</h2>
+<a href="/">back to main page</a>
+
+</body>
+</html>

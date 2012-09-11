@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic.simple import redirect_to
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -43,6 +45,7 @@ urlpatterns = patterns('',
 
     url(r'^order/(?P<order_id>\d+)/$', 'app.views.view_order_detail'),
 
+    url(r'^checkout/$',redirect_to, {'url': '/checkout/payment'}),
     url(r'^checkout/payment$', 'app.views.checkout_payment'),
     url(r'^checkout/shipping$', 'app.views.checkout_shipping'),
     url(r'^checkout/finish$', 'app.views.checkout_finish'),

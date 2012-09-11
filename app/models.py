@@ -41,7 +41,7 @@ class UserProfile(models.Model):
 
     # Other fields here
     creditcard = models.CharField(max_length=50)
-    point = models.IntegerField(default=0)
+    point = models.IntegerField(default=1000)
 
     #address
     addr_firstline = models.CharField(max_length=100)
@@ -73,7 +73,17 @@ post_save.connect(create_user_profile, sender=User)
 class Order(models.Model):
     user = models.ForeignKey(User)
     status = models.CharField(max_length=50)
-    ship_address = models.CharField(max_length=200)
+
+    total_price = models.IntegerField()
+    total_point = models.IntegerField()
+
+    #address
+    addr_firstline = models.CharField(max_length=100)
+    addr_secondline = models.CharField(max_length=100)
+    addr_town = models.CharField(max_length=50)
+    addr_country = models.CharField(max_length=50)
+    addr_zipcode = models.CharField(max_length=15)
+
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
@@ -83,6 +93,6 @@ class ProductInOrder(models.Model):
     product = models.ForeignKey(Product)
     amount = models.IntegerField(default=0)
     status = models.CharField(max_length=50)
-    ship_time = models.DateTimeField()
+    ship_time = models.DateTimeField(blank=True,null=True)
     order = models.ForeignKey(Order)
 

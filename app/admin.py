@@ -13,7 +13,9 @@ class CategoryAdmin(admin.ModelAdmin):
     readonly_fields = ["id"]
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "status", "timestamp"]
+    list_display = ["id", "user", "status","total_price","total_point", "timestamp",
+                    "addr_firstline", "addr_secondline", "addr_town","addr_country",
+                    "addr_zipcode"]
     search_fields = ["user"]
     readonly_fields = ["id"]
 
@@ -40,6 +42,5 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(ProductInOrder, ProductInOrderAdmin)
 admin.site.register(Supplier, SupplierAdmin)
-
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
