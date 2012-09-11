@@ -26,6 +26,7 @@ class Product(models.Model):
             (self.image.name, self.image.name))
     thumbnail.allow_tags = True
 
+# We use the same table to keep Customer and Employee
 class UserProfile(models.Model):
     # This field is required.
     user = models.OneToOneField(User)
@@ -33,6 +34,11 @@ class UserProfile(models.Model):
     # Other fields here
     creditcard = models.CharField(max_length=50)
     point = models.IntegerField(default=0)
+
+    # for those who are employee
+    manager = models.BooleanField(default = False)
+    clerk = models.BooleanField(default = False)
+
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

@@ -210,7 +210,7 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = auth.authenticate(username=username, password=password)
+        user = auth.authenticate(username=username, password=password) # check if exist in DB
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
