@@ -44,10 +44,11 @@ urlpatterns = patterns('',
     url(r'^order/(?P<order_id>\d+)/$', 'app.views.view_order_detail'),
 
     url(r'^checkout/payment$', 'app.views.checkout_payment'),
-    url(r'^checkout/shipping', 'app.views.checkout_shipping'),
-    url(r'^checkout/finish', 'app.views.checkout_finish'),
-    url(r'^checkout/problem', 'app.views.checkout_problem'),
+    url(r'^checkout/shipping$', 'app.views.checkout_shipping'),
+    url(r'^checkout/finish$', 'app.views.checkout_finish'),
+    url(r'^checkout/problem$', 'app.views.checkout_problem'),
 
+    url(r'^supplier/new$', 'app.views.add_supplier'),
 
     #url for backOffice
     url(r'^backoffice/login$','app.backOffice.login'),

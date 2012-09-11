@@ -61,7 +61,7 @@ def add_product(request):
                 category=data['category'], description=data['description'],image=request.FILES['image'])[0]
             product.save()
             context.update(
-                    {'form': add_product_form, 'success': 'product created successfully'}
+                    {'form': add_product_form, 'success': 'product successfully created'}
             )
             return render_to_response('add_product.html', context)
         else:
@@ -107,7 +107,7 @@ def add_category(request):
             category = Category.objects.get_or_create(name=data['name'], description=data['description'])[0]
             category.save()
             context.update(
-                    {'form': add_category_form, 'success_msg': 'category created successfully'}
+                    {'form': add_category_form, 'success_msg': 'category successfully created'}
             )
             return render_to_response('add_category.html', context)
         else:
@@ -359,3 +359,28 @@ def view_order_history(request):
         'messages':messages
     })
     return render_to_response('view_order_history.html',context)
+
+
+def add_supplier(request):
+    context = RequestContext(request, { 'form': add_supplier_form() })
+
+    if request.method == 'POST':
+        asf = add_supplier_form(request.POST)
+        data = asf.data
+
+        if asf.is_valid():
+            data = asf.cleaned_data
+            supplier = Supplier.objects.get_or_create(company_name=data['company_name'], contact=['contact'])[0]
+            supplier.save()
+            context.update(
+                {'form': add_supplier_form, 'success_msg': 'Supplier successfully created.'}
+            )
+        else:
+            context.update({
+                'form':add_supplier_form(
+                    initial = {'company_name': data['company_name'], 'contact': data['contact']}
+                ),
+                'form_error_msg': 'please fill all required information'
+            })
+
+    return render_to_response('add_supplier.html', context)

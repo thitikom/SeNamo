@@ -1,4 +1,4 @@
-from app.models import Product, Category, Order, ProductInOrder, UserProfile
+from app.models import *
 from django.contrib.auth.models import User
 from django.contrib import admin
 
@@ -28,6 +28,10 @@ class UserProfInline(admin.StackedInline):
 class UserAdmin(admin.ModelAdmin):
     inlines = [UserProfInline]
 
+class SupplierAdmin(admin.ModelAdmin):
+    list_display = ["company_name", "id", "contact"]
+    search_fields = ["company_name"]
+    readonly_fields = ["id"]
 
 #Arm Add
 
@@ -35,6 +39,7 @@ admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(ProductInOrder, ProductInOrderAdmin)
+admin.site.register(Supplier, SupplierAdmin)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

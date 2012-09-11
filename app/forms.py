@@ -75,3 +75,7 @@ class credit_card_form(forms.Form):
 class loginEmp_form(forms.Form):
     username = forms.CharField(max_length=20)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class add_supplier_form(forms.ModelForm):
+    class Meta:
+        model = Supplier

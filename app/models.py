@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
 # Create your models here.
+class Supplier(models.Model):
+    company_name = models.CharField(max_length=50)
+    contact = models.CharField(max_length=100)
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=200)
@@ -16,6 +20,7 @@ class Product(models.Model):
     point = models.IntegerField(default=0)
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     description = models.TextField(max_length=300)
+    supplier = models.ForeignKey(Supplier, null=True, on_delete=models.SET_NULL)
     image = models.FileField(upload_to='product_img/')
 
     def __unicode__(self):
@@ -78,6 +83,3 @@ class ProductInOrder(models.Model):
     ship_time = models.DateTimeField()
     order = models.ForeignKey(Order)
 
-class Supplier(models.Model):
-    CompanyName = models.CharField(max_length=50)
-    Contact = models.CharField(max_length=100)
