@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Order: {{ order.id }}</title>
+</head>
+<body>
+    Order ID: {{ order.id }}
+    Date of Purchase: {{ order.timestamp }}
+    Shipping Address: {{ order.ship_address }}
+    Products Purchased:
+    <table border="1">
+        <tr><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td></tr>
+        {% for product_io in products_list %}
+            <tr>
+                <td>{{ product_io.0.product.name }}</td>
+                <td>{{ product_io.0.product.price }}</td>
+                <td>{{ product_io.0.product.point }}</td>
+                <td>{{ product_io.0.amount }}</td>
+                <td>${{ product_io.1 }}/{{ product_io.2 }}pts</td>
+            </tr>
+        {% endfor %}
+    </table>
+    Total: ${{ total_price }}/{{ total_point }}pts
+</body>
+</html>
