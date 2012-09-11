@@ -40,10 +40,13 @@ urlpatterns = patterns('',
     url(r'^clear_cart$', 'app.views.clear_cart'),
     url(r'^product/(?P<product_id>\d+)/add_to_cart$', 'app.views.add_cart'),
 
+    url(r'^order/(?P<order_id>\d+)/$', 'app.views.view_order_detail'),
+
     url(r'^checkout/payment$', 'app.views.checkout_payment'),
     url(r'^checkout/shipping', 'app.views.checkout_shipping'),
     url(r'^checkout/finish', 'app.views.checkout_finish'),
     url(r'^checkout/problem', 'app.views.checkout_problem'),
+
 )
 
 #Media

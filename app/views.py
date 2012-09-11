@@ -1,6 +1,6 @@
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from app.models import Product, Category
+from app.models import Product, Category, Order, ProductInOrder
 from django.http import HttpResponse, HttpResponseRedirect
 from app.forms import *
 from django.contrib import messages
@@ -176,29 +176,7 @@ def register_user(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
-        if request.method=="POST" :
-            form = RegisterForm(request.POST)
-            if form.is_valid():
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                email = form.cleaned_data['email']
-                user = User.objects.create_user(username,email,password)
-                messages.add_message(request, messages.SUCCESS, "You've successfully registered.")
-                context = RequestContext(request,{
-                    'messages' : messages
-                })
-                return HttpResponseRedirect('/login')
-            else:
-
-                context = RequestContext(request,{
-                    'form' : RegisterForm()
-                })
-                return render_to_response('register_user.html',context)
-        else:
-            context = RequestContext(request,{
-                'form' : RegisterForm()
-            })
-            return render_to_response('register_user.html',context)
+        return render_to_response('register_user.html')
 
 def login(request):
     if request.user.is_authenticated():
@@ -263,7 +241,7 @@ def add_session(request):
     return render_to_response('view_cart.html',context)
 
 def add_cart(request,product_id):
-    product_amount = 0;
+    product_amount = 0
     if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
     if request.method == 'POST':
@@ -280,6 +258,34 @@ def add_cart(request,product_id):
 def clear_cart(request):
     request.session['product_in_cart'] = []
     return HttpResponseRedirect("/")
+
+def view_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.user != order.user:
+        messages.add_message(request, messages.ERROR, "You don't have permission to view this order.")
+        if request.GET.get('next'):
+            return HttpResponseRedirect(request.GET['next'])
+        else:
+            return HttpResponseRedirect('/')
+    else:
+        products_list = ProductInOrder.objects.filter(order__id = order_id).order_by('product')
+        list = []
+        total_price = 0
+        total_point = 0
+        for product_io in products_list:
+            price = int(product_io.product.price) * int(product_io.amount)
+            point = int(product_io.product.point) * int(product_io.amount)
+            list.append((product_io, price, point))
+            total_price += price
+            total_point += point
+
+    return render_to_response('view_order_detail.html',
+            {
+                'order': order,
+                'products_list': list,
+                'total_price': total_price,
+                'total_point': total_point,
+            })
 
 def checkout_payment(request):
     if request.method == 'GET':
