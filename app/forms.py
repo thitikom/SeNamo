@@ -1,5 +1,8 @@
 from django import forms
-from app.models import Category, Product
+from app.models import *
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+
 
 #class add_product_form(forms.Form):
 #    name = forms.CharField(max_length=50)
@@ -52,7 +55,7 @@ class RegisterForm(forms.Form):
         email = self.cleaned_data['email']
         try:
             user = User.objects.get(email=email)
-            raise forms.ValidationError("Email '%s' has already been used." % username)
+            raise forms.ValidationError("Email '%s' has already been used."%email)
         except ObjectDoesNotExist:
             return email
 
@@ -64,3 +67,7 @@ class address_form(forms.Form):
     town = forms.CharField(max_length=100)
     country = forms.ChoiceField(choices=country_list)
     zip_code = forms.CharField(max_length=20)
+
+class credit_card_form(forms.Form):
+    card_number = forms.CharField(max_length=19, required=False)
+    ccv = forms.CharField(max_length=4,label='ccv')

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout: Select Payment</title>
+</head>
+<body>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<h1>Select Shipping Address</h1>
+
+<form action='/checkout/shipping' method="post">
+    {% csrf_token %}
+    <input type="radio" name="select_address"
+           {% if not oldaddrss %}disabled="true"{% endif %}
+           value="old"/>
+    Use existing:
+    {% if oldaddrss %}
+        <span id="oldaddress">{{ oladdress }}</span>
+    {% else %}
+        no existing address
+    {% endif %}
+    <br>
+    <input type="radio" name="select_address" value="new"/>Create New:
+
+    {{ form.as_p }}
+
+    <input type="submit" value='back' formaction="/checkout/payment" formmethod="get">
+    <input type="submit" value='next'>
+
+</form>
+
+</body>
+</html>
