@@ -190,7 +190,7 @@ def register_user(request):
                 })
                 return HttpResponseRedirect('/login')
             else:
-
+                messages.add_message(request, messages.ERROR, "You've enter invalid information.")
                 context = RequestContext(request,{
                     'form' : RegisterForm()
                 })
