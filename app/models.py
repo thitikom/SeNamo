@@ -34,6 +34,23 @@ class UserProfile(models.Model):
     creditcard = models.CharField(max_length=50)
     point = models.IntegerField(default=0)
 
+    #address
+    addr_firstline = models.CharField(max_length=100)
+    addr_secondline = models.CharField(max_length=100)
+    addr_town = models.CharField(max_length=50)
+    addr_country = models.CharField(max_length=50)
+    addr_zipcode = models.CharField(max_length=15)
+
+    def get_address(self):
+        return {'firstline':self.addr_firstline,
+                'secondline':self.addr_secondline,
+                'town':self.addr_town,
+                'country':self.addr_country,
+                'zipcode':self.addr_zipcode,}
+
+    def __unicode__(self):
+        return self.user.username
+
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
