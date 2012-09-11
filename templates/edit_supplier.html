@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>edit supplier: {{ sid }}</title>
+</head>
+<body>
+    <form action="/supplier/{{ sid }}/edit" method="POST">
+        {% csrf_token %}
+        <p>edit category: {{ sid }}</p>
+        <p>company name: {{ form.company_name }}</p>
+        <p>contact: {{ form.contact }}</p>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

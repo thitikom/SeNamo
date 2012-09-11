@@ -370,7 +370,7 @@ def add_supplier(request):
 
         if asf.is_valid():
             data = asf.cleaned_data
-            supplier = Supplier.objects.get_or_create(company_name=data['company_name'], contact=['contact'])[0]
+            supplier = Supplier.objects.get_or_create(company_name=data['company_name'], contact=data['contact'])[0]
             supplier.save()
             context.update(
                 {'form': add_supplier_form, 'success_msg': 'Supplier successfully created.'}
@@ -384,3 +384,18 @@ def add_supplier(request):
             })
 
     return render_to_response('add_supplier.html', context)
+
+def edit_supplier(request, supplier_id):
+    supplier = get_object_or_404(Supplier, id=supplier_id)
+
+    if request.method == 'GET':
+        asf = add_supplier_form(instance=supplier)
+        return render_to_response('edit_supplier.html', RequestContext(request, {'form': asf, 'sid': supplier_id}))
+    else:
+        asf = add_supplier_form(request.POST, instance=supplier)
+        if asf.is_valid():
+            asf.save()
+        else:
+            asf = add_supplier_form(instance=supplier)
+
+        return HttpResponseRedirect('/supplier/%d' % supplier.id)
