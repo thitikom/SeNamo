@@ -177,7 +177,29 @@ def register_user(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
-        return render_to_response('register_user.html')
+        if request.method=="POST" :
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                email = form.cleaned_data['email']
+                user = User.objects.create_user(username,email,password)
+                messages.add_message(request, messages.SUCCESS, "You've successfully registered.")
+                context = RequestContext(request,{
+                    'messages' : messages
+                })
+                return HttpResponseRedirect('/login')
+            else:
+
+                context = RequestContext(request,{
+                    'form' : RegisterForm()
+                })
+                return render_to_response('register_user.html',context)
+        else:
+            context = RequestContext(request,{
+                'form' : RegisterForm()
+            })
+            return render_to_response('register_user.html',context)
 
 def login(request):
     if request.user.is_authenticated():
