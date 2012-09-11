@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     url(r'^testcart$','app.views.add_session'),
     url(r'^clear_cart$','app.views.clear_cart'),
     url(r'^product/(?P<product_id>\d+)/add_to_cart$', 'app.views.add_cart'),
-    url(r'^history$','app.views.view_order'),
+    url(r'^history$','app.views.view_order_history'),
 
     url(r'^order/(?P<order_id>\d+)/$', 'app.views.view_order_detail'),
 

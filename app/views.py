@@ -245,6 +245,7 @@ def add_session(request):
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
     return render_to_response('view_cart.html',context)
 
+@login_required()
 def add_cart(request,product_id):
     product_amount = 0
     if not request.session.get('product_in_cart'):
@@ -294,7 +295,6 @@ def view_order_detail(request, order_id):
 
 #Checkout
 
-@login_required
 def checkout_payment(request):
     user = request.user
     if request.method == 'GET':
@@ -328,3 +328,12 @@ def checkout_finish(request):
 
 def checkout_problem(request):
     pass
+
+def view_order_history(request):
+    user_account = request.user
+    order_list = Order.objects.filter(user=user_account).order_by('timestamp')
+    context = Context({
+            'order_list':order_list,
+            'messages':messages
+        })
+    return render_to_response('view_order_history.html',context)
