@@ -50,6 +50,7 @@ urlpatterns = patterns('',
 
     url(r'^supplier/new$', 'app.views.add_supplier'),
     url(r'^supplier/(?P<supplier_id>\d+)/edit$', 'app.views.edit_supplier'),
+    url(r'^supplier/(?P<supplier_id>\d+)/delete$', 'app.views.delete_supplier'),
 
     #url for backOffice
     url(r'^backoffice/login$','app.backOffice.login'),

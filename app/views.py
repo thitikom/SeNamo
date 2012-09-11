@@ -161,7 +161,7 @@ def delete_product(request, product_id):
     context = RequestContext(request, {
         messages : messages
     })
-    return render_to_response('delete_product.html',context)
+    return render_to_response('delete_record.html',context)
 
 def delete_category(request, category_id):
     category = get_object_or_404(Category, id=category_id)
@@ -171,7 +171,7 @@ def delete_category(request, category_id):
     context = RequestContext(request, {
         messages : messages
     })
-    return render_to_response('delete_product.html', context)
+    return render_to_response('delete_record.html', context)
 
 def register_user(request):
     if request.user.is_authenticated():
@@ -399,3 +399,13 @@ def edit_supplier(request, supplier_id):
             asf = add_supplier_form(instance=supplier)
 
         return HttpResponseRedirect('/supplier/%d' % supplier.id)
+
+def delete_supplier(request, supplier_id):
+    supplier = get_object_or_404(Supplier,id=supplier_id)
+    supplier.delete()
+
+    messages.add_message(request,messages.SUCCESS,'Successfully delete supplier.')
+    context = RequestContext(request, {
+        messages : messages
+    })
+    return render_to_response('delete_record.html',context)

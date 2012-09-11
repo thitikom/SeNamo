@@ -7,6 +7,9 @@ class Supplier(models.Model):
     company_name = models.CharField(max_length=50)
     contact = models.CharField(max_length=100)
 
+    def __unicode__(self):
+        return self.company_name
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=200)
