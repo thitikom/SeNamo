@@ -34,6 +34,23 @@ class UserProfile(models.Model):
     creditcard = models.CharField(max_length=50)
     point = models.IntegerField(default=0)
 
+    #address
+    addr_firstline = models.CharField(max_length=100)
+    addr_secondline = models.CharField(max_length=100)
+    addr_town = models.CharField(max_length=50)
+    addr_country = models.CharField(max_length=50)
+    addr_zipcode = models.CharField(max_length=15)
+
+    def get_address(self):
+        return {'firstline':self.addr_firstline,
+                'secondline':self.addr_secondline,
+                'town':self.addr_town,
+                'country':self.addr_country,
+                'zipcode':self.addr_zipcode,}
+
+    def __unicode__(self):
+        return self.user.username
+
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
@@ -43,11 +60,15 @@ post_save.connect(create_user_profile, sender=User)
 class Order(models.Model):
     user = models.ForeignKey(User)
     status = models.CharField(max_length=50)
-    timestamp = models.TimeField(auto_now_add=True)
+    ship_address = models.CharField(max_length=200)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return unicode(self.id) + ': ' + unicode(self.user.username)
 
 class ProductInOrder(models.Model):
     product = models.ForeignKey(Product)
     amount = models.IntegerField(default=0)
     status = models.CharField(max_length=50)
-    ship_time = models.TimeField()
+    ship_time = models.DateTimeField()
     order = models.ForeignKey(Order)

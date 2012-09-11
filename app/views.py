@@ -1,11 +1,12 @@
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
-from app.models import Product, Category
+from app.models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from app.forms import *
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return HttpResponse("Hello, world. You're at the category index.")
@@ -235,8 +236,8 @@ def login(request):
             'messages': messages})
     return render_to_response('login_user.html',context)
 
-
-def view_cart(request):
+#private method
+def calc_price_point(request):
     if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
     cart_list = request.session['product_in_cart']
@@ -246,6 +247,10 @@ def view_cart(request):
         for product in cart_list:
             total_price += int(product[2])
             total_point += int(product[3])
+    return (total_price,total_point)
+
+def view_cart(request):
+    (total_price,total_point) = calc_price_point(request)
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart'],
                                        'total_price':total_price,
                                        'total_point':total_point})
@@ -262,8 +267,9 @@ def add_session(request):
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
     return render_to_response('view_cart.html',context)
 
+@login_required()
 def add_cart(request,product_id):
-    product_amount = 0;
+    product_amount = 0
     if not request.session.get('product_in_cart'):
         request.session['product_in_cart'] = []
     if request.method == 'POST':
@@ -281,12 +287,75 @@ def clear_cart(request):
     request.session['product_in_cart'] = []
     return HttpResponseRedirect("/")
 
+def view_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.user != order.user:
+        messages.add_message(request, messages.ERROR, "You don't have permission to view this order.")
+        if request.GET.get('next'):
+            return HttpResponseRedirect(request.GET['next'])
+        else:
+            return HttpResponseRedirect('/')
+    else:
+        products_list = ProductInOrder.objects.filter(order__id = order_id).order_by('product')
+        list = []
+        total_price = 0
+        total_point = 0
+        for product_io in products_list:
+            price = int(product_io.product.price) * int(product_io.amount)
+            point = int(product_io.product.point) * int(product_io.amount)
+            list.append((product_io, price, point))
+            total_price += price
+            total_point += point
+
+    return render_to_response('view_order_detail.html',
+            {
+                'order': order,
+                'products_list': list,
+                'total_price': total_price,
+                'total_point': total_point,
+            })
+
+#Checkout
+
 def checkout_payment(request):
+    user = request.user
     if request.method == 'GET':
-        return render_to_response('checkout_payment.html',{'form': address_form()})
+        user_profile = user.get_profile()
+        (total_price,total_point) = calc_price_point(request)
+        context = RequestContext(request, {'form': credit_card_form(),
+                                           'oldcard': user_profile.creditcard,
+                                           'total_price': total_price,
+                                           'total_point': total_point,
+                                           })
+        return render_to_response('checkout_payment.html',context)
+    else: #POST
+        #request.POST.get('select_card')
+        return HttpResponse("OK GOOD")
+
+@login_required(redirect_field_name='/cart')
 def checkout_shipping(request):
-    pass
+    user = request.user
+    if request.method == 'GET':
+        user_profile = user.get_profile()
+        (total_price,total_point) = calc_price_point(request)
+        context = RequestContext(request, {'form': address_form(),
+                                           'oldaddress': user_profile.get_address(),
+                                           'total_price': total_price,
+                                           'total_point': total_point,
+                                           })
+        return render_to_response('checkout_shipping.html',context)
+
 def checkout_finish(request):
     pass
+
 def checkout_problem(request):
     pass
+
+def view_order_history(request):
+    user_account = request.user
+    order_list = Order.objects.filter(user=user_account).order_by('timestamp')
+    context = Context({
+            'order_list':order_list,
+            'messages':messages
+        })
+    return render_to_response('view_order_history.html',context)
