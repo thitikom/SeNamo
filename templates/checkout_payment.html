@@ -13,16 +13,28 @@
 {% endif %}
 
 <h1>Select Payment</h1>
-
+<h3>Total: $ {{ total_price }} / {{ total_point }} pts.</h3>
 <form action='/checkout/payment' method="post">
     {% csrf_token %}
-    <input type="radio" name="creditcart" value="old"/>Use existing: {% if oldcard %}<span id="oldcard">{{ oldcard }}</span> {% else %} no existing card {% endif %}
+    <input type="radio" name="select_card"
+           {% if not oldcard %}disabled="true"{% endif %}
+           value="old"/>
+    Use existing:
+    {% if oldcard %}
+        <span id="oldcard">{{ oldcard }}</span>
+    {% else %}
+        no existing card
+    {% endif %}
     <br>
-    <input type="radio" name="creditcart" value="new"/>Create New:
+    <input type="radio" name="select_card" value="new"/> Create New:{{ form.card_number }}
+    <br>
+    <br>
+    {{ form.ccv.label }}: {{ form.ccv }}
+    <br>
+    <br>
 
-    {{ form.as_p }}
-<input type="submit" value='back' formaction="/cart" formmethod="get">
-<input type="submit" value='next'>
+    <input type="submit" value='back' formaction="/cart" formmethod="get">
+    <input type="submit" value='next'>
 </form>
 </body>
 </html>
