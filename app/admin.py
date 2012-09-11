@@ -28,6 +28,9 @@ class UserProfInline(admin.StackedInline):
 class UserAdmin(admin.ModelAdmin):
     inlines = [UserProfInline]
 
+
+#Arm Add
+
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Order, OrderAdmin)

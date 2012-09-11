@@ -78,3 +78,7 @@ class ProductInOrder(models.Model):
     status = models.CharField(max_length=50)
     ship_time = models.DateTimeField()
     order = models.ForeignKey(Order)
+
+class Supplier(models.Model):
+    CompanyName = models.CharField(max_length=50)
+    Contact = models.CharField(max_length=100)

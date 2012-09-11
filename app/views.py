@@ -177,7 +177,29 @@ def register_user(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
-        return render_to_response('register_user.html')
+        if request.method=="POST" :
+            form = RegisterForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                email = form.cleaned_data['email']
+                user = User.objects.create_user(username,email,password)
+                messages.add_message(request, messages.SUCCESS, "You've successfully registered.")
+                context = RequestContext(request,{
+                    'messages' : messages
+                })
+                return HttpResponseRedirect('/login')
+            else:
+                messages.add_message(request, messages.ERROR, "You've enter invalid information.")
+                context = RequestContext(request,{
+                    'form' : RegisterForm()
+                })
+                return render_to_response('register_user.html',context)
+        else:
+            context = RequestContext(request,{
+                'form' : RegisterForm()
+            })
+            return render_to_response('register_user.html',context)
 
 def login(request):
     if request.user.is_authenticated():
@@ -328,3 +350,12 @@ def checkout_finish(request):
 
 def checkout_problem(request):
     pass
+
+def view_order_history(request):
+    user_account = request.user
+    order_list = Order.objects.filter(user=user_account).order_by('timestamp')
+    context = Context({
+        'order_list':order_list,
+        'messages':messages
+    })
+    return render_to_response('view_order_history.html',context)

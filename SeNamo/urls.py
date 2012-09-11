@@ -29,16 +29,17 @@ urlpatterns = patterns('',
     url(r'^product/(?P<product_id>\d+)/$', 'app.views.view_product'),
     url(r'^product/new$', 'app.views.add_product'),
     url(r'^product/(?P<product_id>\d+)/edit$', 'app.views.edit_product'),
-    url(r'^product/(?P<product_id>\d+)/delete$', 'app.views.delete_product'),
+    url(r'^product/(?P<product_id>\d+)/delete$','app.views.delete_product'),
 
-    url(r'^register$', 'app.views.register_user'),
-    url(r'^login$', 'app.views.login'),
-    url(r'^logout$', 'django.contrib.auth.views.logout_then_login'),
+    url(r'^register$','app.views.register_user'),
+    url(r'^login$','app.views.login'),
+    url(r'^logout$','django.contrib.auth.views.logout_then_login'),
 
     url(r'^cart$', 'app.views.view_cart'),
-    url(r'^testcart$', 'app.views.add_session'),
-    url(r'^clear_cart$', 'app.views.clear_cart'),
+    url(r'^testcart$','app.views.add_session'),
+    url(r'^clear_cart$','app.views.clear_cart'),
     url(r'^product/(?P<product_id>\d+)/add_to_cart$', 'app.views.add_cart'),
+    url(r'^history$','app.views.view_order_history'),
 
     url(r'^order/(?P<order_id>\d+)/$', 'app.views.view_order_detail'),
 
@@ -52,5 +53,5 @@ urlpatterns = patterns('',
 #Media
 urlpatterns += patterns('',
     (r'^media/(?P<path>.*)$', 'django.views.static.serve',
-     {'document_root': settings.MEDIA_ROOT}),
+         {'document_root': settings.MEDIA_ROOT}),
 )
