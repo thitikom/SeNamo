@@ -386,7 +386,7 @@ def checkout_shipping(request):
     user_profile = user.get_profile()
     if request.method == 'GET':
         (total_price,total_point) = calc_price_point(request)
-        //print user_profile.get_address()
+        #print user_profile.get_address()
         context = RequestContext(request, {'form': address_form(),
                                            'oldaddress': user_profile.get_address(),
                                            'total_price': total_price,
