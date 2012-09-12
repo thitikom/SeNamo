@@ -41,34 +41,72 @@ def update_product_context(context, data, error_type, error_msg):
     return context
 
 def add_product(request):
-    context = RequestContext(request, { 'form': add_product_form() })
+    context = RequestContext(request, {'form': add_product_form()})
 
     if request.method == 'POST':
-        anpf = add_product_form(request.POST, request.FILES)
-        data = anpf.data
+        apf = add_product_form(request.POST, request.FILES)
+        data = apf.data
 
-        if anpf.is_valid():
-            data = anpf.cleaned_data
-
-            # file type validation
-            file_type = data['image'].content_type.split('/')[0]
-            if file_type != 'image':
-                context = update_product_context(context, data, 'file_type_error', 'image file only!')
-                return render_to_response('add_product.html', context)
-
-            # create obj
-            product = Product.objects.get_or_create(name=data['name'], price=data['price'], point=data['point'],
-                category=data['category'], description=data['description'],image=request.FILES['image'])[0]
+        if apf.is_valid():
+            data = apf.cleaned_data
+            product = Product.objects.get_or_create(
+                name = data['name'],
+                price = data['price'],
+                point = data['point'],
+                category = data['category'],
+                description = data['description'],
+                supplier = data['supplier'],
+                image = request.FILES['image']
+            )[0]
             product.save()
             context.update(
-                    {'form': add_product_form, 'success': 'product successfully created'}
+                {'form': add_product_form, 'success_msg': 'Product successfully created.'}
             )
-            return render_to_response('add_product.html', context)
         else:
-            context = update_product_context(context, data, 'form_error', 'please fill all required informations')
-            return render_to_response('add_product.html', context)
-    else:
-        return render_to_response('add_product.html', context)
+            context.update({
+                'form': add_product_form(
+                    initial = {
+                        'name': data['name'],
+                        'price': data['price'],
+                        'point': data['point'],
+                        'category': data['category'],
+                        'description': data['description'],
+                        'supplier': data['supplier'],
+                    }
+                ),
+                'form_error_msg': 'Please fill all required information'
+            })
+
+    return render_to_response('add_product.html', context)
+
+#    context = RequestContext(request, { 'form': add_product_form() })
+#
+#    if request.method == 'POST':
+#        anpf = add_product_form(request.POST, request.FILES)
+#        data = anpf.data
+#
+#        if anpf.is_valid():
+#            data = anpf.cleaned_data
+#
+#            # file type validation
+#            file_type = data['image'].content_type.split('/')[0]
+#            if file_type != 'image':
+#                context = update_product_context(context, data, 'file_type_error', 'image file only!')
+#                return render_to_response('add_product.html', context)
+#
+#            # create obj
+#            product = Product.objects.get_or_create(name=data['name'], price=data['price'], point=data['point'],
+#                category=data['category'], description=data['description'],image=request.FILES['image'])[0]
+#            product.save()
+#            context.update(
+#                    {'form': add_product_form, 'success': 'product successfully created'}
+#            )
+#            return render_to_response('add_product.html', context)
+#        else:
+#            context = update_product_context(context, data, 'form_error', 'please fill all required informations')
+#            return render_to_response('add_product.html', context)
+#    else:
+#        return render_to_response('add_product.html', context)
 
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
