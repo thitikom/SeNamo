@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>View Supplier</title>
+</head>
+<body>
+{% if supplier_list %}
+<table border="1">
+<tr><td>Name</td><td>Contact</td><td>EDIT</td><td>DELETE</td></tr>
+    {% for supplier in supplier_list %}
+        <tr><td>{{ supplier.company_name }}</td><td>{{ supplier.contact }}</td>
+            <td><a href="/supplier/{{ supplier.id }}/edit">EDIT</a></td><td><a href="/supplier/{{ supplier.id }}/delete">DELETE</a></td></tr>
+    {% endfor %}
+</table>
+{% endif %}
+<p><a href="/supplier/new">ADD NEW SUPPLIER</a></p>
+</body>
+</html>

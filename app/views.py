@@ -525,6 +525,14 @@ def delete_supplier(request, supplier_id):
     })
     return render_to_response('delete_record.html',context)
 
+def view_supplier(request):
+    supplier_list = Supplier.objects.order_by('company_name')
+    context = RequestContext(request, {
+        'supplier_list' : supplier_list,
+        'messages' : messages
+    })
+    return render_to_response('view_supplier.html',context)
+
 def view_order_to_deliver(request):
     order_list = Order.objects.exclude(status='Shipped')
     return render_to_response('packing.html', {'list': order_list})

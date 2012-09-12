@@ -51,6 +51,8 @@ urlpatterns = patterns('',
     url(r'^checkout/finish$', 'app.views.checkout_finish'),
     url(r'^checkout/problem$', 'app.views.checkout_problem'),
 
+
+    url(r'^supplier$', 'app.views.view_supplier'),
     url(r'^supplier/new$', 'app.views.add_supplier'),
     url(r'^supplier/(?P<supplier_id>\d+)/edit$', 'app.views.edit_supplier'),
     url(r'^supplier/(?P<supplier_id>\d+)/delete$', 'app.views.delete_supplier'),
