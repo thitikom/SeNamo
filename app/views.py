@@ -79,53 +79,14 @@ def add_product(request):
 
     return render_to_response('add_product.html', context)
 
-#    context = RequestContext(request, { 'form': add_product_form() })
-#
-#    if request.method == 'POST':
-#        anpf = add_product_form(request.POST, request.FILES)
-#        data = anpf.data
-#
-#        if anpf.is_valid():
-#            data = anpf.cleaned_data
-#
-#            # file type validation
-#            file_type = data['image'].content_type.split('/')[0]
-#            if file_type != 'image':
-#                context = update_product_context(context, data, 'file_type_error', 'image file only!')
-#                return render_to_response('add_product.html', context)
-#
-#            # create obj
-#            product = Product.objects.get_or_create(name=data['name'], price=data['price'], point=data['point'],
-#                category=data['category'], description=data['description'],image=request.FILES['image'])[0]
-#            product.save()
-#            context.update(
-#                    {'form': add_product_form, 'success': 'product successfully created'}
-#            )
-#            return render_to_response('add_product.html', context)
-#        else:
-#            context = update_product_context(context, data, 'form_error', 'please fill all required informations')
-#            return render_to_response('add_product.html', context)
-#    else:
-#        return render_to_response('add_product.html', context)
-
 def edit_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    context = RequestContext(request, {'form': add_product_form()})
 
-    if request.method == 'GET':
-        context = RequestContext(request, {
-            'form': add_product_form(
-                initial={'name': product.name, 'price': product.price, 'point': product.point,
-                         'category': product.category, 'description': product.description,
-                         'image': product.image}
-            ),
-            'product': product,
-            'cid': product.id
-        })
-        return render_to_response('edit_product.html', context)
+    if request.method =='GET':
+        apf = add_product_form(instance=product)
+        return render_to_response('edit_product.html', RequestContext(request, {'form': apf, 'pid': product_id, 'product': product}))
     else:
-        apf = add_product_form(request.POST, request.FILES, instance=product)
-        #data = apf.data
+        apf = add_product_form(request.POST, instance=product)
         if apf.is_valid():
             apf.save()
         else:
