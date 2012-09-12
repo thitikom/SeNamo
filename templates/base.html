@@ -2,7 +2,7 @@
 <html>
 <head>
     <title></title>
-    <link href="/media/css/main.css" type="text/css"/>
+    <link rel='stylesheet' href="/media/css/main.css" type="text/css">
 </head>
 <body>
 
@@ -13,7 +13,11 @@
 <input type="submit" value='go' />
 </form>
 {% block userblock %}
+    {% if not user %}
     <a href='/login'>Login</a> | <a href='/register'>Register</a>
+    {% else %}
+    Hello, {{ user.username }}
+    {% endif %}
 {% endblock %}
 
 
