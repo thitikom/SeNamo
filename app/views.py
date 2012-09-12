@@ -12,7 +12,8 @@ def index(request):
     category_list = Category.objects.all()
     context = {}
     context['category_list'] = category_list
-    return render_to_response('base.html',context)
+    c = RequestContext(request,context)
+    return render_to_response('base.html',c)
 
 def search(request):
     if request.method == 'GET':
@@ -25,7 +26,7 @@ def search(request):
 def view_category(request, category_id):
     products_list = Product.objects.filter(category__id = category_id).order_by('name')[:10]
     category_detail = get_object_or_404(Category, id=category_id)
-    context = Context({
+    context = RequestContext(request,{
         'products_list': products_list,
         'category_detail': category_detail,
         })
@@ -34,9 +35,10 @@ def view_category(request, category_id):
 
 def view_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    return render_to_response('view_product.html', {'product': product},
+    return render_to_response('view_product.html',
         context_instance=RequestContext(request,{
-            'messages': messages}))
+            'messages': messages,
+            'product': product}))
 
 #update context of forms
 def update_product_context(context, data, error_type, error_msg):
@@ -314,14 +316,13 @@ def view_order_detail(request, order_id):
             list.append((product_io, price, point))
             total_price += price
             total_point += point
-
-    return render_to_response('view_order_detail.html',
-            {
-                'order': order,
-                'products_list': list,
-                'total_price': total_price,
-                'total_point': total_point,
-            })
+    context = RequestContext(request,{
+        'order': order,
+        'products_list': list,
+        'total_price': total_price,
+        'total_point': total_point,
+        })
+    return render_to_response('view_order_detail.html',context)
 
 #Checkout
 def verify(card_no,ccv,total_price):
@@ -480,8 +481,8 @@ def checkout_finish(request):
 
     request.session['checkout'] = {}
     request.session['product_in_cart'] = []
-
-    return render_to_response('checkout_finish.html',{'order':order})
+    context = RequestContext(request,{'order':order})
+    return render_to_response('checkout_finish.html',context)
 
 def checkout_problem(request):
     request.session['checkout'] = None
@@ -490,7 +491,7 @@ def checkout_problem(request):
 def view_order_history(request):
     user_account = request.user
     order_list = Order.objects.filter(user=user_account).order_by('timestamp')
-    context = Context({
+    context = RequestContext(request,{
         'order_list':order_list,
         'messages':messages
     })
