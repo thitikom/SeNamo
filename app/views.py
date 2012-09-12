@@ -9,17 +9,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the category index.")
+    return render_to_response('base.html')
+
+def search(request):
+    if request.method == 'GET':
+        q = request.GET.get('q')
+        product_list = Product.objects.filter(name__icontains=q)
+        context = RequestContext(request,{'product_list':product_list,
+                                          'q':q})
+        return render_to_response('search.html',context)
 
 def view_category(request, category_id):
     products_list = Product.objects.filter(category__id = category_id).order_by('name')[:10]
     category_detail = get_object_or_404(Category, id=category_id)
-    template = loader.get_template('view_category.html')
     context = Context({
         'products_list': products_list,
         'category_detail': category_detail,
         })
-    return HttpResponse(template.render(context))
+    return render_to_response('view_category.html',context)
     #    return HttpResponse("You're looking at category %s." % category_id)
 
 def view_product(request, product_id):
@@ -315,7 +322,7 @@ def view_order_detail(request, order_id):
 
 #Checkout
 def verify(card_no,ccv,total_price):
-    if card_no and ccv == '123' and total_price:
+    if card_no and ccv == '123':
         return 'success'
     return 'failed'
 
@@ -324,6 +331,9 @@ def checkout_payment(request):
     user = request.user
     user_profile = user.get_profile()
     (total_price,total_point) = calc_price_point(request)
+    if not total_point and not total_price:
+        messages.add_message(request, messages.ERROR, 'Cannot checkout! nothing in cart.')
+        return HttpResponseRedirect('/cart')
     if request.method == 'GET':
         context = RequestContext(request, {'form': credit_card_form(),
                                            'oldcard': user_profile.creditcard,
@@ -376,6 +386,7 @@ def checkout_shipping(request):
     user_profile = user.get_profile()
     if request.method == 'GET':
         (total_price,total_point) = calc_price_point(request)
+        //print user_profile.get_address()
         context = RequestContext(request, {'form': address_form(),
                                            'oldaddress': user_profile.get_address(),
                                            'total_price': total_price,
@@ -428,6 +439,7 @@ def checkout_finish(request):
     total_point = checkout['total_point']
     product_list = request.session['product_in_cart']
 
+
     fraud = ((not (total_price,total_point) == calc_price_point(request) )
              or total_point > user_profile.point
              or (not verify(card_no,ccv,total_price)))
@@ -440,6 +452,12 @@ def checkout_finish(request):
 
     #deduct points
     user_profile.point -= total_point
+    user_profile.creditcard = card_no
+    user_profile.addr_firstline = address['firstline']
+    user_profile.addr_secondline = address['secondline']
+    user_profile.addr_town = address['town']
+    user_profile.addr_country = address['country']
+    user_profile.addr_zipcode=address['zipcode']
     user_profile.save()
 
     #create order

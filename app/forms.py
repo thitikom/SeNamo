@@ -118,6 +118,10 @@ class add_supplier_form(forms.ModelForm):
     class Meta:
         model = Supplier
 
+class search_form(forms.Form):
+    q = forms.CharField(max_length=50)
+    category = forms.ModelChoiceField(queryset=Category.objects.all())
+
 class stockNormal_manage_form(forms.ModelForm):
     amount = forms.IntegerField()
 

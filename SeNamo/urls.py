@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'app.views.index'),
+    url(r'^search$','app.views.search'),
     url(r'^category/(?P<category_id>\d+)/$', 'app.views.view_category'),
     url(r'^category/new$', 'app.views.add_category'),
     url(r'^category/(?P<category_id>\d+)/edit$', 'app.views.edit_category'),
