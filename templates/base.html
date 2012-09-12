@@ -2,15 +2,39 @@
 <html>
 <head>
     <title></title>
+    <link href="/media/css/main.css" type="text/css"/>
 </head>
 <body>
+
 <span id="logo">E-Commerce</span>
 <form id="search_form" action='/search' method="get">
 <input id="id_q" type="text" name="q" maxlength="50">
 {#{{ search_form.category }}#}
 <input type="submit" value='go' />
 </form>
+{% block userblock %}
+    <a href='/login'>Login</a> | <a href='/register'>Register</a>
+{% endblock %}
 
+
+{% block sidemenu %}
+    <div class='sidemenu'>
+        <div class='menu1'><a href="/">Home</a></div>
+    {% if user %}
+        <div class='menu1'><a href="/cart">Cart</a></div>
+        <div class='menu1'><a href='/history'>Order</a></div>
+    {% endif %}
+        <div class='menu1'>Shop</div>
+            {% for category in category_list %}
+                <div class='menu2'><a href="/category/{{ category.id }}">{{ category.name }}</a></div>
+            {% endfor %}
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+{% endblock %}
 
 </body>
 </html>

@@ -9,7 +9,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 def index(request):
-    return render_to_response('base.html')
+    category_list = Category.objects.all()
+    context = {}
+    context['category_list'] = category_list
+    return render_to_response('base.html',context)
 
 def search(request):
     if request.method == 'GET':
