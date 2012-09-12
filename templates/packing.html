@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Packing</title>
+</head>
+<body>
+    <p>Packing</p>
+    <div><span>Order ID</span><span>Ordered Date</span><span>Status</span><span></span></div>
+    {% for order in list %}
+        <div><span>{{ order.id }}</span><span>{{ order.timestamp }}</span><span>{{ order.status }}</span><span><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></span></div>
+    {% endfor %}
+</body>
+</html>

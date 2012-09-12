@@ -95,4 +95,3 @@ class ProductInOrder(models.Model):
     status = models.CharField(max_length=50)
     ship_time = models.DateTimeField(blank=True,null=True)
     order = models.ForeignKey(Order)
-

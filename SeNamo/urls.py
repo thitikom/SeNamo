@@ -59,6 +59,8 @@ urlpatterns = patterns('',
     url(r'^backoffice/login$','app.backOffice.login'),
     url(r'^backoffice/managestock$','app.backOffice.managestock'),
 
+    url(r'^packing/$', 'app.views.view_order_to_deliver'),
+
 )
 
 #Media
