@@ -17,6 +17,8 @@
     <a href='/login'>Login</a> | <a href='/register'>Register</a>
     {% else %}
     Hello, {{ user.username }}
+    {{ user.get_profile.point }} pts.
+    <a href="/cart">View cart</a> | <a href='/logout'>Logout</a>
     {% endif %}
 {% endblock %}
 
@@ -35,6 +37,13 @@
     </div>
 {% endblock %}
 
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 {% block content %}
 

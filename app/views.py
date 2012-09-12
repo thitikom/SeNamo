@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     category_list = Category.objects.all()
     context = {}
-    context['category_list'] = category_list
+    #context['category_list'] = category_list
     c = RequestContext(request,context)
     return render_to_response('base.html',c)
 
