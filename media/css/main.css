@@ -1,3 +1,16 @@
 #logo {
-font-size: 30px;
+    font-size: 30px;
+    color:blue;
 }
+#search_form {
+    margin-left:auto;
+    margin-right:auto;
+    width:70%;
+    display:inline;
+}
+#user_block {
+
+}
+
+
+
