@@ -79,3 +79,11 @@ class loginEmp_form(forms.Form):
 class add_supplier_form(forms.ModelForm):
     class Meta:
         model = Supplier
+
+class stockNormal_manage_form(forms.ModelForm):
+    amount = forms.IntegerField()
+
+orderSup_status_list = [("None",'None'),("Not ordered yet",'Not ordered yet'),("Has been ordered",'Has been ordered')]
+class stockEmpty_manage_form(forms.ModelForm):
+    amount = forms.IntegerField()
+    status = forms.ChoiceField(choices=orderSup_status_list)

@@ -25,6 +25,8 @@ class Product(models.Model):
     description = models.TextField(max_length=300)
     supplier = models.ForeignKey(Supplier, null=True, on_delete=models.SET_NULL)
     image = models.FileField(upload_to='product_img/')
+    amount = models.IntegerField(default=0)
+    orderSupStatus = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name

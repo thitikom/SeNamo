@@ -58,6 +58,9 @@ urlpatterns = patterns('',
     #url for backOffice
     url(r'^backoffice/login$','app.backOffice.login'),
     url(r'^backoffice/managestock$','app.backOffice.managestock'),
+    url(r'^backoffice/managecatalog$','app.backOffice.managecatalog'),
+    url(r'^backoffice/packing$','app.backOffice.packing'),
+    url(r'^backoffice/managestock/(?P<prod_id>\d+)$','app.backOffice.increaseStock'),
 
     url(r'^packing/$', 'app.views.view_order_to_deliver'),
 

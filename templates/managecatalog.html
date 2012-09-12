@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <title>Packing List</title>
+    <title>Catalog Management</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <style>
         body{
@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-<h1>Back Office : Packing List</h1>
+<h1>Back Office : Catalog Management</h1>
 
 <div id='empDetails'>
     Welcome!<br>
@@ -31,14 +31,8 @@
         <a href='/backoffice/managecatalog'>Catalog management</a>
     {% endif %}
     {% if clerk %}
-        <a href='/backoffice/packing'>Packing List</a>
+        <a href='/backoffice/spacking'>Packing List</a>
     {% endif %}
 </div>
-
-<div><span>Order ID</span><span>Ordered Date</span><span>Status</span><span></span></div>
-{% for order in list %}
-    <div><span>{{ order.id }}</span><span>{{ order.timestamp }}</span><span>{{ order.status }}</span><span><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></span></div>
-{% endfor %}
-
 </body>
 </html>

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "thumbnail", "id", "price", "point", "category", "supplier"]
+    list_display = ["name", "thumbnail", "id", "price", "point", "category", "supplier", "amount"]
     search_fields = ["name"]
     readonly_fields = ["id"]
 
