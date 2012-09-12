@@ -2,7 +2,7 @@ from django import forms
 from app.models import *
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-
+from django.shortcuts import render_to_response, get_object_or_404
 
 #class add_product_form(forms.Form):
 #    name = forms.CharField(max_length=50)
@@ -12,6 +12,44 @@ from django.core.exceptions import ObjectDoesNotExist
 #    description = forms.CharField(widget=forms.Textarea, required=False)
 #    image = forms.FileField(required=False)
 
+class add_profile_form(forms.Form):
+    username = forms.CharField(required=False, max_length=50)
+    first_name = forms.CharField(required=False, max_length=50)
+    last_name = forms.CharField(required=False, max_length=50)
+    birth_date = forms.DateField(required=False)
+    CHOICES = (('0', 0), ('1', 1), ('2', 2),)
+    sex = forms.ChoiceField(required=False, widget=forms.RadioSelect, choices=CHOICES)
+    tel = forms.CharField(required=False, max_length=30)
+    email = forms.EmailField(required=False, max_length=50)
+    creditcard = forms.CharField(required=False, max_length=50)
+
+    is_change_password = forms.BooleanField(required=False)
+    old_password = forms.CharField(required=False, max_length=50)
+    new_password = forms.CharField(required=False, max_length=50)
+    confirm_password = forms.CharField(required=False, max_length=50)
+
+    def clean_confirm_password(self):
+        if not 'is_change_password' in self.data or not self.data['is_change_password']:
+            return ''
+        if 'new_password' in self.data:
+            new_password = self.data['new_password']
+            confirm_password = self.data['confirm_password']
+            if new_password == confirm_password:
+                return confirm_password
+        raise forms.ValidationError("Password do not match.")
+
+    def clean_old_password(self):
+        if not 'is_change_password' in self.data or not self.data['is_change_password']:
+            return ''
+        username_data = self.data['username']
+        try:
+            user = get_object_or_404(User,username=username_data)
+            if(user.check_password(self.data['old_password'])):
+                return self.data['old_password']
+            else:
+                raise forms.ValidationError("Incorrect Password.")
+        except ObjectDoesNotExist:
+            raise forms.ValidationError("Username '%s' does not exist." % username)
 
 class add_product_form(forms.ModelForm):
     class Meta:

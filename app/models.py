@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.utils.datetime_safe import date
 
 # Create your models here.
 class Supplier(models.Model):
@@ -44,6 +45,10 @@ class UserProfile(models.Model):
     # Other fields here
     creditcard = models.CharField(max_length=50)
     point = models.IntegerField(default=1000)
+    sex = models.IntegerField(default=0) # 0 is undefine, 1 is male, 2 is female
+    birthday = models.DateField(null=True)
+    tel = models.CharField(max_length=30) #format 0xx-xxxxxxx... [should validate]
+
 
     #address
     addr_firstline = models.CharField(max_length=100)
@@ -62,6 +67,21 @@ class UserProfile(models.Model):
                 'town':self.addr_town,
                 'country':self.addr_country,
                 'zipcode':self.addr_zipcode,}
+
+    def get_age(self):
+        today = date.today()
+        born = self.birthday
+
+        try: # raised when birth date is February 29 and the current year is not a leap year
+            birthday = born.replace(year=today.year)
+        except ValueError:
+            birthday = born.replace(year=today.year, day=born.day-1)
+        except AttributeError:
+            return 0
+        if birthday > today:
+            return today.year - born.year - 1
+        else:
+            return today.year - born.year
 
     def __unicode__(self):
         return self.user.username

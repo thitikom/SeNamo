@@ -30,11 +30,15 @@ class UserProfInline(admin.StackedInline):
 class UserAdmin(admin.ModelAdmin):
     inlines = [UserProfInline]
 
+class UserProfileAdmin(admin.ModelAdmin) :
+    list_display = ["user"]
+    readonly_fields = ["id"]
+
 class SupplierAdmin(admin.ModelAdmin):
     list_display = ["company_name", "id", "contact"]
     search_fields = ["company_name"]
-    readonly_fields = ["id"]
-
+    readonly_fields = ["id"]    
+    
 #Arm Add
 
 admin.site.register(Product, ProductAdmin)
@@ -44,3 +48,4 @@ admin.site.register(ProductInOrder, ProductInOrderAdmin)
 admin.site.register(Supplier, SupplierAdmin)
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)

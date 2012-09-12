@@ -536,3 +536,98 @@ def view_supplier(request):
 def view_order_to_deliver(request):
     order_list = Order.objects.exclude(status='Shipped')
     return render_to_response('packing.html', {'list': order_list})
+
+#Arm Edit
+@login_required()
+def edit_profile(request):
+    user_account = request.user
+    profile = get_object_or_404(UserProfile,user=user_account)
+    if request.POST :
+        form = add_profile_form(request.POST)
+        print(form.is_valid())
+
+        if form.is_valid():
+            data = form.cleaned_data
+            # Update User's Profile
+            user = profile.user
+            if data['is_change_password']:
+
+                user.set_password(data['new_password'])
+            user.email = data['email']
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+
+            profile.birthday = data['birth_date']
+            profile.sex = data['sex']
+            profile.creditcard = data['creditcard']
+
+            profile.save()
+            user.save()
+
+            # Update Address
+            address = address_form(request.POST).data;
+            profile.addr_firstline  = address['first_line']
+            profile.addr_secondline = address['second_line']
+            profile.addr_town       = address['town']
+            profile.addr_country    = address['country']
+            profile.addr_zipcode    = address['zip_code']
+            profile.save()
+
+            return HttpResponseRedirect('/')
+        else:
+            data = form.data
+            address = address_form(request.POST).data;
+            CHOICES = (('0', 0), ('1', 1), ('2', 2),)
+            data['sex'] = dict(CHOICES)[data['sex']]
+            #context = RequestContext(request, { 'form': add_profile_form(request.POST) })
+            try:
+                birthday = data['birth_date']
+                bday = str(birthday.year)+'-'+str(profile.birthday.month)+'-'+str(profile.birthday.day);
+            except AttributeError:
+                bday = data['birth_date']
+                #TODO: undo debug context below
+                # to print form.field.errors in template old form needed --noly
+            #            context = RequestContext(request, {'form':form})
+            context = RequestContext(request, {'form':{
+                'username':user_account,
+                'age':profile.get_age(),
+                'checked_undefined':"""checked=checked""" if data['sex'] == 0 else '',
+                'checked_male':"""checked=checked""" if data['sex'] == 1 else '',
+                'checked_female':"""checked=checked""" if data['sex'] == 2 else '',
+                'tel':data['tel'],
+                'email':data['email'],
+                'first_name':data['first_name'],
+                'last_name':data['last_name'],
+                'birth_date':bday,
+                'creditcard':data['creditcard'],
+                'first_line':address['first_line'],
+                'second_line':address['second_line'],
+                'town':address['town'],
+                'country':address['country'],
+                'zip_code':address['zip_code'],
+                }})
+            return render_to_response('edit_profile.html', context)
+    else:
+        try:
+            bday = str(profile.birthday.year)+'-'+str(profile.birthday.month)+'-'+str(profile.birthday.day);
+        except AttributeError:
+            bday = ''
+        context = RequestContext(request, {'form':{
+            'username':user_account,
+            'age':profile.get_age(),
+            'checked_undefined':"""checked=checked""" if profile.sex == 0 else '',
+            'checked_male':"""checked=checked""" if profile.sex == 1 else '',
+            'checked_female':"""checked=checked""" if profile.sex == 2 else '',
+            'tel':profile.tel,
+            'email':profile.user.email,
+            'first_name':profile.user.first_name,
+            'last_name':profile.user.last_name,
+            'birth_date':bday,
+            'creditcard':profile.creditcard,
+            'first_line':profile.addr_firstline,
+            'second_line':profile.addr_secondline,
+            'town':profile.addr_town,
+            'country':profile.addr_country,
+            'zip_code':profile.addr_zipcode,
+            }})
+        return render_to_response('edit_profile.html', context)
