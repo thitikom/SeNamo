@@ -1,21 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>User Register</title>
-</head>
-<body>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+{% extends 'base.html' %}
+{% block title %}User Register{% endblock %}
+{% block content %}
+
 <form action="/register" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Register"/>
 </form>
-</body>
-</html>
+{% endblock %}

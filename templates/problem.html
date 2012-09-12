@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Opps!</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Opps!{% endblock %}
+{% block content %}
 <h1>Houston, we got a problem!</h1>
 {% if messages %}
     <ul class="messages">
@@ -12,5 +9,4 @@
         {% endfor %}
     </ul>
 {% endif %}
-</body>
-</html>
+{% endblock %}

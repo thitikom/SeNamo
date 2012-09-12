@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Checkout: Select Payment</title>
-</head>
-<body>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
+{% extends 'base.html' %}
+{% block title %}Checkout: Select Payment{% endblock %}
+{% block content %}
 <h1>Select Shipping Address</h1>
 <h3>Total: $ {{ total_price }} / {{ total_point }} pts.</h3>
 <form action='/checkout/shipping' method="post">
@@ -35,6 +24,4 @@
     <input type="submit" value='next'>
 
 </form>
-
-</body>
-</html>
+{% endblock %}

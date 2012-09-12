@@ -1,10 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>add new category</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Add category{% endblock %}
+{% block content %}
     {% if success_msg %}
         {{ success_msg }}
     {% elif form_error_msg %}
@@ -18,5 +14,4 @@
         <p>{{ form.description }}</p>
         <input type="submit" value="Submit" />
     </form>
-</body>
-</html>
+{% endblock %}

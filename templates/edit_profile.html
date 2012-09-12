@@ -1,13 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <script language="JavaScript" src="/media/gen_validatorv4.js"
-    type="text/javascript"></script>
-    <title>Edit Profile</title>
-</head>
-<body>
-
+{% extends 'base.html' %}
+{% block title %}Edit Profile{% endblock %}
+{% block content %}
+<script language="JavaScript" src="/media/gen_validatorv4.js"
+        type="text/javascript"></script>
 <form id='edit_form' name='edit_form' enctype="multipart/form-data" action="edit" method="post">
     {% csrf_token %}
     <!--{% for field in form %}-->
@@ -56,5 +51,4 @@
     frmvalidator.addValidation("Address","maxlen=50");
     frmvalidator.addValidation("Country","dontselect=000");
 </script>
-</body>
-</html>
+{% endblock %}

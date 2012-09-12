@@ -1,10 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Order: {{ order.id }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Order: {{ order.id }}{% endblock %}
+{% block content %}
     Order ID: {{ order.id }}
     Date of Purchase: {{ order.timestamp }}
     Shipping Address: {{ order.addr_firstline }} {{ order.addr_secondline }} {{ order.addr_town }} {{ order.addr_country }} {{ order.zipcode }}
@@ -23,5 +19,4 @@
         {% endfor %}
     </table>
     Total: ${{ total_price }}/{{ total_point }}pts
-</body>
-</html>
+{% endblock %}

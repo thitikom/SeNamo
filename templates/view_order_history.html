@@ -1,10 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Order History</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Order History{% endblock %}
+{% block content %}
 <table border="1">
     <tr><td>Order no.</td><td>Date</td><td>Status</td></tr>
     {% for order in order_list %}
@@ -13,5 +9,4 @@
             <td>{{ order.status }}</td></tr>
     {% endfor %}
 </table>
-</body>
-</html>
+{% endblock %}

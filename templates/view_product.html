@@ -1,17 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>Product: {{ product.name }}</title>
-</head>
-<body>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+{% extends 'base.html' %}
+{% block title %}Product: {{ product.name }}{% endblock %}
+{% block content %}
     <p>{{ product.name }}</p>
     <img src="/media/{{ product.image }}" />
     <p>description: {{ product.description }}</p>
@@ -22,6 +11,4 @@
         <input type=int name="amount" value=1 size=3/>
         <input type="submit" value="ADD TO CART!" />
     </form>
-
-</body>
-</html>
+{% endblock %}
