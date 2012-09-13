@@ -1,14 +1,34 @@
 {% extends 'base.html' %}
 {% block title %}Product: {{ product.name }}{% endblock %}
 {% block content %}
-    <p>{{ product.name }}</p>
-    <img src="/media/{{ product.image }}" />
-    <p>description: {{ product.description }}</p>
-    <p>price: {{ product.price }} $  point: {{ product.point }} pt.</p>
-    <form action="/product/{{ product.id }}/add_to_cart" method="post">
-        {% csrf_token %}
-        Amount:
-        <input type=int name="amount" value=1 size=3/>
-        <input type="submit" value="ADD TO CART!" />
-    </form>
+<span id='navigation'>
+    <a href="/">Home</a> > <a href="/category/{{category_detail.id}}">{{ category_detail.name }}</a> > {{ product.name }}
+</span>
+<br>
+<div id="show_product_detail">
+    <img class="big_img" src="/media/{{ product.image }}" />
+    <br>
+    <span id='product_name_title'>
+        <b>{{ product.name }}</b>
+    </span>
+    <br>
+    <br>
+    <span class='description_header'>
+        <b>Description:</b>
+    </span>
+    <br>
+    <span class='description'>
+        {{ product.description }}
+    </span>
+    <span id='add_to_cart_zone'>
+        <br>price: ${{ product.price }},  point: {{ product.point }} pts.<br>
+        <form action="/product/{{ product.id }}/add_to_cart" method="post">
+            {% csrf_token %}
+            Quantity:
+            <input type=int name="amount" value=1 size=3/>
+            <input type="submit" value="ADD TO CART!" />
+        </form>
+    </span>
+    <span class="endfloat"></span>
+</div>
 {% endblock %}

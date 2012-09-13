@@ -3,15 +3,25 @@
 {% block title %} Category {{ category_detail.name }} View {% endblock %}
 
 {% block content %}
-<p>{{ category_detail.name }} : {{ category_detail.description }}</p>
+<div id='show_product' xmlns="http://www.w3.org/1999/html">
+<span id='navigation'>
+<a href="/">Home</a> > <a href="/category/{{category_detail.id}}">{{ category_detail.name }}</a>
+    <!--: {{ category_detail.description }}-->
+</span><br>
 {% if products_list %}
-    <ul>
-        {% for product in products_list %}
-            <p><p><a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a></p><p>{{ product.name }}
-            <br>Price : {{ product.price }} Point : {{ product.point }}</p>
-        {% endfor %}
-    </ul>
+    {% for product in products_list %}
+        <ul class="product_block">
+            <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a><br>
+            <span class="product_name">{{ product.name }}</span>
+            <br><span class="product_price"> Price : {{ product.price }}
+            <br> Point : {{ product.point }}</span>
+        </ul>
+    {% endfor %}
+
 {% else %}
     <p>No product are available.</p>
 {% endif %}
+
+</div>
+<span class="endfloat">Page: </span>
 {% endblock %}

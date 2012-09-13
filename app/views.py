@@ -35,10 +35,13 @@ def view_category(request, category_id):
 
 def view_product(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    category_detail = get_object_or_404(Category, id=product.category.id)
     return render_to_response('view_product.html',
         context_instance=RequestContext(request,{
             'messages': messages,
-            'product': product}))
+            'product': product,
+            'category_detail': category_detail,
+            }))
 
 #update context of forms
 def update_product_context(context, data, error_type, error_msg):
