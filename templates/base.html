@@ -5,49 +5,45 @@
     <link rel='stylesheet' href="/media/css/main.css" type="text/css">
 </head>
 <body>
-
-<span id="logo">E-Commerce</span>
-<form id="search_form" action='/search' method="get">
-<input id="id_q" type="text" name="q" maxlength="50">
-{#{{ search_form.category }}#}
-<input type="submit" value='go' />
-</form>
-{% block userblock %}
-    {% if not user.is_authenticated %}
-    <a href='/login'>Login</a> | <a href='/register'>Register</a>
-    {% else %}
-    Hello, {{ user.username }}
-    {{ user.get_profile.point }} pts.
-    <a href="/cart">View cart</a> | <a href='/logout'>Logout</a>
-    {% endif %}
-{% endblock %}
-
-
-{% block sidemenu %}
-    <div class='sidemenu'>
-        <div class='menu1'><a href="/">Home</a></div>
-    {% if user.is_authenticated %}
-        <div class='menu1'><a href="/cart">Cart</a></div>
-        <div class='menu1'><a href='/history'>Order</a></div>
-    {% endif %}
-        <div class='menu1'>Shop</div>
-            {% for category in category_list %}
-                <div class='menu2'><a href="/category/{{ category.id }}">{{ category.name }}</a></div>
-            {% endfor %}
+<div id="container">
+    <div id="header">
+        <span id="logo">E-Commerce</span>
+        <form id="search_form" action='/search' method="get">
+            <input id="id_q" type="text" name="q" maxlength="50">
+            {#{{ search_form.category }}#}
+            <input type="submit" value='go' />
+        </form>
+        <span id='user_block'>
+            {% block userblock %}
+                {% if not user.is_authenticated %}
+                <a href='/login'>Login</a> | <a href='/register'>Register</a>
+                {% else %}
+                Hello, {{ user.username }}
+                {{ user.get_profile.point }} pts.
+                <a href="/cart">View cart</a> | <a href='/logout'>Logout</a>
+                {% endif %}
+            {% endblock %}
+        </span>
     </div>
-{% endblock %}
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+    <div id='sidemenu'>
+    {% block sidemenu %}
+            <div class='menu1'><a href="/">Home</a></div>
+        {% if user.is_authenticated %}
+            <div class='menu1'><a href="/cart">Cart</a></div>
+            <div class='menu1'><a href='/history'>Order</a></div>
+        {% endif %}
+            <div class='menu1'>Shop</div>
+                {% for category in category_list %}
+                    <div class='menu2'><a href="/category/{{ category.id }}">{{ category.name }}</a></div>
+                {% endfor %}
+    {% endblock %}
+    </div>
+    <div id="content">
+    {% block content %}
 
-{% block content %}
-
-{% endblock %}
-
+    {% endblock %}
+    </div>
+</div>
 </body>
 </html>

@@ -13,7 +13,7 @@ def index(request):
     context = {}
     #context['category_list'] = category_list
     c = RequestContext(request,context)
-    return render_to_response('base.html',c)
+    return render_to_response('catalog_view.html',c)
 
 def search(request):
     if request.method == 'GET':
@@ -607,7 +607,6 @@ def edit_profile(request):
                 bday = str(birthday.year)+'-'+str(profile.birthday.month)+'-'+str(profile.birthday.day);
             except AttributeError:
                 bday = data['birth_date']
-                #TODO: undo debug context below
                 # to print form.field.errors in template old form needed --noly
             #            context = RequestContext(request, {'form':form})
             context = RequestContext(request, {'form':{
