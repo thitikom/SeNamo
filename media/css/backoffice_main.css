@@ -1,15 +1,19 @@
 #container {
     position:relative;
     top:10px;
-    width:800px;
+    width:1024px;
     margin:0 auto;
     background-color:lightblue;
+    background-attachment:scroll;
+    background-image:url(http://i727.photobucket.com/albums/ww272/okooi_09/version/047aat8.gif);
+    background-position:top;
+    background-repeat:repeat;
 }
 
 #sidemenu {
     position:absolute;
-    margin-top:40px;
-    margin-left:20px;
+    margin-top:45px;
+    margin-left:10px;
     height:100px;
     width:155px;
     background-color:lightgray;
@@ -18,9 +22,9 @@
 #content {
     position:relative;
     margin-left:200px;
-    margin-top:40px;
-    height:300px;
-    width:550px;
+    margin-top:45px;
+    height:500px;
+    width:600px;
     padding-left:10px;
     padding-top:10px;
     background-color:lightgray;
@@ -35,8 +39,9 @@
 
 #logo {
     position:relative;
-    font-size: 30px;
+    font-size:30px;
     color:darkblue;
+// img src="../images/lotus.jpg"
 }
 #search_form {
     position:relative;
