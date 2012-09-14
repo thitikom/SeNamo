@@ -36,7 +36,7 @@ urlpatterns = patterns('',
 
     url(r'^register$','app.views.register_user'),
     url(r'^login$','app.views.login'),
-    url(r'^logout$','django.contrib.auth.views.logout_then_login'),
+    url(r'^logout$','django.contrib.auth.views.logout',{'next_page': '/'}),
     url(r'^profile/edit', 'app.views.edit_profile'),
 
     url(r'^cart$', 'app.views.view_cart'),
