@@ -92,6 +92,7 @@ def add_product(request):
             context.update(
                 {'form': add_product_form, 'success_msg': 'Product successfully created.'}
             )
+            return HttpResponseRedirect('/backoffice/managecatalog')
         else:
             context.update({
                 'form': add_product_form(
@@ -122,7 +123,7 @@ def edit_product(request, product_id):
         else:
             apf = add_product_form(instance=product)
 
-        return HttpResponseRedirect('/product/%d' % product.id)
+        return HttpResponseRedirect('/backoffice/managecatalog')
 
 def add_category(request):
     context = RequestContext(request, {'form': add_category_form})
@@ -138,7 +139,7 @@ def add_category(request):
             context.update(
                     {'form': add_category_form, 'success_msg': 'category successfully created'}
             )
-            return render_to_response('add_category.html', context)
+            return HttpResponseRedirect('/backoffice/managecatalog')
         else:
             context.update({
                 'form': add_category_form(
@@ -171,7 +172,7 @@ def edit_category(request, category_id):
             category.name = data['name']
             category.description = data['description']
             category.save()
-            return HttpResponseRedirect('/category/%d' % category.id)
+            return HttpResponseRedirect('/backoffice/managecatalog')
         else:
             context.update({
                 'form': add_category_form(
@@ -200,7 +201,7 @@ def delete_category(request, category_id):
     context = RequestContext(request, {
         messages : messages
     })
-    return render_to_response('delete_record.html', context)
+    return HttpResponseRedirect('/backoffice/managecatalog')
 
 def register_user(request):
     if request.user.is_authenticated():

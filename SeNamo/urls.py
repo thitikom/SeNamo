@@ -66,6 +66,7 @@ urlpatterns = patterns('',
     url(r'^backoffice/packing$','app.backOffice.packing'),
     url(r'^backoffice/packing/(?P<order_id>\d+)$','app.backOffice.proceedPacking'),
     url(r'^backoffice/managecatalog$','app.backOffice.managecatalog'),
+    url(r'^backoffice/managecatalog/(?P<category_id>\d+)$','app.backOffice.managecatalog'),
 
 
 )

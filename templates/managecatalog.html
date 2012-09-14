@@ -34,5 +34,23 @@
         <a href='/backoffice/spacking'>Packing List</a>
     {% endif %}
 </div>
+
+    <div> <!-- Category Here Jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+        <a href="/category/new">Add new Category</a><br>
+        {% for category in categories %}
+            <a href="/backoffice/managecatalog/{{ category.id }}">
+            {{ category }}....<a href="/category/{{ category.id }}/edit">Edit</a></a><br>
+        {% endfor %}
+    <a href="/backoffice/managecatalog">Show all products</a>
+    </div>
+
+    <div><!-- Product List Jaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+        <a href="/product/new">Add New Product</a><br>
+        {% for product in product_list %}
+            {{ product.name }} / {{ product.category }}    <a href="/product/{{ product.id }}/edit">Edit</a><br>
+
+        {% endfor %}
+    </div>
+
 </body>
 </html>

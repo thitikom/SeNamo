@@ -109,18 +109,27 @@ def increaseStock(request,prod_id):
     return HttpResponseRedirect('/backoffice/managestock')
 
 @login_required(redirect_field_name='/backoffice/managestock', login_url='/backoffice/login')
-def managecatalog(request):
+def managecatalog(request, category_id=0):
     user = request.user
     emp = user.get_profile()
     is_manager = emp.manager
     if not is_manager:
         return packing(request)
 
+    categories = Category.objects.all()
+
+    if category_id != 0:
+        product_list = Product.objects.filter(category__id = category_id)
+    else:
+        product_list = Product.objects.all().order_by('category')
+
     is_clerk = emp.clerk
     dataContext = RequestContext(request,
         {
             'fullname' : user.get_full_name(),
-            'manager':'Manager'
+            'manager':'Manager',
+            'categories' : categories,
+            'product_list' : product_list
         }
     )
     if is_clerk:
