@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Checkout: Select Payment{% endblock %}
 {% block content %}
+<span id='navigation'>
+    <a href="/profile">{{ username }}</a> > <a href="/cart">Cart </a> > <a href="/checkout/payment">Payment</a> > Shipping
+</span>
+<br>
+<br>
 <span class="biggest_header">Select Shipping Address</span>
 <span class="big_header">Total: $ {{ total_price }} / {{ total_point }} pts.</span>
 <form action='/checkout/shipping' method="post">

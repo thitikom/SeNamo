@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}Order History{% endblock %}
 {% block content %}
-<table border="1">
-    <tr><td>Order no.</td><td>Date</td><td>Status</td></tr>
+<span id='navigation'>
+    <a href="/profile">{{ username }}</a> > Order </a>
+</span>
+<br>
+<br>
+<span class="biggest_header">Order</span>
+<table border="0" class="show_table">
+    <tr class='table_header'><td>Order no.</td><td>Date</td><td>Status</td></tr>
     {% for order in order_list %}
         <tr><td><a href="/order/{{ order.id }}">{{ order.id }}</a></td>
             <td>{{ order.timestamp }}</td>

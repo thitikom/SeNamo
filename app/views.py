@@ -350,6 +350,7 @@ def view_order_detail(request, order_id):
         'products_list': list,
         'total_price': total_price,
         'total_point': total_point,
+        'username':request.user,
         })
     return render_to_response('view_order_detail.html',context)
 
@@ -395,6 +396,7 @@ def checkout_payment(request):
                                            'oldcard': user_profile.creditcard,
                                            'total_price': total_price,
                                            'total_point': total_point,
+                                           'username':request.user,
                                            })
         return render_to_response('checkout_payment.html',context)
     else: #POST
@@ -447,6 +449,7 @@ def checkout_shipping(request):
                                            'oldaddress': user_profile.get_address(),
                                            'total_price': total_price,
                                            'total_point': total_point,
+                                           'username':user_profile,
                                            })
         return render_to_response('checkout_shipping.html',context)
 
@@ -544,7 +547,8 @@ def view_order_history(request):
     order_list = Order.objects.filter(user=user_account).order_by('timestamp')
     context = RequestContext(request,{
         'order_list':order_list,
-        'messages':messages
+        'messages':messages,
+        'username':user_account,
     })
     return render_to_response('view_order_history.html',context)
 
