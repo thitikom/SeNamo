@@ -13,20 +13,21 @@
 {% endif %}
 
 <h1>Select Shipping Address</h1>
-
+<h3>Total: $ {{ total_price }} / {{ total_point }} pts.</h3>
 <form action='/checkout/shipping' method="post">
     {% csrf_token %}
     <input type="radio" name="select_address"
-           {% if not oldaddrss %}disabled="true"{% endif %}
+           {% if not oldaddress.country %}disabled="true"{% endif %}
            value="old"/>
-    Use existing:
-    {% if oldaddrss %}
-        <span id="oldaddress">{{ oladdress }}</span>
+    Ship to:
+    {% if oldaddress.country %}
+        <span id="oldaddress">{{ oldaddress.firstline }} {{ oldaddress.secondline}}
+        {{ oldaddress.town }} {{ oldaddress.country }} {{ oldaddress.zipcode }}</span>
     {% else %}
         no existing address
     {% endif %}
     <br>
-    <input type="radio" name="select_address" value="new"/>Create New:
+    <input type="radio" name="select_address" value="new"/> Add new address:
 
     {{ form.as_p }}
 

@@ -2,13 +2,10 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>edit product: {{ cid }}</title>
+    <title>edit product: {{ pid }}</title>
 </head>
 <body>
-    {% if form_error_msg %}
-        {{ form_error_msg }}
-    {% endif %}
-    <form enctype="multipart/form-data" action="/product/{{ cid }}/edit" method="POST">
+    <form action="/product/{{ pid }}/edit" method="POST">
         {% csrf_token %}
         <p>edit product: {{ cid }}</p>
         <p>name: {{ form.name }}</p>
@@ -17,9 +14,7 @@
         <p>category: {{ form.category }}</p>
         <p>description: </p>
         <p>{{ form.description }}</p>
-        {% if file_type_error_msg %}
-            {{ file_type_error_msg }}
-        {% endif %}
+        <p>supplier: {{ form.supplier }}</p>
         <img src="/media/{{ product.image }}" />
         <p>{{ form.image }}</p>
         <input type="submit" value="submit" />

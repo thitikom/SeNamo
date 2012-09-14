@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic.simple import redirect_to
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -21,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'app.views.index'),
+    url(r'^search$','app.views.search'),
     url(r'^category/(?P<category_id>\d+)/$', 'app.views.view_category'),
     url(r'^category/new$', 'app.views.add_category'),
     url(r'^category/(?P<category_id>\d+)/edit$', 'app.views.edit_category'),
@@ -34,6 +37,7 @@ urlpatterns = patterns('',
     url(r'^register$','app.views.register_user'),
     url(r'^login$','app.views.login'),
     url(r'^logout$','django.contrib.auth.views.logout_then_login'),
+    url(r'^profile/edit', 'app.views.edit_profile'),
 
     url(r'^cart$', 'app.views.view_cart'),
     url(r'^testcart$','app.views.add_session'),
@@ -43,10 +47,26 @@ urlpatterns = patterns('',
 
     url(r'^order/(?P<order_id>\d+)/$', 'app.views.view_order_detail'),
 
+    url(r'^checkout/$',redirect_to, {'url': '/checkout/payment'}),
     url(r'^checkout/payment$', 'app.views.checkout_payment'),
-    url(r'^checkout/shipping', 'app.views.checkout_shipping'),
-    url(r'^checkout/finish', 'app.views.checkout_finish'),
-    url(r'^checkout/problem', 'app.views.checkout_problem'),
+    url(r'^checkout/shipping$', 'app.views.checkout_shipping'),
+    url(r'^checkout/finish$', 'app.views.checkout_finish'),
+    url(r'^checkout/problem$', 'app.views.checkout_problem'),
+
+
+    url(r'^supplier$', 'app.views.view_supplier'),
+    url(r'^supplier/new$', 'app.views.add_supplier'),
+    url(r'^supplier/(?P<supplier_id>\d+)/edit$', 'app.views.edit_supplier'),
+    url(r'^supplier/(?P<supplier_id>\d+)/delete$', 'app.views.delete_supplier'),
+
+    #url for backOffice
+    url(r'^backoffice/login$','app.backOffice.login'),
+    url(r'^backoffice/managestock$','app.backOffice.managestock'),
+    url(r'^backoffice/managecatalog$','app.backOffice.managecatalog'),
+    url(r'^backoffice/packing$','app.backOffice.packing'),
+    url(r'^backoffice/managestock/(?P<prod_id>\d+)$','app.backOffice.increaseStock'),
+
+    url(r'^packing/$', 'app.views.view_order_to_deliver'),
 
 )
 

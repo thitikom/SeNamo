@@ -13,7 +13,7 @@
     </ul>
 {% endif %}
     <p>{{ product.name }}</p>
-    <img src="/media/{{ product.image }}"/>
+    <img src="/media/{{ product.image }}" />
     <p>description: {{ product.description }}</p>
     <p>price: {{ product.price }} $  point: {{ product.point }} pt.</p>
     <form action="/product/{{ product.id }}/add_to_cart" method="post">

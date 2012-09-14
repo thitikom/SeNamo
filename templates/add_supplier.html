@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>add new supplier</title>
+</head>
+<body>
+    {% if success_msg %}
+        {{ success_msg }}
+    {% elif form_error_msg %}
+        {{ form_error_msg }}
+    {% endif %}
+
+    <form action="/supplier/new" method="POST">
+        {% csrf_token %}
+        <p>add new supplier</p>
+        <p>company name: {{ form.company_name }}</p>
+        <p>contact: {{ form.contact }}</p>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
