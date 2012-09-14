@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+import requests
 
 def index(request):
     return render_to_response('base.html')
@@ -324,7 +326,30 @@ def view_order_detail(request, order_id):
 def verify(card_no,ccv,total_price):
     if card_no and ccv == '123':
         return 'success'
-    return 'failed'
+
+    params = {
+        'card_num' : card_no,
+        'card_ccv' : ccv,
+        'amount' : total_price
+    }
+
+    url = settings.BANK_URL
+    response = requests.post('%s/verify' % url,params)
+    return response.content
+
+def pay(card_no,ccv,total_price):
+    if card_no and ccv == '123':
+        return 'success'
+
+    params = {
+        'card_num' : card_no,
+        'card_ccv' : ccv,
+        'amount' : total_price
+    }
+
+    url = settings.BANK_URL
+    response = requests.post('%s/pay' % url,params)
+    return response.content
 
 @login_required
 def checkout_payment(request):
