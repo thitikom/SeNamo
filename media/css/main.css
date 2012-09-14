@@ -122,7 +122,6 @@ body{
 .show_table td{
     text-align:center;
     min-width:90px;
-    background-color:#000099;
 }
 
 .show_table {
@@ -133,6 +132,7 @@ body{
 .table_header{
     background-color:black;
     color:white;
+    background-color:#000099;
 }
 
 .float_left{
@@ -156,10 +156,10 @@ body{
 #oldcard,#oldaddress{
     background-color:white;
     text-align:center;
-    vertical-align:bottom;
+    vertical-align:middle;
     margin-left: 200px;
     margin-top:-20px;
-    height:50px;
+    height:30px;
     width:100px;
     border:0px;
     padding-top:5px;
@@ -190,6 +190,11 @@ body{
 
 #payment_submit {
     margin-left:120px;
+}
+
+.show_table_oreder_detail td{
+    min-width: 70px;
+    text-align: right;
 }
 
 a.menubox:link,a.menubox:visited

@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}Order: {{ order.id }}{% endblock %}
 {% block content %}
+<span id='navigation'>
+    <a href="/profile">{{ username }}</a> > <a href="/history">Order</a> > {{ order.id }}
+</span>
+<br>
+<br>
+<span class="biggest_header">
     Order ID: {{ order.id }}
-    Date of Purchase: {{ order.timestamp }}
-    Shipping Address: {{ order.addr_firstline }} {{ order.addr_secondline }} {{ order.addr_town }} {{ order.addr_country }} {{ order.zipcode }}
-    Products Purchased:
-    <table border="1">
-        <tr><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td><td>status</td></tr>
+</span>
+<span class="big_header">
+    Ordered on {{ order.timestamp.date }}
+</span>
+<br>
+    <table border="0"  class="show_table_oreder_detail">
+        <tr class='table_header'><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td><td>status</td></tr>
         {% for product_io in products_list %}
             <tr>
                 <td>{{ product_io.0.product.name }}</td>
@@ -18,5 +26,6 @@
             </tr>
         {% endfor %}
     </table>
-    Total: ${{ total_price }}/{{ total_point }}pts
+    <br>
+<span class="big_header">Total: ${{ total_price }}/{{ total_point }}pts</span>
 {% endblock %}
