@@ -10,28 +10,29 @@
     }
 </style>
 
+{% block userblock %}
+    <div id='empDetails'>
+        Welcome!<br>
+        Mr.{{ fullname }}<br>
+        {% if manager and clerk %}
+            {{ manager }}, {{ clerk }}<br>
+        {% else %}
+            {% if manager %} {{ manager }}<br>{% endif %}
+            {% if clerk %}{{ clerk }}<br>{% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
 
 {% block content %}
 <h1>Back Office : Packing List</h1>
 
-<div id='empDetails'>
-    Welcome!<br>
-    Mr.{{ fullname }}<br>
-    {% if manager and clerk %}
-    {{ manager }}, {{ clerk }}<br>
-    {% else %}
-    {% if manager %} {{ manager }}<br>{% endif %}
-    {% if clerk %}{{ clerk }}<br>{% endif %}
-    {% endif %}
-
-</div>
-
-
-<div><span>Order ID</span><span>Ordered Date</span><span>Status</span><span></span></div>
+<table id="packing"><tr><th>Order ID</th><th>Ordered Date</th><th>Status</th><th>Action</th></tr>
 {% for order in list %}
-<div><span>{{ order.id }}</span><span>{{ order.timestamp }}</span><span>{{ order.status }}</span><span><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></span></div>
+    <tr><td>{{ order.id }}</td><td>{{ order.timestamp }}</td><td>{{ order.status }}</td><td><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></td></tr>
 {% endfor %}
+</table>
 {% endblock %}
+
 <!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

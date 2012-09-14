@@ -23,11 +23,11 @@
     <div id='sidemenu'>
         {% block sidemenu %}
         {% if manager%}
-        <div class='menu1'><a href="/backoffice/managestock">Stock Management</a></div>
-        <div class='menu1'><a href="/backoffice/managecatalog">Catalog Management</a></div>
+        <div><a href="/backoffice/managestock" class='menubox'>Stock Management</a></div>
+        <div><a href="/backoffice/managecatalog" class='menubox'>Catalog Management</a></div>
         {% endif %}
         {% if clerk %}
-        <div class='menu1'><a href='/backoffice/packing'>Packing Management</a></div>
+        <div><a href='/backoffice/packing' class='menubox'>Packing Management</a></div>
         {% endif %}
         {% endblock %}
     </div>
@@ -36,6 +36,7 @@
 
         {% endblock %}
     </div>
+<div class="clearfix"></dic>
 </div>
 </body>
 </html>
