@@ -3,11 +3,9 @@
     top:10px;
     width:1024px;
     margin:0 auto;
-    background-color:lightblue;
+//background-color:lightblue;
     background-attachment:scroll;
-    background-image:url(http://i727.photobucket.com/albums/ww272/okooi_09/version/047aat8.gif);
-    background-position:top;
-    background-repeat:repeat;
+
 }
 
 #sidemenu {
@@ -16,7 +14,7 @@
     margin-left:10px;
     height:100px;
     width:155px;
-    background-color:lightgray;
+//background-color:lightgray;
 }
 
 #content {
@@ -27,7 +25,7 @@
     width:600px;
     padding-left:10px;
     padding-top:10px;
-    background-color:lightgray;
+// background-color:lightgray;
 }
 
 #header{
@@ -35,12 +33,14 @@
     left:15px;
     top:10px;
     position:relative;
+    background-color:#00004d;
 }
 
 #logo {
+    margin-left:10px;
     position:relative;
-    font-size:30px;
-    color:darkblue;
+    font-size:40px;
+    color:white;
 // img src="../images/lotus.jpg"
 }
 #search_form {
@@ -54,11 +54,13 @@
 #search_form #id_q{
     width:400px;
 }
+
 #user_block {
     position:absolute;
     right:30px;
     top:10px;
     display:inline;
+    color:white;
 }
 
 
