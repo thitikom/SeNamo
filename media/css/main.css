@@ -109,3 +109,74 @@
     float:right;
     margin-right:25px;
 }
+.show_table td{
+    text-align: right;
+    min-width:90px;
+}
+
+.show_table {
+    margin-left:20px;
+    margin-bottom:20px;
+}
+
+.table_header{
+    background-color:black;
+    color:white;
+}
+
+.float_left{
+    float:right;
+    margin-right:20px;
+}
+
+
+.biggest_header {
+    font-size:30px;
+}
+
+.big_header {
+    font-size:20px;
+    float:right;
+    margin-right:20px;
+    margin-top:10px;
+}
+
+
+#oldcard,#oldaddress{
+    background-color:white;
+    text-align:center;
+    vertical-align:buttom;
+    margin-left: 200px;
+    margin-top:-20px;
+    height:50px;
+    width:100px;
+    border:0px;
+    padding-top:5px;
+    padding-bottom:0px;
+    padding-left:0px;
+}
+
+#id_card_number{
+    width:230px;
+}
+
+#payment_form{
+    margin-left:30px;
+}
+
+#id_ccv {
+    width:40px;
+}
+#ccv_input {
+    display:block;
+    margin-left:100px;
+    margin-top:20px;
+}
+
+#payment_warn_text,#adress_form{
+    margin-left:40px;
+}
+
+#payment_submit {
+    margin-left:120px;
+}

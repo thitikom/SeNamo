@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% block title %}Order placed{% endblock %}
 {% block content %}
-<h1>We recieve your order! on {{ order.timestamp }}</h1>
-<h2>Your order ID is {{ order.id }}</h2>
-<h2>${{ order.total_price }} was charged from your credit card</h2>
-<h2>{{ order.total_point }} pts. was deduct from your account</h2>
-<h2>Thankyou for shopping with us!!</h2>
+<span class="biggest_header">
+    We received your order!
+    <!--on {{ order.timestamp }}-->
+</span>
+<br>
+<br>
+<span>
+    Your order ID is {{ order.id }}
+</span>
+<!--<h2>${{ order.total_price }} was charged from your credit card</h2>-->
+<!--<h2>{{ order.total_point }} pts. was deduct from your account</h2>-->
+<br>
+<span>Thank you for shopping with us!!</span>
+<br>
+<br>
 <a href="/">back to main page</a>
 {% endblock %}

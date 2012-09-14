@@ -3,8 +3,13 @@
 {% block title %}View cart{% endblock %}
 
 {% block content %}
-<table border="1">
-    <tr><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td></tr>
+<span id='navigation'>
+    <a href="/profile">{{ username }}</a> > Cart </a>
+</span>
+<br>
+<br>
+<table class="show_table">
+    <tr class='table_header'><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td></tr>
     {% for product in product_in_cart %}
         <tr><td>{{ product.0.name }}</td>
             <td>{{ product.0.price }}</td>
@@ -13,6 +18,16 @@
             <td>${{ product.2 }}/{{ product.3 }}pts</td></tr>
     {% endfor %}
 </table>
-Total: ${{ total_price }}/{{ total_point }}pts
-<p>Add some more! <a href="/checkout">Checkout</a></p>
+<div class='float_left'>
+Total: ${{ total_price }}/{{ total_point }}pts.
+</div>
+<br>
+
+<div class="float_left">
+    <a href="/checkout">Checkout</a>
+</div>
+
+<div class="float_left">
+    <a href="/">Add some more</a>
+</div>
 {% endblock %}

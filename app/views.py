@@ -264,10 +264,13 @@ def calc_price_point(request):
     return (total_price,total_point)
 
 def view_cart(request):
+    user = request.user;
     (total_price,total_point) = calc_price_point(request)
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart'],
                                        'total_price':total_price,
-                                       'total_point':total_point})
+                                       'total_point':total_point,
+                                       'username':user.get_profile,
+                                       })
     return render_to_response('view_cart.html',context)
 
 def add_session(request):
