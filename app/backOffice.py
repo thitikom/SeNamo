@@ -1,5 +1,7 @@
 __author__ = 'wattanai' #for every function for backOffice system
 
+
+import datetime
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from app.models import Product, Category
@@ -65,13 +67,11 @@ def managestock(request):
     list = []
     for product in product_list:
         if product.amount == 0:
-            #form = stockEmpty_manage_form(initial={'amount':product.amount, 'status':product.orderSupStatus})
             if product.orderSupStatus == True:
                 list.append((product.id ,product.name, product.category.name, product.amount, product.orderSupStatus,'T'))
             else:
                 list.append((product.id ,product.name, product.category.name, product.amount, product.orderSupStatus,))
         else:
-            #form = stockNormal_manage_form(initial={'amount':product.amount})
             list.append((product.id, product.name, product.category.name, product.amount))
 
     dataContext = RequestContext(request,
@@ -86,6 +86,7 @@ def managestock(request):
 
     return render_to_response('managestock.html',dataContext)
 
+@login_required(redirect_field_name='/backoffice/managestock', login_url='/backoffice/login')
 def increaseStock(request,prod_id):
     if request.method == 'POST':
         product = get_object_or_404(Product,id=prod_id)
@@ -97,6 +98,11 @@ def increaseStock(request,prod_id):
         else:
             product.orderSupStatus = False
         product.save()
+
+        productIncreased = get_object_or_404(ProductInOrder,product = product)
+        order = productIncreased.order
+        order.status = 'products now instock'
+        order.save()
     return HttpResponseRedirect('/backoffice/managestock')
 
 @login_required(redirect_field_name='/backoffice/managestock', login_url='/backoffice/login')
@@ -119,7 +125,7 @@ def managecatalog(request):
 
     return render_to_response('managecatalog.html',dataContext)
 
-@login_required(redirect_field_name='/backoffice/managestock', login_url='/backoffice/login')
+@login_required(redirect_field_name='/backoffice/packing', login_url='/backoffice/login')
 def packing(request):
     user = request.user
     emp = user.get_profile()
@@ -128,13 +134,71 @@ def packing(request):
     if not is_clerk:
         return managestock(request)
 
+    order_list = Order.objects.exclude(status='Shipped')
+
     dataContext = RequestContext(request,
         {
             'fullname' : user.get_full_name(),
-            'clerk':'Clerk'
+            'clerk':'Clerk',
+            'list': order_list,
         }
     )
     if is_manager:
         dataContext.update({'manager':'Manager', })
 
     return render_to_response('packing.html',dataContext)
+
+@login_required(redirect_field_name='/backoffice/packing', login_url='/backoffice/login')
+def proceedPacking(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order,id=order_id)
+        ordered_product_list = ProductInOrder.objects.filter(order = order)
+        for ordered_product in ordered_product_list:
+            if ordered_product.ship_time == None:
+                updateStat = request.POST.get(ordered_product.product.name)
+                if updateStat == 'send':
+                    ordered_product.ship_time = datetime.datetime.now()
+                    ordered_product.save()
+                    upAmountProduct = ordered_product.product
+                    upAmountProduct.amount = upAmountProduct.amount - ordered_product.amount
+                    upAmountProduct.save()
+                    print(upAmountProduct.amount)
+
+        review_product_list = ProductInOrder.objects.filter(order = order)
+        shipped = True
+        for review_product in review_product_list:
+            if review_product.ship_time == None:
+                order.status = 'Wait for more products'
+                shipped = False
+
+        if shipped:
+            order.status = 'Shipped'
+
+        order.save()
+
+        return HttpResponseRedirect('/backoffice/packing')
+
+    else:
+        order = get_object_or_404(Order,id=order_id)
+        ordered_product_list = ProductInOrder.objects.filter(order = order)
+        list = []
+        i = 1
+        for ordered_product in ordered_product_list:
+            if ordered_product.ship_time != None:
+                list.append((i,ordered_product.product.name, ordered_product.amount, ordered_product.ship_time))
+            else:
+                list.append((i,ordered_product.product.name, ordered_product.amount))
+            i = i+1
+
+        dataContext = RequestContext(request,
+            {
+                'order_id' : order.id,
+                'order_date' : order.timestamp,
+                'name' : order.user.get_full_name(),
+                'email' : order.user.email,
+                'address' : order.get_address(),
+                'tel' : order.user.get_profile().tel,
+                'ordered_product_list' : list,
+            }
+        )
+        return render_to_response('packingDetail.html', dataContext)

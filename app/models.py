@@ -108,6 +108,13 @@ class Order(models.Model):
 
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    def get_address(self):
+        return {'firstline':self.addr_firstline,
+                'secondline':self.addr_secondline,
+                'town':self.addr_town,
+                'country':self.addr_country,
+                'zipcode':self.addr_zipcode,}
+
     def __unicode__(self):
         return unicode(self.id) + ': ' + unicode(self.user.username)
 

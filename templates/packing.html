@@ -35,10 +35,15 @@
     {% endif %}
 </div>
 
-<div><span>Order ID</span><span>Ordered Date</span><span>Status</span><span></span></div>
-{% for order in list %}
-    <div><span>{{ order.id }}</span><span>{{ order.timestamp }}</span><span>{{ order.status }}</span><span><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></span></div>
-{% endfor %}
+    <div><span>Order ID</span>----<span>Ordered Date</span>----<span>Status</span><span></span></div>
+        {% for order in list %}
+            <div><span>{{ order.id }}</span>----<span>{{ order.timestamp }}</span>----<span>{{ order.status }}</span><span>
+                <form action="/backoffice/packing/{{ order.id }}">
+                    {% csrf_token %}
+                    <input type="submit" value="Proceed">
+                </form>
+                </span></div>
+        {% endfor %}
 
 </body>
 </html>
