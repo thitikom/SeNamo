@@ -30,10 +30,10 @@
 
     <div id='sidemenu'>
     {% block sidemenu %}
-            <div class='menu1'><a href="/">Home</a></div>
+            <div class='menu1'><a href="/" class="menubox">Home</a></div>
         {% if user.is_authenticated %}
-            <div class='menu1'><a href="/cart">Cart</a></div>
-            <div class='menu1'><a href='/history'>Order</a></div>
+            <div class='menu1'><a href="/cart" class="menubox">Cart</a></div>
+            <div class='menu1'><a href='/history' class="menubox">Order</a></div>
         {% endif %}
             <div class='menu1'>Shop</div>
                 {% for category in category_list %}

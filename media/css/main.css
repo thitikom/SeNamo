@@ -186,3 +186,22 @@
 #payment_submit {
     margin-left:120px;
 }
+
+a.menubox:link,a.menubox:visited
+{
+    margin: 2px;
+    display:block;
+    font-weight:bold;
+    color:#000068;
+    background-color: #ffffff;
+    text-align:center;
+    padding:4px;
+    text-decoration:none;
+    border-style:groove;
+    border-color: #000068;
+}
+a.menubox:hover,a.menubox:active
+{
+    color: #FFFFFF;
+    background-color: #000068;
+}
