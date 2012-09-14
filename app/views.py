@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+import requests
 
 def index(request):
     category_list = Category.objects.all()
@@ -64,6 +66,27 @@ def add_product(request):
 
         if apf.is_valid():
             data = apf.cleaned_data
+
+            if data['image'] is not None:
+                file_type = data['image'].content_type.split('/')[0]
+                if file_type != 'image':
+                    context.update({
+                        'form': add_product_form(
+                            initial = {
+                                'name': data['name'],
+                                'price': data['price'],
+                                'point': data['point'],
+                                'category': data['category'],
+                                'description': data['description'],
+                                'supplier': data['supplier'],
+                                'amount': data['amount'],
+                                'orderSupStatus': data['orderSupStatus'],
+                            }
+                        ),
+                        'file_type_error_msg': 'Image File Only !!',
+                    })
+                    return render_to_response('add_product.html', context)
+
             product = Product.objects.get_or_create(
                 name = data['name'],
                 price = data['price'],
@@ -331,7 +354,30 @@ def view_order_detail(request, order_id):
 def verify(card_no,ccv,total_price):
     if card_no and ccv == '123':
         return 'success'
-    return 'failed'
+
+    params = {
+        'card_num' : card_no,
+        'card_ccv' : ccv,
+        'amount' : total_price
+    }
+
+    url = settings.BANK_URL
+    response = requests.post('%s/verify' % url,params)
+    return response.content
+
+def pay(card_no,ccv,total_price):
+    if card_no and ccv == '123':
+        return 'success'
+
+    params = {
+        'card_num' : card_no,
+        'card_ccv' : ccv,
+        'amount' : total_price
+    }
+
+    url = settings.BANK_URL
+    response = requests.post('%s/pay' % url,params)
+    return response.content
 
 @login_required
 def checkout_payment(request):
@@ -446,16 +492,15 @@ def checkout_finish(request):
     total_point = checkout['total_point']
     product_list = request.session['product_in_cart']
 
-
     fraud = ((not (total_price,total_point) == calc_price_point(request) )
              or total_point > user_profile.point
-             or (not verify(card_no,ccv,total_price)))
+             or (not verify(card_no,ccv,total_price)=='success'))
 
     if fraud:
         messages.add_message(request, messages.ERROR, 'FRAUD DETECTED!!')
         return HttpResponseRedirect('/checkout/problem')
 
-    #TODO: pay to bank
+    pay(card_no,ccv,total_price)
 
     #deduct points
     user_profile.point -= total_point

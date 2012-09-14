@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render_to_response, get_object_or_404
 
+
 #class add_product_form(forms.Form):
 #    name = forms.CharField(max_length=50)
 #    price = forms.IntegerField(min_value=0)
@@ -22,7 +23,6 @@ class add_profile_form(forms.Form):
     tel = forms.CharField(required=False, max_length=30)
     email = forms.EmailField(required=False, max_length=50)
     creditcard = forms.CharField(required=False, max_length=50)
-
     is_change_password = forms.BooleanField(required=False)
     old_password = forms.CharField(required=False, max_length=50)
     new_password = forms.CharField(required=False, max_length=50)
