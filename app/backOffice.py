@@ -99,10 +99,13 @@ def increaseStock(request,prod_id):
             product.orderSupStatus = False
         product.save()
 
-        productIncreased = get_object_or_404(ProductInOrder,product = product)
-        order = productIncreased.order
-        order.status = 'products now instock'
-        order.save()
+        productIncreased = ProductInOrder.objects.filter(product = product)
+        for pInc in productIncreased:
+            order = pInc.order
+            if order.status != 'Shipped':
+                order.status = 'products now instock'
+                order.save()
+
     return HttpResponseRedirect('/backoffice/managestock')
 
 @login_required(redirect_field_name='/backoffice/managestock', login_url='/backoffice/login')
