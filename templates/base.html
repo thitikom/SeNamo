@@ -1,16 +1,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <title>{% block title %}Base Template{% endblock %}</title>
+    <link rel='stylesheet' href="/media/css/main.css" type="text/css">
+    <link rel='stylesheet' href="/media/css/menu.css" type="text/css">
 </head>
 <body>
-<span id="logo">E-Commerce</span>
-<form id="search_form" action='/search' method="get">
-<input id="id_q" type="text" name="q" maxlength="50">
-{#{{ search_form.category }}#}
-<input type="submit" value='go' />
-</form>
+<div id="container">
+    <div id="header">
+        <span id="logo">
+            <a href="/">E-Commerce</a>
+        </span>
+        <form id="search_form" action='/search' method="get">
+            <input id="id_q" type="text" name="q" maxlength="50">
+            {#{{ search_form.category }}#}
+            <input type="submit" value='go' />
+        </form>
+        <span id='user_block'>
+            {% block userblock %}
+                {% if not user.is_authenticated %}
+                    <a href='/login'>Login</a> | <a href='/register'>Register</a>
+                {% else %}
+                    Welcome, {{ user.username }}<br>
+                    {{ user.get_profile.point }} pts.
+                    <a href="/cart"><img src="/media/img/cart.jpg" height="15px" /></a> | <a href='/logout'>Logout</a>
+                {% endif %}
+            {% endblock %}
+        </span>
+    </div>
 
+    <div id='sidemenu'>
+    {% block sidemenu %}
+        <div id="wrapper">
+            <ul class="ac-menu">
+                <li id="one">
+                    <a href="/">Home</a>
+                </li>
+                <li id="two">
+                    <a href="/cart">Cart</a>
+                </li>
+                <li id="three">
+                    <a href="/history">Order</a>
+                </li>
+                <li id="four">
+                    <a href="#four">Shop</a>
+                    <ul class="sub-menu">
+                        {% for category in category_list %}
+                        <li><a href="/category/{{ category.id }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div><!--end accordian-->
+        <!--end wrapper-->
+    {% endblock %}
+    </div>
+    <div id="content">
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tag %}> class="{{ message.tag}}"{% endif %}> {{message}} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% block content %}
+
+    {% endblock %}
+    </div>
+</div>
 </body>
 </html>

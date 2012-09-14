@@ -1,0 +1,161 @@
+#container {
+    position:relative;
+    top:10px;
+    width:1024px;
+    margin:0 auto;
+    background-attachment:scroll;
+
+}
+
+#sidemenu {
+    margin-top:45px;
+    margin-left:10px;
+    float:left;
+    width:17%;
+    height: 100%;
+    min-height: 100px;
+}
+
+#middle {
+    display: block;
+}
+
+#content {
+    float:left;
+    width: 80%;
+    min-height:500px;
+    padding-left:10px;
+    padding-top:10px;
+    display: block;
+}
+
+#header{
+    margin-top:10px;
+    left:15px;
+    min-height: 80px;
+    top:10px;
+    position:relative;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.3, rgb(0,40,110)),
+        color-stop(0.97, rgb(0,35,51))
+    );
+    display: block;
+}
+#header-left {
+    float:left;
+    margin-left: 10px;
+    display: block;
+}
+#header-left-right {
+    float: right;
+    font-size:20px;
+    color:white;
+    display: block;
+    clear: left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: right;
+}
+
+#logo {
+    margin-left:10px;
+    float:left;
+    position:relative;
+    font-size:40px;
+    color:white;
+    display: block;
+
+}
+#search_form {
+    position:relative;
+    display:inline;
+    margin-top:0px;
+    margin-left:10px;
+    width:100px;
+}
+
+#search_form #id_q{
+    width:400px;
+}
+
+#user_block {
+    position:absolute;
+    right:30px;
+    top:10px;
+    display:inline;
+    color:white;
+}
+
+
+
+.menu1 {
+    margin-top:5px;
+    margin-right:10px;
+    position:relative;
+    left:5px;
+    border-style:ridge;
+    border-width:medium;
+    border-color:#9CA9B5;
+}
+
+.menu2 {
+    position:relative;
+    left:20px;
+}
+a.menubox:link,a.menubox:visited
+{
+    margin: 2px;
+    display:block;
+    font-weight:bold;
+    color:#000068;
+    background-color: #ffffff;
+    text-align:center;
+    padding:4px;
+    text-decoration:none;
+    border-style:groove;
+    border-color: #000068;
+}
+a.menubox:hover,a.menubox:active
+{
+    color: #FFFFFF;
+    background-color: #000068;
+}
+
+#packing
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    width:100%;
+    border-collapse:collapse;
+}
+#packing td, #packing th
+{
+    font-size:1em;
+    border:1px solid #ffffff;
+    padding:3px 7px 2px 7px;
+}
+#packing th
+{
+    font-size:1.1em;
+    text-align:left;
+    padding-top:5px;
+    padding-bottom:4px;
+    background-color: #9797ff;
+    color:#ffffff;
+}
+#packing tr.alt td
+{
+    color:#000000;
+    background-color:#EAF2D3;
+}
+
+.clearfix::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ".";
+    clear: both;
+    height: 0;
+}

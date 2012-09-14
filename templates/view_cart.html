@@ -1,19 +1,19 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <title>TEMP CART VIEW</title>
-</head>
-<body>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-<table border="1">
-    <tr><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td></tr>
+{% extends 'base.html' %}
+
+{% block title %}View cart{% endblock %}
+
+{% block content %}
+<span id='navigation'>
+    <a href="/profile">{{ username }}</a> > Cart </a>
+</span>
+<br>
+<br>
+<span class="biggest_header">
+    Cart
+</span>
+<br>
+<table class="show_table">
+    <tr class='table_header'><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td></tr>
     {% for product in product_in_cart %}
         <tr><td>{{ product.0.name }}</td>
             <td>{{ product.0.price }}</td>
@@ -22,7 +22,16 @@
             <td>${{ product.2 }}/{{ product.3 }}pts</td></tr>
     {% endfor %}
 </table>
-Total: ${{ total_price }}/{{ total_point }}pts
-<p>Add some more! <a href="/checkout">Checkout</a></p>
-</body>
-</html>
+<div class='float_left'>
+Total: ${{ total_price }}/{{ total_point }}pts.
+</div>
+<br>
+
+<div class="float_left">
+    <a href="/checkout">Checkout</a>
+</div>
+
+<div class="float_left">
+    <a href="/">Add some more</a>
+</div>
+{% endblock %}

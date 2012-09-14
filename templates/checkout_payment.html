@@ -1,40 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Checkout: Select Payment</title>
-</head>
-<body>
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+{% extends 'base.html' %}
+{% block title %}Checkout: Select Payment{% endblock %}
 
-<h1>Select Payment</h1>
-<h3>Total: $ {{ total_price }} / {{ total_point }} pts.</h3>
-<form action='/checkout/payment' method="post">
+{% block content %}
+<span id='navigation'>
+    <a href="/profile">{{ username }}</a> > <a href="/cart">Cart </a> > Payment
+</span>
+<br>
+<br>
+<span class="biggest_header">Select Payment</span>
+<span class="big_header">Total: $ {{ total_price }} / {{ total_point }} pts. </span>
+<form id='payment_form' action='/checkout/payment' method="post">
     {% csrf_token %}
-    <input type="radio" name="select_card"
-           {% if not oldcard %}disabled="true"{% endif %}
-           value="old"/>
-    Use existing:
+
+    <table><tr><td><input type="radio" name="select_card"
+        {% if not oldcard %}disabled="true"{% endif %}
+        value="old"/> Use existing:
+        </td><td id='oldcard'>
     {% if oldcard %}
-        <span id="oldcard">{{ oldcard }}</span>
+        {{ oldcard }}
     {% else %}
         no existing card
     {% endif %}
-    <br>
-    <input type="radio" name="select_card" value="new"/> Create New:{{ form.card_number }}
-    <br>
-    <br>
+    </td></tr>
+    </table>
+    <input type="radio" id='new_card' name="select_card" value="new"/> Create New:{{ form.card_number }}
+    <span id='ccv_input'>
     {{ form.ccv.label }}: {{ form.ccv }}
-    <br>
-    <br>
-
-    <input type="submit" value='back' formaction="/cart" formmethod="get">
-    <input type="submit" value='next'>
+    </span>
+    <p id='payment_warn_text'>{{ total_point }} points will be deducted from your account</p>
+    <p id='payment_submit'>
+        <input type="submit" value='back' formaction="/cart" formmethod="get">
+        <input type="submit" value='next'>
+    </p>
 </form>
-</body>
-</html>
+{% endblock %}

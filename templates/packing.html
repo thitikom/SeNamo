@@ -1,3 +1,42 @@
+{% extends "backoffice_base.html" %}
+
+{% block title %}Packing Management{% endblock %}
+
+
+<style>
+    body{
+        font-family:Arial,Helvetica,sans-serif;
+        font-size: 12px;
+    }
+</style>
+
+{% block userblock %}
+    <div id='empDetails'>
+        Welcome!<br>
+        Mr.{{ fullname }}<br>
+        {% if manager and clerk %}
+            {{ manager }}, {{ clerk }}<br>
+        {% else %}
+            {% if manager %} {{ manager }}<br>{% endif %}
+            {% if clerk %}{{ clerk }}<br>{% endif %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+<h1>Packing List</h1>
+
+<table id="packing"><tr><th>Order ID</th><th>Ordered Date</th><th>Status</th><th>Action</th></tr>
+{% for order in list %}
+    <tr><td>{{ order.id }}</td><td>{{ order.timestamp }}</td><td>{{ order.status }}</td><td><form action="/backoffice/packing/{{ order.id }}">
+        {% csrf_token %}
+        <input type="submit" value="Proceed">
+    </form></td></tr>
+{% endfor %}
+</table>
+{% endblock %}
+
+<!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -47,3 +86,4 @@
 
 </body>
 </html>
+-->

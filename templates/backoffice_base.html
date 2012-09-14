@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Base Template{% endblock %}</title>
+    <link rel='stylesheet' href="/media/css/backoffice_main.css" type="text/css">
+    <link rel='stylesheet' href="/media/css/menu.css" type="text/css">
+</head>
+<body>
+<div id="container">
+    <div id="header">
+    <div id="header-left">
+        <div id="logo" class="clearfix">E-Commerce Store</div>
+        <p id="header-left-right">Back Office</p>
+    </div>
+        <span id='user_block'>
+            {% block userblock %}
+                {% if not user.is_authenticated %}
+                <a href='/login'>Login</a>
+                {% else %}
+                Hello, {{ user.username }}
+                <a href='/logout'>Logout</a>
+                {% endif %}
+            {% endblock %}
+        </span>
+    </div>
+    <div id="middle" class="clearfix">
+    <div id='sidemenu'>
+        {% block sidemenu %}
+        {% if manager%}
+        <div><a href="/backoffice/managestock" class='menubox'>Stock Management</a></div>
+        <div><a href="/backoffice/managecatalog" class='menubox'>Catalog Management</a></div>
+        {% endif %}
+        {% if clerk %}
+        <div><a href='/backoffice/packing' class='menubox'>Packing Management</a></div>
+        {% endif %}
+            <div id="wrapper">
+                <ul class="ac-menu">
+                    <li id="one">
+                        <a href="#one">Stock Management</a>
+                    </li>
+                    <li id="two">
+                        <a href="#two">Menu Two</a>
+                    </li>
+                    <li id="three">
+                        <a href="#three">Menu Three</a>
+                </ul>
+            </div><!--end accordian-->
+            </div><!--end wrapper-->
+
+        {% endblock %}
+    </div>
+    <div id="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+</div>
+</div>
+</body>
+</html>
