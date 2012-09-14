@@ -487,13 +487,13 @@ def checkout_finish(request):
 
     fraud = ((not (total_price,total_point) == calc_price_point(request) )
              or total_point > user_profile.point
-             or (not verify(card_no,ccv,total_price)))
+             or (not verify(card_no,ccv,total_price)=='success'))
 
     if fraud:
         messages.add_message(request, messages.ERROR, 'FRAUD DETECTED!!')
         return HttpResponseRedirect('/checkout/problem')
 
-    #TODO: pay to bank
+    pay(card_no,ccv,total_price)
 
     #deduct points
     user_profile.point -= total_point
