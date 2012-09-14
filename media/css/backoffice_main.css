@@ -35,7 +35,7 @@
     min-height: 80px;
     top:10px;
     position:relative;
-    background-color:#00004d;
+    background-color:#000068;
     display: block;
 }
 #header-left {
@@ -61,7 +61,7 @@
     font-size:40px;
     color:white;
     display: block;
-/* img src="../images/lotus.jpg"*/
+
 }
 #search_form {
     position:relative;
@@ -127,7 +127,7 @@ a.menubox:hover,a.menubox:active
 #packing td, #packing th
 {
     font-size:1em;
-    border:1px solid #699dbf;
+    border:1px solid #ffffff;
     padding:3px 7px 2px 7px;
 }
 #packing th
@@ -136,7 +136,7 @@ a.menubox:hover,a.menubox:active
     text-align:left;
     padding-top:5px;
     padding-bottom:4px;
-    background-color: #4ca3c9;
+    background-color: #9797ff;
     color:#ffffff;
 }
 #packing tr.alt td
