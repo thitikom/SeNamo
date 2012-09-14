@@ -32,7 +32,13 @@
     min-height: 80px;
     top:10px;
     position:relative;
-    background-color: #000068;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.3, rgb(0,40,110)),
+        color-stop(0.97, rgb(0,35,51))
+    );
     display: block;
 }
 
@@ -145,7 +151,7 @@
 #oldcard,#oldaddress{
     background-color:white;
     text-align:center;
-    vertical-align:buttom;
+    vertical-align:bottom;
     margin-left: 200px;
     margin-top:-20px;
     height:50px;
