@@ -61,6 +61,7 @@ urlpatterns = patterns('',
 
     #url for backOffice
     url(r'^backoffice/login$','app.backOffice.login'),
+    url(r'^backoffice/logout$', 'django.contrib.auth.views.logout',{'next_page':'/backoffice/login'}),
     url(r'^backoffice/managestock$','app.backOffice.managestock'),
     url(r'^backoffice/managestock/(?P<prod_id>\d+)$','app.backOffice.increaseStock'),
     url(r'^backoffice/packing$','app.backOffice.packing'),

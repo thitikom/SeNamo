@@ -383,6 +383,11 @@ def pay(card_no,ccv,total_price):
     url = settings.BANK_URL
     response = requests.post('%s/pay' % url,params)
     return response.content
+def show_card_no(card_no):
+    if len(card_no) >= 16:
+        return "####-####-####-" + card_no[12:16]
+    else:
+        return card_no
 
 @login_required
 def checkout_payment(request):
@@ -394,7 +399,7 @@ def checkout_payment(request):
         return HttpResponseRedirect('/cart')
     if request.method == 'GET':
         context = RequestContext(request, {'form': credit_card_form(),
-                                           'oldcard': user_profile.creditcard,
+                                           'oldcard': show_card_no(user_profile.creditcard),
                                            'total_price': total_price,
                                            'total_point': total_point,
                                            'username':request.user,
