@@ -13,10 +13,7 @@
     </style>
 </head>
 <body>
-
-{% block content %}
-<h1>Back Office : Stock Management</h1>
-
+{% block userblock %}
 <div id='empDetails'>
     Welcome!<br>
     Mr.{{ fullname }}<br>
@@ -28,6 +25,11 @@
     {% endif %}
 
 </div>
+{% endblock %}
+
+{% block content %}
+<h1>Back Office : Stock Management</h1>
+
 
 <div>
     {% for product in product_list %}
