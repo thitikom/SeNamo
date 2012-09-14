@@ -12,6 +12,9 @@
         <div id="logo" class="clearfix">E-Commerce Store</div>
         <p id="header-left-right">Back Office</p>
     </div>
+    <div id="logo-image">
+        <img src="/media/images/logo.png" height="100"/>
+    </div>
         <span id='user_block'>
             {% block userblock %}
                 {% if not user.is_authenticated %}
@@ -23,29 +26,27 @@
             {% endblock %}
         </span>
     </div>
+    <div class="clearfix"></div>
     <div id="middle" class="clearfix">
     <div id='sidemenu'>
         {% block sidemenu %}
-        {% if manager%}
-        <div><a href="/backoffice/managestock" class='menubox'>Stock Management</a></div>
-        <div><a href="/backoffice/managecatalog" class='menubox'>Catalog Management</a></div>
-        {% endif %}
-        {% if clerk %}
-        <div><a href='/backoffice/packing' class='menubox'>Packing Management</a></div>
-        {% endif %}
             <div id="wrapper">
                 <ul class="ac-menu">
+                    {% if manager%}
                     <li id="one">
-                        <a href="#one">Stock Management</a>
+                        <a href="/backoffice/managestock">Stock Management</a>
                     </li>
                     <li id="two">
-                        <a href="#two">Menu Two</a>
+                        <a href="/backoffice/managecatalog">Catalog Management</a>
                     </li>
+                    {% endif %}
+                    {% if clerk %}
                     <li id="three">
-                        <a href="#three">Menu Three</a>
+                        <a href="/backoffice/packing">Packing Management</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div><!--end accordian-->
-            </div><!--end wrapper-->
 
         {% endblock %}
     </div>
