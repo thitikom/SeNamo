@@ -1,10 +1,9 @@
 #container {
     position:relative;
     top:10px;
-    width:800px;
-    min-height:600px;
+    width:1024px;
     margin:0 auto;
-    background-color:lightblue;
+    background-attachment:scroll;
 }
 
 #sidemenu {
@@ -13,7 +12,7 @@
     margin-left:20px;
     height: 200px;
     width:130px;
-    background-color:lightgray;
+
 }
 
 #content {
@@ -30,31 +29,40 @@
 #header{
     margin-top:10px;
     left:15px;
+    min-height: 80px;
     top:10px;
     position:relative;
+    background-color: #000068;
+    display: block;
 }
 
 #logo {
+    margin-top:10px;
+    margin-left:10px;
+    float:left;
     position:relative;
-    font-size: 30px;
-    color:darkblue;
+    font-size:40px;
+    color:white;
+    display: block;
 }
 #search_form {
     position:relative;
     display:inline;
     margin-top:0px;
-    margin-left:10px;
+    margin-left:20px;
     width:100px;
 }
 
 #search_form #id_q{
+    margin-top:25px;
     width:400px;
 }
 #user_block {
     position:absolute;
     right:30px;
-    top:10px;
+    top:15px;
     display:inline;
+    color:white;
 }
 
 .menu1 {
