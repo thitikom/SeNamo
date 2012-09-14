@@ -34,7 +34,13 @@
         </span>
 
     </div>
-
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div {% if message.tag %}> class="{{ message.tag}}"{% endif %}> {{message}} </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div id='sidemenu'>
     {% block sidemenu %}
         <div id="wrapper">
@@ -62,14 +68,6 @@
     {% endblock %}
     </div>
     <div id="content">
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tag %}> class="{{ message.tag}}"{% endif %}> {{message}} </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
     {% block content %}
 
     {% endblock %}

@@ -186,3 +186,13 @@ body{
 #logo-image{
     margin-left: 10px;
 }
+
+.messages{
+    position: relative;
+    border: solid 2px #070;
+    background-color: #FFF;
+    margin-top: 15px;
+    padding-top:10px;
+    padding-bottom:5px;
+    text-align: center;
+}
