@@ -28,7 +28,10 @@
 
 <table id="packing"><tr><th>Order ID</th><th>Ordered Date</th><th>Status</th><th>Action</th></tr>
 {% for order in list %}
-    <tr><td>{{ order.id }}</td><td>{{ order.timestamp }}</td><td>{{ order.status }}</td><td><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></td></tr>
+    <tr><td>{{ order.id }}</td><td>{{ order.timestamp }}</td><td>{{ order.status }}</td><td><form action="/backoffice/packing/{{ order.id }}">
+        {% csrf_token %}
+        <input type="submit" value="Proceed">
+    </form></td></tr>
 {% endfor %}
 </table>
 {% endblock %}
@@ -71,10 +74,15 @@
     {% endif %}
 </div>
 
-<div><span>Order ID</span><span>Ordered Date</span><span>Status</span><span></span></div>
-{% for order in list %}
-    <div><span>{{ order.id }}</span><span>{{ order.timestamp }}</span><span>{{ order.status }}</span><span><button type="button" formaction="/packing/{{ order.id }}">Proceed</button></span></div>
-{% endfor %}
+    <div><span>Order ID</span>----<span>Ordered Date</span>----<span>Status</span><span></span></div>
+        {% for order in list %}
+            <div><span>{{ order.id }}</span>----<span>{{ order.timestamp }}</span>----<span>{{ order.status }}</span><span>
+                <form action="/backoffice/packing/{{ order.id }}">
+                    {% csrf_token %}
+                    <input type="submit" value="Proceed">
+                </form>
+                </span></div>
+        {% endfor %}
 
 </body>
 </html>
