@@ -3,6 +3,7 @@
 <head>
     <title>{% block title %}Base Template{% endblock %}</title>
     <link rel='stylesheet' href="/media/css/main.css" type="text/css">
+    <link rel='stylesheet' href="/media/css/menu.css" type="text/css">
 </head>
 <body>
 <div id="container">
@@ -30,15 +31,28 @@
 
     <div id='sidemenu'>
     {% block sidemenu %}
-            <div class='menu1'><a href="/" class="menubox">Home</a></div>
-        {% if user.is_authenticated %}
-            <div class='menu1'><a href="/cart" class="menubox">Cart</a></div>
-            <div class='menu1'><a href='/history' class="menubox">Order</a></div>
-        {% endif %}
-            <div class='menu1'>Shop</div>
-                {% for category in category_list %}
-                    <div class='menu2'><a href="/category/{{ category.id }}">{{ category.name }}</a></div>
-                {% endfor %}
+        <div id="wrapper">
+            <ul class="ac-menu">
+                <li id="one">
+                    <a href="/">Home</a>
+                </li>
+                <li id="two">
+                    <a href="/cart">Cart</a>
+                </li>
+                <li id="three">
+                    <a href="/history">Order</a>
+                </li>
+                <li id="four">
+                    <a href="#four">Shop</a>
+                    <ul class="sub-menu">
+                        {% for category in category_list %}
+                        <li><a href="/category/{{ category.id }}">{{ category.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div><!--end accordian-->
+        <!--end wrapper-->
     {% endblock %}
     </div>
     <div id="content">
