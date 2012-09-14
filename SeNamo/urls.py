@@ -67,7 +67,6 @@ urlpatterns = patterns('',
     url(r'^backoffice/managestock/(?P<prod_id>\d+)$','app.backOffice.increaseStock'),
 
     url(r'^packing/$', 'app.views.view_order_to_deliver'),
-
 )
 
 #Media

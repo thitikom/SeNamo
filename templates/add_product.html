@@ -20,7 +20,13 @@
         <p>description:</p>
         <p>{{ form.description }}</p>
         <p>supplier: {{ form.supplier }}</p>
+
+        {% if file_type_error_msg %}
+            {{ file_type_error_msg }}
+        {% endif %}
         <p>image: {{ form.image }}</p>
+        <p>amount: {{ form.amount }}</p>
+        <p>order supply status: {{ form.orderSupStatus }}</p>
         <input type="submit" value="submit" />
     </form>
 </body>

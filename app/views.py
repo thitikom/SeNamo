@@ -58,6 +58,27 @@ def add_product(request):
 
         if apf.is_valid():
             data = apf.cleaned_data
+
+            if data['image'] is not None:
+                file_type = data['image'].content_type.split('/')[0]
+                if file_type != 'image':
+                    context.update({
+                        'form': add_product_form(
+                            initial = {
+                                'name': data['name'],
+                                'price': data['price'],
+                                'point': data['point'],
+                                'category': data['category'],
+                                'description': data['description'],
+                                'supplier': data['supplier'],
+                                'amount': data['amount'],
+                                'orderSupStatus': data['orderSupStatus'],
+                            }
+                        ),
+                        'file_type_error_msg': 'Image File Only !!',
+                    })
+                    return render_to_response('add_product.html', context)
+
             product = Product.objects.get_or_create(
                 name = data['name'],
                 price = data['price'],
@@ -463,7 +484,6 @@ def checkout_finish(request):
     total_price = checkout['total_price']
     total_point = checkout['total_point']
     product_list = request.session['product_in_cart']
-
 
     fraud = ((not (total_price,total_point) == calc_price_point(request) )
              or total_point > user_profile.point

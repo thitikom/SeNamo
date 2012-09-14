@@ -22,7 +22,6 @@ class add_profile_form(forms.Form):
     tel = forms.CharField(required=False, max_length=30)
     email = forms.EmailField(required=False, max_length=50)
     creditcard = forms.CharField(required=False, max_length=50)
-
     is_change_password = forms.BooleanField(required=False)
     old_password = forms.CharField(required=False, max_length=50)
     new_password = forms.CharField(required=False, max_length=50)
