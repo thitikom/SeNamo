@@ -8,14 +8,19 @@
 <body>
 <div id="container">
     <div id="header">
-        <span id="logo">
-            <a href="/">E-Commerce</a>
-        </span>
-        <form id="search_form" action='/search' method="get">
-            <input id="id_q" type="text" name="q" maxlength="50">
-            {#{{ search_form.category }}#}
-            <input type="submit" value='go' />
-        </form>
+        <div id="header-left">
+            <div id="logo" class="clearfix">E-Commerce Store</div>
+        </div>
+        <div id="logo-image">
+            <img src="/media/images/logo.png" height="100"/>
+            <form id="search_form" action='/search' method="get">
+                <input id="id_q" type="text" name="q" maxlength="50">
+                {#{{ search_form.category }}#}
+                <input type="submit" value='go' />
+            </form>
+        </div>
+
+
         <span id='user_block'>
             {% block userblock %}
                 {% if not user.is_authenticated %}
@@ -27,6 +32,7 @@
                 {% endif %}
             {% endblock %}
         </span>
+
     </div>
 
     <div id='sidemenu'>

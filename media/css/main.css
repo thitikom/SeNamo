@@ -4,199 +4,123 @@
     width:1024px;
     margin:0 auto;
     background-attachment:scroll;
+
 }
 
 #sidemenu {
-    position:absolute;
-    margin-top:40px;
-    margin-left:20px;
-    height: 200px;
-    width:130px;
-
+    margin-top:20px;
+    margin-left:0px;
+    float:left;
+    width:17%;
+    height: 100%;
+    min-height: 100px;
 }
 
-#content {
-    position:relative;
-    margin-left:200px;
-    margin-top:40px;
-    width:550px;
-    min-height:300px;
-    padding-left:10px;
-    padding-top:10px;
-//  background-color:lightgray;
-}
-
-
-body{
-    font-family: "Trebuchet MS";
-}
-#header{
-    margin-top:10px;
-    left:15px;
-    min-height: 80px;
-    top:10px;
-    position:relative;
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.3, rgb(0,40,110)),
-        color-stop(0.97, rgb(0,35,51))
-    );
+#middle {
     display: block;
 }
 
-#logo {
+#content {
+    float:left;
+    width: 80%;
+    min-height:500px;
+    padding-left:5px;
+    padding-right:5px ;
     margin-top:10px;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #5571ff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+    -moz-box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+    box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+}
+
+#header{
+    margin: 0 auto;
+    min-height: 80px;
+    top:10px;
+    position:relative;
+    display: block;
+    background: #343435;
+    background: -moz-linear-gradient(top, #343435 1%, #4a4a4a 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#343435), color-stop(100%,#4a4a4a));
+    background: -webkit-linear-gradient(top, #343435 1%,#4a4a4a 100%);
+    background: -o-linear-gradient(top, #343435 1%,#4a4a4a 100%);
+    background: -ms-linear-gradient(top, #343435 1%,#4a4a4a 100%);
+    background: linear-gradient(top, #343435 1%,#4a4a4a 100%);
+
+    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+    -moz-box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+    box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+
+    clear: both;
+}
+#header-left {
+    float:left;
+    margin-left: 10px;
+    display: block;
+}
+#header-left-right {
+    float: right;
+    font-size:20px;
+    color:white;
+    display: block;
+    clear: left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: right;
+}
+
+#logo {
     margin-left:10px;
     float:left;
     position:relative;
     font-size:40px;
     color:white;
     display: block;
+
 }
 #search_form {
-    position:relative;
+    position:absolute;
     display:inline;
-    margin-top:0px;
-    margin-left:20px;
-    width:100px;
+    margin-top:20px;
+    margin-left:10px;
+    width:100%;
 }
 
 #search_form #id_q{
-    margin-top:25px;
-    width:400px;
+    width:300px;
 }
+
 #user_block {
     position:absolute;
     right:30px;
-    top:15px;
+    top:10px;
     display:inline;
     color:white;
 }
 
+
+
 .menu1 {
-    margin-top:2px;
+    margin-top:5px;
+    margin-right:10px;
     position:relative;
-    left:10px;
+    left:5px;
+    border-style:ridge;
+    border-width:medium;
+    border-color:#9CA9B5;
 }
 
 .menu2 {
     position:relative;
     left:20px;
 }
-
-.product_block{
-    position:relative;
-    width:20%;
-    margin:10px;
-    float:left;
-    font-size: small;
-}
-
-.endfloat {
-    clear: both;
-    display:block;
-}
-
-.big_img {
-    width:250px;
-    float:right;
-    margin-right:20px;
-}
-
-.description_header {
-    font-size: large;
-    font-style: oblique;
-}
-
-#product_name_title {
-    font-size: 25px;
-}
-
-#add_to_cart_zone {
-    clear: both;
-    float:right;
-    margin-right:25px;
-}
-.show_table td{
-    text-align:center;
-    min-width:90px;
-}
-
-.show_table {
-    margin-left:20px;
-    margin-bottom:20px;
-}
-
-.table_header{
-    background-color:black;
-    color:white;
-    background-color:#000099;
-}
-
-.float_left{
-    float:right;
-    margin-right:20px;
-}
-
-
-.biggest_header {
-    font-size:30px;
-}
-
-.big_header {
-    font-size:20px;
-    float:right;
-    margin-right:20px;
-    margin-top:10px;
-}
-
-
-#oldcard,#oldaddress{
-    background-color:white;
-    text-align:center;
-    vertical-align:middle;
-    margin-left: 200px;
-    margin-top:-20px;
-    height:30px;
-    width:100px;
-    border:0px;
-    padding-top:5px;
-    padding-bottom:0px;
-    padding-left:0px;
-}
-
-#id_card_number{
-    width:230px;
-}
-
-#payment_form{
-    margin-left:30px;
-}
-
-#id_ccv {
-    width:40px;
-}
-#ccv_input {
-    display:block;
-    margin-left:100px;
-    margin-top:20px;
-}
-
-#payment_warn_text,#adress_form{
-    margin-left:40px;
-}
-
-#payment_submit {
-    margin-left:120px;
-}
-
-.show_table_oreder_detail td{
-    min-width: 70px;
-    text-align: right;
-}
-
 a.menubox:link,a.menubox:visited
 {
     margin: 2px;
@@ -214,4 +138,51 @@ a.menubox:hover,a.menubox:active
 {
     color: #FFFFFF;
     background-color: #000068;
+}
+
+#packing
+{
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    width:100%;
+    border-collapse:collapse;
+}
+#packing td, #packing th
+{
+    font-size:1em;
+    border:1px solid #ffffff;
+    padding:3px 7px 2px 7px;
+}
+#packing th
+{
+    font-size:1.1em;
+    text-align:left;
+    padding-top:5px;
+    padding-bottom:4px;
+    background-color: #9797ff;
+    color:#ffffff;
+}
+#packing tr.alt td
+{
+    color:#000000;
+    background-color:#EAF2D3;
+}
+
+.clearfix::after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: ".";
+    clear: both;
+    height: 0;
+}
+
+body{
+    font-family: "Trebuchet MS";
+    background-image: url('/media/images/bg2.jpg');
+    background-repeat:repeat;
+    background-attachment:fixed;
+}
+
+#logo-image{
+    margin-left: 10px;
 }
