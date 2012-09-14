@@ -23,7 +23,7 @@
     min-height:300px;
     padding-left:10px;
     padding-top:10px;
-    background-color:lightgray;
+//  background-color:lightgray;
 }
 
 #header{
@@ -116,8 +116,9 @@
     margin-right:25px;
 }
 .show_table td{
-    text-align: right;
+    text-align:center;
     min-width:90px;
+    background-color:#000099;
 }
 
 .show_table {
