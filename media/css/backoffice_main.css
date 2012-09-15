@@ -241,6 +241,8 @@ a.user_block:visited{
      clear:left;
      position: relative;
      width: 30%;
+     border-right: solid 1px;
+     padding-right: 10px;
  }
  #product-m {
      display: block;

@@ -52,7 +52,7 @@ class add_profile_form(forms.Form):
             else:
                 raise forms.ValidationError("Incorrect Password.")
         except ObjectDoesNotExist:
-            raise forms.ValidationError("Username '%s' does not exist." % username)
+            raise forms.ValidationError("Username '%s' does not exist." % usernameData)
 
 class add_product_form(forms.ModelForm):
     class Meta:
@@ -106,7 +106,7 @@ class address_form(forms.Form):
     first_line = forms.CharField(max_length=100)
     second_line = forms.CharField(max_length=100,required=False)
     town = forms.CharField(max_length=100)
-    country = forms.ChoiceField(choices=country_list)
+    country = forms.CharField(max_length=100)
     zip_code = forms.CharField(max_length=20)
 
 class credit_card_form(forms.Form):
