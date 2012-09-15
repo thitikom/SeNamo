@@ -15,7 +15,7 @@
     <span class='menu2'>
         First name: <input type="text" name="first_name"  value='{{ form.first_name }}' onchange="return "/><br />
         Last name: <input type="text" name="last_name"  value='{{ form.last_name }}'/><br />
-        Birth Date: <input type="text" name="birth_date"  value='{{ form.birth_date }}' onchange="" />  (now your age is {{ form.age }} years old.)<br />
+        Birth Date: <input type="text" name="birth_date"  value='{{ form.birth_date }}' onchange="" />  (YYYY-MM-DD) <br />
         Sex: <input type="radio" name="sex" {{ form.checked_undefined }} value='0' /> Undefined <input type="radio" name="sex" {{ form.checked_male }} value='1' /> Male  <input type="radio" name="sex" {{ form.checked_female }} value='2' /> Female <br />
         Tel: <input type="text" name="tel" value='{{ form.tel }}' /> <br />
         E-Mail: <input type="text" name="email" value='{{ form.email }}' /> <br />
