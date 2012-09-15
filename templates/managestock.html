@@ -5,31 +5,40 @@
 {% block content %}
 <h1>Stock Management</h1>
 
-
-<div>
+<table id="packing">
+<tr><th>Product/Category</th><th>amount in stock</th><th>ordered to supplier</th></tr>
     {% for product in product_list %}
-    <div>
-        <form action='/backoffice/managestock/{{ product.0 }}' method='post'>
-            {% csrf_token %}
-            {{ product.1 }}/{{ product.2 }}
-            amount <input type="text" name="amount" value="{{ product.3 }}"/>
-            {% if product.4 != None %}
-            {% if product.5 %}
-            <input type="checkbox" value="ordered" name="ordered" checked="checked"/> Has been ordered
-            {% else %}
-            <input type="checkbox" value="ordered" name="ordered" /> Has been ordered
-            {% endif %}
+        <tr>
+            <form action='/backoffice/managestock/{{ product.0 }}' method='post'>
+                {% csrf_token %}
+            <td>
+                {{ product.1 }}/{{ product.2 }}
+            </td>
+                <td>
+                <input type="text" name="amount" value="{{ product.3 }}"/>
+                </td>
+                <td align="center">
+                {% if product.4 != None %}
+                    {% if product.5 %}
+                        <input type="checkbox" value="ordered" name="ordered" checked="checked"/> Has been ordered
+                    {% else %}
+                        <input type="checkbox" value="ordered" name="ordered" /> Has been ordered
+                    {% endif %}
 
-            {% else %}
-            -
-            {% endif %}
+                {% else %}
+                    -
+                {% endif %}
 
-
-            <input type="submit" value="submit"div class="sexy-button"/>
-        </form>
-    </div>
+                </td>
+                <td align="center">
+                <input type="submit" value="submit"div class="sexy-button"/>
+                </td>
+        </tr>
+            </form>
+        </tr>
     {% endfor %}
-</div>
+</table>
+
 {% endblock %}
 <!--
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
