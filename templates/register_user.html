@@ -2,9 +2,12 @@
 {% block title %}User Register{% endblock %}
 {% block content %}
 
-<form action="/register" method="post">
+<form action="/register" method="post" class='regisform'>
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register"div class="sexy-button"/>
+    <table border="0px" align="left">
+    {{ form.as_table }}
+    <tr><td colspan="2" align="center"><input type="submit" value="Register"div class="sexy-button"/></td></tr>
+    </table>
+
 </form>
 {% endblock %}

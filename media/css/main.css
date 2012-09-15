@@ -394,3 +394,7 @@ a.user_block:visited{
     color: gray;
 
 }
+
+.regisform th {
+    text-align: left;
+}
