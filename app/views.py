@@ -119,7 +119,18 @@ def add_product(request):
                 ),
                 'form_error_msg': 'Please fill all required information'
             })
-
+    user = request.user
+    emp = user.get_profile()
+    is_manager = emp.manager
+    is_clerk = emp.clerk
+    context.update(
+        {
+            'fullname' : user.get_full_name(),
+            'clerk':'Clerk',
+            }
+    )
+    if is_manager:
+        context.update({'manager':'Manager', })
     return render_to_response('add_product.html', context)
 
 def edit_product(request, product_id):
@@ -127,7 +138,21 @@ def edit_product(request, product_id):
 
     if request.method =='GET':
         apf = add_product_form(instance=product)
-        return render_to_response('edit_product.html', RequestContext(request, {'form': apf, 'pid': product_id, 'product': product}))
+        context = RequestContext(request, {'form': apf, 'pid': product_id, 'product': product})
+        user = request.user
+        emp = user.get_profile()
+        is_manager = emp.manager
+        is_clerk = emp.clerk
+        context.update(
+            {
+                'fullname' : user.get_full_name(),
+                'clerk':'Clerk',
+                }
+        )
+        if is_manager:
+            context.update({'manager':'Manager', })
+
+        return render_to_response('edit_product.html', context)
     else:
         apf = add_product_form(request.POST, instance=product)
         if apf.is_valid():
@@ -161,6 +186,18 @@ def add_category(request):
             })
             return render_to_response('add_category.html', context)
     else:
+        user = request.user
+        emp = user.get_profile()
+        is_manager = emp.manager
+        is_clerk = emp.clerk
+        context.update(
+            {
+                'fullname' : user.get_full_name(),
+                'clerk':'Clerk',
+                }
+        )
+        if is_manager:
+            context.update({'manager':'Manager', })
         return render_to_response('add_category.html', context)
 
 def edit_category(request, category_id):
@@ -174,6 +211,18 @@ def edit_category(request, category_id):
             ),
             'cid': category.id
         })
+        user = request.user
+        emp = user.get_profile()
+        is_manager = emp.manager
+        is_clerk = emp.clerk
+        context.update(
+            {
+                'fullname' : user.get_full_name(),
+                'clerk':'Clerk',
+                }
+        )
+        if is_manager:
+            context.update({'manager':'Manager', })
         return render_to_response('edit_category.html', context)
     else:
         acf = add_category_form(request.POST)
@@ -193,6 +242,18 @@ def edit_category(request, category_id):
                 'form_error_msg': 'please fill all required informations',
                 'cid': category.id
             })
+            user = request.user
+            emp = user.get_profile()
+            is_manager = emp.manager
+            is_clerk = emp.clerk
+            context.update(
+                {
+                    'fullname' : user.get_full_name(),
+                    'clerk':'Clerk',
+                }
+            )
+            if is_manager:
+                context.update({'manager':'Manager', })
             return render_to_response('edit_category.html', context)
 
 def delete_product(request, product_id):

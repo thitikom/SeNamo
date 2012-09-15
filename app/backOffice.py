@@ -203,15 +203,28 @@ def proceedPacking(request, order_id):
                 list.append((i,ordered_product.product.name, ordered_product.amount))
             i = i+1
 
-        dataContext = RequestContext(request,
-            {
-                'order_id' : order.id,
-                'order_date' : order.timestamp,
-                'name' : order.user.get_full_name(),
-                'email' : order.user.email,
-                'address' : order.get_address(),
-                'tel' : order.user.get_profile().tel,
-                'ordered_product_list' : list,
-            }
-        )
+    user = request.user
+    emp = user.get_profile()
+    is_clerk = emp.clerk
+    if not is_clerk:
+        return managestock(request)
+
+    dataContext = RequestContext(request,
+        {
+            'order_id' : order.id,
+            'order_date' : order.timestamp,
+            'name' : order.user.get_full_name(),
+            'email' : order.user.email,
+            'address' : order.get_address(),
+            'tel' : order.user.get_profile().tel,
+            'ordered_product_list' : list,
+            'fullname' : user.get_full_name(),
+            'clerk':'Clerk',
+        }
+    )
+
+    is_manager = emp.manager
+    if is_manager:
+        dataContext.update({'manager':'Manager', })
+
         return render_to_response('packingDetail.html', dataContext)
