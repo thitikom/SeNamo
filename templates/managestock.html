@@ -8,7 +8,15 @@
 <table id="packing">
 <tr><th>Product/Category</th><th>amount in stock</th><th>ordered to supplier</th></tr>
     {% for product in product_list %}
-        <tr>
+        <tr
+
+                {% if product.4 != None %}
+                {% if product.5 %}
+                    class="warning"
+                {% else %}
+                    class="alert"
+                {% endif %}
+                {% endif %}>
             <form action='/backoffice/managestock/{{ product.0 }}' method='post'>
                 {% csrf_token %}
             <td>
