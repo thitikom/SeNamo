@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from app.models import *
 from django.http import HttpResponse, HttpResponseRedirect
 from app.forms import *
+from app.backOffice import *
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -630,7 +631,20 @@ def view_order_history(request):
 
 
 def add_supplier(request):
-    context = RequestContext(request, { 'form': add_supplier_form() })
+    user = request.user
+    emp = user.get_profile()
+    is_manager = emp.manager
+    is_clerk = emp.clerk
+    if not is_manager:
+        return packing(request)
+
+    context = RequestContext(request,
+        {
+            'form': add_supplier_form(),
+            'fullname' : user.get_full_name(),
+            'manager' : 'Manager',
+        }
+    )
 
     if request.method == 'POST':
         asf = add_supplier_form(request.POST)
@@ -643,6 +657,7 @@ def add_supplier(request):
             context.update(
                 {'form': add_supplier_form, 'success_msg': 'Supplier successfully created.'}
             )
+            return HttpResponseRedirect('/backoffice/managesupplier')
         else:
             context.update({
                 'form':add_supplier_form(
@@ -650,15 +665,35 @@ def add_supplier(request):
                 ),
                 'form_error_msg': 'please fill all required information'
             })
+    if is_clerk:
+        context.update({'clerk':'Clerk'})
 
     return render_to_response('add_supplier.html', context)
 
 def edit_supplier(request, supplier_id):
+
+
     supplier = get_object_or_404(Supplier, id=supplier_id)
 
     if request.method == 'GET':
         asf = add_supplier_form(instance=supplier)
-        return render_to_response('edit_supplier.html', RequestContext(request, {'form': asf, 'sid': supplier_id}))
+        user = request.user
+        emp = user.get_profile()
+        is_manager = emp.manager
+        is_clerk = emp.clerk
+        if not is_manager:
+            return packing(request)
+
+        context = RequestContext(request,
+            {
+                'form': asf, 'sid': supplier_id,
+                'fullname' : user.get_full_name(),
+                'manager' : 'Manager',
+            }
+        )
+        if is_clerk:
+            context.update({'clerk':'Clerk'})
+        return render_to_response('edit_supplier.html', RequestContext(request, context))
     else:
         asf = add_supplier_form(request.POST, instance=supplier)
         if asf.is_valid():
@@ -666,7 +701,7 @@ def edit_supplier(request, supplier_id):
         else:
             asf = add_supplier_form(instance=supplier)
 
-        return HttpResponseRedirect('/supplier/%d' % supplier.id)
+        return HttpResponseRedirect('/backoffice/managesupplier')
 
 def delete_supplier(request, supplier_id):
     supplier = get_object_or_404(Supplier,id=supplier_id)
@@ -676,7 +711,7 @@ def delete_supplier(request, supplier_id):
     context = RequestContext(request, {
         messages : messages
     })
-    return render_to_response('delete_record.html',context)
+    return HttpResponseRedirect('/backoffice/managesupplier')
 
 def view_supplier(request):
     supplier_list = Supplier.objects.order_by('company_name')

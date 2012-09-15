@@ -243,3 +243,28 @@ def proceedPacking(request, order_id):
         dataContext.update({'manager':'Manager', })
 
         return render_to_response('packingDetail.html', dataContext)
+
+@login_required(redirect_field_name='/backoffice/packing', login_url='/backoffice/login')
+def managesupplier(request):
+    user = request.user
+    emp = user.get_profile()
+    is_manager = emp.manager
+    if not is_manager:
+        return packing(request)
+
+    supplier_list = Supplier.objects.all()
+
+
+    is_clerk = emp.clerk
+    dataContext = RequestContext(request,
+        {
+            'fullname' : user.get_full_name(),
+            'manager' : 'Manager',
+            'supplier_list' : supplier_list,
+            }
+    )
+    if is_clerk:
+        dataContext.update({'clerk':'Clerk'})
+    return render_to_response('managesupplier.html', dataContext)
+
+
