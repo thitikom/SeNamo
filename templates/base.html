@@ -4,6 +4,7 @@
     <title>{% block title %}Base Template{% endblock %}</title>
     <link rel='stylesheet' href="/media/css/main.css" type="text/css">
     <link rel='stylesheet' href="/media/css/menu.css" type="text/css">
+    <link rel='stylesheet' href="/media/css/style.css" type="text/css">
 </head>
 <body>
 <div id="container">
@@ -36,13 +37,22 @@
         </span>
 
     </div>
+    <section>
     {% if messages %}
-        <div class="messages">
             {% for message in messages %}
-                <div {% if message.tag %}> class="{{ message.tag}}"{% endif %}> {{message}} </div>
+                <div class="tn-box tn-box-active{% if message.tags %} {{ message.tags }}{% endif %}">
+                    <p>{{ message }}</p>
+                    <div class="tn-progress"></div>
+                </div>
             {% endfor %}
+    {% else %}
+        <div class="tn-box tn-box-active error">
+            <p>This is test noti.</p>
+{#            <div class="tn-progress"></div>#}
         </div>
     {% endif %}
+    </section>
+
     <div id='sidemenu'>
     {% block sidemenu %}
         <div id="wrapper">

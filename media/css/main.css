@@ -302,6 +302,7 @@ body{
 .messages{
     position: relative;
     border: solid 2px #070;
+    font-size: 20px;
     background-color: #FFF;
     margin-top: 15px;
     padding-top:10px;
