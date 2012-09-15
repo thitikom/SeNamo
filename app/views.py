@@ -318,7 +318,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                messages.add_message(request, messages.INFO, '334Successfully Logged in.')
+                messages.add_message(request, messages.INFO, 'Successfully Logged in.')
             else:
                 messages.add_message(request, messages.ERROR, 'Your account is inactive. Please contact Administrator.')
         else:
