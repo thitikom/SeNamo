@@ -13,12 +13,12 @@
         <p id="header-left-right">Back Office</p>
     </div>
     <div id="logo-image">
-        <img src="/media/images/logo.png" height="100"/>
+        <img src="/media/images/logo.png" height="80"/>
     </div>
         <span id='user_block'>
             {% block userblock %}
                 {% if not user.is_authenticated %}
-                    <a href='/login'>Login</a>
+                    <a href='/login' class="user_block">Login</a>
                 {% else %}
                     <div id='empDetails'>
                         Welcome!<br>
@@ -30,7 +30,7 @@
                             {% if clerk %}{{ clerk }}<br>{% endif %}
                         {% endif %}
                     </div>
-                    <a href='/logout'>Logout</a>
+                    <a href='/logout' class="user_block">Logout</a>
                 {% endif %}
             {% endblock %}
         </span>

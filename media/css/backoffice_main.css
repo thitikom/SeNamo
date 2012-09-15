@@ -194,6 +194,6 @@ body{
     float:left;
 }
 
-a:visited{
+a.user_block:visited{
     color:#ffffff;
 }
