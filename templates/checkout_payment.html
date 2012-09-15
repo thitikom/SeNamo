@@ -12,7 +12,7 @@
 <form id='payment_form' action='/checkout/payment' method="post">
     {% csrf_token %}
 
-    <table><tr><td><input type="radio" name="select_card"
+    <table><tr><td><input type="radio" name="select_card">
         {% if not oldcard %}disabled="true"{% endif %}
         value="old"/> Use existing:
         </td><td id='oldcard'>
@@ -29,8 +29,8 @@
     </span>
     <p id='payment_warn_text'>{{ total_point }} points will be deducted from your account</p>
     <p id='payment_submit'>
-        <input type="submit" value='back' formaction="/cart" formmethod="get">
-        <input type="submit" value='next'>
+        <input type="submit" value='back' formaction="/cart" formmethod="get" class="sexy-button">
+        <input type="submit" value='next' class="sexy-button">
     </p>
 </form>
 {% endblock %}

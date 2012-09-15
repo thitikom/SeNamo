@@ -10,7 +10,7 @@
 <span class="big_header">Total: $ {{ total_price }} / {{ total_point }} pts.</span>
 <form action='/checkout/shipping' method="post">
     {% csrf_token %}
-    <table><tr><td><input type="radio" name="select_address"
+    <table><tr><td><input type="radio" name="select_address">
            {% if not oldaddress.country %}disabled="true"{% endif %}
            value="old"/>
     Ship to:
@@ -27,8 +27,8 @@
     <div id='adress_form'>
     {{ form.as_p }}
     </div>
-    <input type="submit" value='back' formaction="/checkout/payment" formmethod="get">
-    <input type="submit" value='next'>
+    <input type="submit" value='back' class="sexy-button" formaction="/checkout/payment" formmethod="get">
+    <input type="submit" value='next' class="sexy-button">
 
 </form>
 {% endblock %}
