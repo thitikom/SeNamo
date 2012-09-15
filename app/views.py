@@ -1,3 +1,4 @@
+from _ast import excepthandler
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from app.models import *
@@ -11,11 +12,14 @@ from django.conf import settings
 import requests
 
 def index(request):
+    product_list = Product.objects.all()
     category_list = Category.objects.all()
-    context = {}
+    context = RequestContext(request,{
+        'product_list':product_list,
+             })
     #context['category_list'] = category_list
     c = RequestContext(request,context)
-    return render_to_response('catalog_view.html',c)
+    return render_to_response('catalog_view.html',context)
 
 def search(request):
     if request.method == 'GET':
@@ -307,7 +311,7 @@ def add_session(request):
     request.session['product_in_cart'] = tmp
     context = RequestContext(request, {'product_in_cart': request.session['product_in_cart']})
     return render_to_response('view_cart.html',context)
-
+@login_required()
 def add_cart(request,product_id):
     product_amount = 0
     if not request.session.get('product_in_cart'):
@@ -627,14 +631,11 @@ def edit_profile(request):
     profile = get_object_or_404(UserProfile,user=user_account)
     if request.POST :
         form = add_profile_form(request.POST)
-        print(form.is_valid())
-
         if form.is_valid():
             data = form.cleaned_data
             # Update User's Profile
             user = profile.user
             if data['is_change_password']:
-
                 user.set_password(data['new_password'])
             user.email = data['email']
             user.first_name = data['first_name']
@@ -655,8 +656,8 @@ def edit_profile(request):
             profile.addr_country    = address['country']
             profile.addr_zipcode    = address['zip_code']
             profile.save()
-
-            return HttpResponseRedirect('/')
+            messages.add_message(request, messages.ERROR, "Profile edited.")
+            return HttpResponseRedirect('/profile/')
         else:
             data = form.data
             address = address_form(request.POST).data;
@@ -670,23 +671,32 @@ def edit_profile(request):
                 bday = data['birth_date']
                 # to print form.field.errors in template old form needed --noly
             #            context = RequestContext(request, {'form':form})
-            context = RequestContext(request, {'form':{
-                'username':user_account,
-                'age':profile.get_age(),
-                'checked_undefined':"""checked=checked""" if data['sex'] == 0 else '',
-                'checked_male':"""checked=checked""" if data['sex'] == 1 else '',
-                'checked_female':"""checked=checked""" if data['sex'] == 2 else '',
-                'tel':data['tel'],
-                'email':data['email'],
-                'first_name':data['first_name'],
-                'last_name':data['last_name'],
-                'birth_date':bday,
-                'creditcard':data['creditcard'],
-                'first_line':address['first_line'],
-                'second_line':address['second_line'],
-                'town':address['town'],
-                'country':address['country'],
-                'zip_code':address['zip_code'],
+#            messages.add_message(request, messages.ERROR, "You've enter invalid information.")
+            for error_mess in form.errors:
+                messages.add_message(request, messages.ERROR, form.errors[error_mess][0])
+#            messages.add_message(request, messages.ERROR, form._errors['email'][0])
+#            messages.add_message(request, messages.ERROR, form._errors['creditcard'][0])
+#            messages.add_message(request, messages.ERROR, form._errors['old_password'][0])
+#            messages.add_message(request, messages.ERROR, form._errors['confirm_password'][0])
+            context = RequestContext(request, {
+                'messages': messages,
+                'form':{
+                    'username':user_account,
+                    'age':profile.get_age(),
+                    'checked_undefined':"""checked=checked""" if data['sex'] == 0 else '',
+                    'checked_male':"""checked=checked""" if data['sex'] == 1 else '',
+                    'checked_female':"""checked=checked""" if data['sex'] == 2 else '',
+                    'tel':data['tel'],
+                    'email':data['email'],
+                    'first_name':data['first_name'],
+                    'last_name':data['last_name'],
+                    'birth_date':bday,
+                    'creditcard':data['creditcard'],
+                    'first_line':address['first_line'],
+                    'second_line':address['second_line'],
+                    'town':address['town'],
+                    'country':address['country'],
+                    'zip_code':address['zip_code'],
                 }})
             return render_to_response('edit_profile.html', context)
     else:
@@ -694,9 +704,40 @@ def edit_profile(request):
             bday = str(profile.birthday.year)+'-'+str(profile.birthday.month)+'-'+str(profile.birthday.day);
         except AttributeError:
             bday = ''
-        context = RequestContext(request, {'form':{
+        context = RequestContext(request, {
+            'messages': messages,
+            'form':{
+                'username':user_account,
+                'age':profile.get_age(),
+                'checked_undefined':"""checked=checked""" if profile.sex == 0 else '',
+                'checked_male':"""checked=checked""" if profile.sex == 1 else '',
+                'checked_female':"""checked=checked""" if profile.sex == 2 else '',
+                'tel':profile.tel,
+                'email':profile.user.email,
+                'first_name':profile.user.first_name,
+                'last_name':profile.user.last_name,
+                'birth_date':bday,
+                'creditcard':profile.creditcard,
+                'first_line':profile.addr_firstline,
+                'second_line':profile.addr_secondline,
+                'town':profile.addr_town,
+                'country':profile.addr_country,
+                'zip_code':profile.addr_zipcode,
+            }})
+        return render_to_response('edit_profile.html', context)
+
+@login_required()
+def view_profile(request):
+    user_account = request.user
+    profile = get_object_or_404(UserProfile,user=user_account)
+    try:
+        bday = str(profile.birthday.year)+'-'+str(profile.birthday.month)+'-'+str(profile.birthday.day);
+    except AttributeError:
+        bday = ''
+    context = RequestContext(request, {'form':{
             'username':user_account,
             'age':profile.get_age(),
+            'sex':profile.sex,
             'checked_undefined':"""checked=checked""" if profile.sex == 0 else '',
             'checked_male':"""checked=checked""" if profile.sex == 1 else '',
             'checked_female':"""checked=checked""" if profile.sex == 2 else '',
@@ -712,4 +753,4 @@ def edit_profile(request):
             'country':profile.addr_country,
             'zip_code':profile.addr_zipcode,
             }})
-        return render_to_response('edit_profile.html', context)
+    return render_to_response('view_profile.html', context)

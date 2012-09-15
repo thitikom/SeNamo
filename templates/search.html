@@ -4,8 +4,12 @@
 <h2>Search results for {{ q }}</h2>
 {% if product_list %}
 {% for product in product_list %}
-    <p><p><a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a></p><p>{{ product.name }}
-    <br>Price : {{ product.price }} Point : {{ product.point }}</p>
+    <ul class="product_block">
+        <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a><br>
+        <span class="product_name">{{ product.name }}</span>
+        <br><span class="product_price"> Price : {{ product.price }}
+        <br> Point : {{ product.point }}</span>
+    </ul>
 {% endfor %}
 {% else %}
 <p>Your search {{ q }} did not match any products</p>

@@ -22,12 +22,16 @@ class add_profile_form(forms.Form):
     sex = forms.ChoiceField(required=False, widget=forms.RadioSelect, choices=CHOICES)
     tel = forms.CharField(required=False, max_length=30)
     email = forms.EmailField(required=False, max_length=50)
-    creditcard = forms.CharField(required=False, max_length=50)
+    creditcard = forms.CharField(required=False, min_length=16, max_length=16)
     is_change_password = forms.BooleanField(required=False)
     old_password = forms.CharField(required=False, max_length=50)
     new_password = forms.CharField(required=False, max_length=50)
     confirm_password = forms.CharField(required=False, max_length=50)
 
+    def clean_creditcard(self):
+        if 'creditcard' in self.cleaned_data:
+            return self.cleaned_data['creditcard']
+        raise forms.ValidationError("Ensure Credit Card Number has at least 16 characters (it has 1).")
     def clean_confirm_password(self):
         if not 'is_change_password' in self.data or not self.data['is_change_password']:
             return ''
@@ -41,9 +45,9 @@ class add_profile_form(forms.Form):
     def clean_old_password(self):
         if not 'is_change_password' in self.data or not self.data['is_change_password']:
             return ''
-        username_data = self.data['username']
         try:
-            user = get_object_or_404(User,username=username_data)
+            usernameData = self.data['username']
+            user = get_object_or_404(User,username=usernameData)
             if(user.check_password(self.data['old_password'])):
                 return self.data['old_password']
             else:

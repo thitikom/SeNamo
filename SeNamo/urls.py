@@ -38,6 +38,7 @@ urlpatterns = patterns('',
     url(r'^login$','app.views.login'),
     url(r'^logout$','django.contrib.auth.views.logout',{'next_page': '/'}),
     url(r'^profile/edit', 'app.views.edit_profile'),
+    url(r'^profile/', 'app.views.view_profile'),
 
     url(r'^cart$', 'app.views.view_cart'),
     url(r'^testcart$','app.views.add_session'),

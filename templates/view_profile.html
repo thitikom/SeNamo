@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<span class="big_header">
+    Information (<a href="/profile/edit">edit</a>)
+</span>
+<br>
+<br>
+<b>General:</b><br>
+<span class='menu2'>
+    First Name: {{ form.first_name }}<br>
+    Last Name: {{ form.last_name }}<br>
+    Sex:
+        {% if form.sex == 0 %}
+            Undefined
+        {% elif form.sex == 1 %}
+            Male
+        {% else %}
+            Female
+        {% endif %}
+    <br>
+    Age: {{ form.age }} ({{ form.birth_date }})<br>
+    Tel: {{ form.tel }}<br>
+    E-mail: {{ form.email }}<br>
+</span>
+<br>
+<b>Address:</b><br>
+<span class='menu2'>
+    Address 1:<br>
+    <span class="menu2">{{ form.first_line }}</span><br>
+    Address 1:<br>
+    <span class="menu2">{{ form.second_line }}</span><br>
+    Town: {{ form.town }}<br>
+    Country: {{ form.country }}<br>
+    Zipcode: {{ form.zipcode }}<br>
+</span>
+<br>
+<b>Payment Method:</b><br>
+<span class='menu2'>
+    Credit Card Number: {{ form.creditcard }}<br>
+</span>
+<br>
+<a href="/">back to main page</a>
+{% endblock %}

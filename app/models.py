@@ -71,7 +71,6 @@ class UserProfile(models.Model):
     def get_age(self):
         today = date.today()
         born = self.birthday
-
         try: # raised when birth date is February 29 and the current year is not a leap year
             birthday = born.replace(year=today.year)
         except ValueError:
