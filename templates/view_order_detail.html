@@ -28,4 +28,7 @@
     </table>
     <br>
 <span class="big_header">Total: ${{ total_price }}/{{ total_point }}pts</span>
+<div>Ship to: {{ order.addr_firstline }} {{ order.addr_secondline}}
+    {{ order.addr_town }} {{ order.addr_country }} {{ order.addr_zipcode }}</div>
+
 {% endblock %}
