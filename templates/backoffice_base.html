@@ -49,11 +49,19 @@
                     <li id="two">
                         <a href="/backoffice/managecatalog">Catalog Management</a>
                     </li>
+                    <li id="four">
+                        <a href="/backoffice/managesupplier">Supplier Management</a>
+                    </li>
                     {% endif %}
                     {% if clerk %}
                     <li id="three">
                         <a href="/backoffice/packing">Packing Management</a>
                     </li>
+                    {% endif %}
+                    {% if clerk %}
+                        <li id="three">
+                            <a href="/backoffice/packing">Packing Management</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div><!--end accordian-->
