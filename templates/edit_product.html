@@ -1,13 +1,7 @@
 {% extends "backoffice_base.html" %}
 {% block title %}Edit Product{% endblock %}
 
-<html>
-<head>
-    <title>edit product: {{ pid }}</title>
-</head>
-
 {% block content %}
-<body>
 <form action="/product/{{ pid }}/edit" method="POST">
     {% csrf_token %}
     <p>edit product: {{ cid }}</p>
@@ -28,8 +22,6 @@
 <div>
     <a href="/product/{{ pid }}/delete">Delete this product</a>
 </div>
-</body>
-</html>
 
 {% endblock %}
 <!--
