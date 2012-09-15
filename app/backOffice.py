@@ -18,6 +18,13 @@ def login(request):
             'form' : loginEmp_form(),
         }
     )
+    if request.user.is_authenticated():
+        user = request.user
+        emp = user.get_profile()
+        is_manager = emp.manager
+        is_clerk = emp.clerk
+        if is_clerk or is_manager:
+            return HttpResponseRedirect('/backoffice/managestock');
     if request.method == 'POST':
         loginForm = loginEmp_form(request.POST)
         #data = loginForm.data
