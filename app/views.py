@@ -98,7 +98,8 @@ def add_product(request):
                 category = data['category'],
                 description = data['description'],
                 supplier = data['supplier'],
-                image = request.FILES['image']
+                image = request.FILES['image'],
+                amount = data['amount'],
             )[0]
             product.save()
             context.update(
@@ -115,6 +116,7 @@ def add_product(request):
                         'category': data['category'],
                         'description': data['description'],
                         'supplier': data['supplier'],
+                        'amount': data['amount'],
                     }
                 ),
                 'form_error_msg': 'Please fill all required information'

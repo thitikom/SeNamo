@@ -6,8 +6,8 @@
 <span class='biggest_header'>Welcome to E-Commerce Store Website.</span><br>
 {% for product in product_list %}
     <ul class="product_block">
-        <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a><br>
-        <span class="product_name">{{ product.name }}</span>
+        <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /><br>
+        <span class="product_name">{{ product.name }}</span></a>
         <br><span class="product_price"> Price : {{ product.price }}
             <br> Point : {{ product.point }}</span>
     </ul>

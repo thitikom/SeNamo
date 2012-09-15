@@ -11,8 +11,8 @@
 {% if products_list %}
     {% for product in products_list %}
         <ul class="product_block">
-            <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a><br>
-            <span class="product_name">{{ product.name }}</span>
+            <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /><br>
+            <span class="product_name">{{ product.name }}</span></a>
             <br><span class="product_price"> Price : {{ product.price }}
             <br> Point : {{ product.point }}</span>
         </ul>
