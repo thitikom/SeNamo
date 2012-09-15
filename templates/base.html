@@ -42,7 +42,7 @@
     <section>
     {% if messages %}
             {% for message in messages %}
-                <div class="tn-box tn-box-active{% if message.tags %} {{ message.tags }}{% endif %}">
+                <div class="tn-box tn-box-active tn-box-hoverpause{% if message.tags %} {{ message.tags }}{% endif %}">
                     <p>{{ message }}</p>
 {#                    <div class="tn-progress"></div>#}
                 </div>
