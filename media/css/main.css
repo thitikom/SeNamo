@@ -67,7 +67,7 @@
 }
 #header-left {
     float:left;
-    margin-left: 10px;
+    margin-left: 5px;
     display: block;
 }
 #header-left-right {
@@ -93,6 +93,7 @@
 #search_form {
     position:relative;
     top:20px;
+
 }
 
 #search_form #id_q{
@@ -100,12 +101,13 @@
 }
 
 #user_block {
-    position:relative;
+    position:absolute;
     display:block;
     color:white;
-    margin-top: 2px;
-    margin-right: 5px;
+    top: 5px;
+    right: 5px;
     float:right;
+    text-align:right;
 }
 
 .menu1 {
@@ -304,7 +306,7 @@ body{
 }
 
 #logo-image{
-    width: 10%;
+    width: 9%;
     float:left;
     position: relative;
     margin-top:5px;
