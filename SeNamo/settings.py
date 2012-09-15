@@ -106,7 +106,9 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 ROOT_URLCONF = 'SeNamo.urls'
 
-BANK_URL = '/bank/verify'
+BANK_URL = 'http://ramzpat.no-ip.info:50002'
+USE_BANK_API = True
+
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'SeNamo.wsgi.application'
 

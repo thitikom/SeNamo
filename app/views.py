@@ -1,4 +1,6 @@
 from _ast import excepthandler
+import urllib
+import urllib2
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 from app.models import *
@@ -10,6 +12,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.core.context_processors import csrf
 import requests
 
 def index(request):
@@ -425,21 +428,23 @@ def view_order_detail(request, order_id):
 
 #Checkout
 def verify(card_no,ccv,total_price):
-    if card_no and ccv == '123':
+    """
+
+    """
+    if card_no and ccv == '123' and not settings.USE_BANK_API:
         return 'success'
 
     params = {
         'card_num' : card_no,
         'card_ccv' : ccv,
-        'amount' : total_price
+        'amount' : total_price,
     }
-
     url = settings.BANK_URL
     response = requests.post('%s/verify' % url,params)
     return response.content
 
 def pay(card_no,ccv,total_price):
-    if card_no and ccv == '123':
+    if card_no and ccv == '123' and not settings.USE_BANK_API:
         return 'success'
 
     params = {

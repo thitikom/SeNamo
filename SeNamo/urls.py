@@ -8,7 +8,6 @@ from django.contrib import admin
 # Setting
 from django.conf import settings
 
-
 admin.autodiscover()
 
 urlpatterns = patterns('',
