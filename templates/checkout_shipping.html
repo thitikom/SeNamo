@@ -10,8 +10,7 @@
 <span class="big_header">Total: $ {{ total_price }} / {{ total_point }} pts.</span>
 <form action='/checkout/shipping' method="post">
     {% csrf_token %}
-    <table><tr><td><input type="radio" name="select_address">
-           {% if not oldaddress.country %}disabled="true"{% endif %}
+    <table><tr><td><input type="radio" name="select_address"{% if not oldaddress.country %}disabled="true"{% endif %}
            value="old"/>
     Ship to:
     </td><td id='oldaddress'>

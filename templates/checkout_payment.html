@@ -12,7 +12,7 @@
 <form id='payment_form' action='/checkout/payment' method="post">
     {% csrf_token %}
 
-    <table><tr><td><input type="radio" name="select_card">
+    <table><tr><td><input type="radio" name="select_card"
         {% if not oldcard %}disabled="true"{% endif %}
         value="old"/> Use existing:
         </td><td id='oldcard'>
