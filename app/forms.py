@@ -63,11 +63,11 @@ class add_category_form(forms.Form):
     description = forms.CharField(widget=forms.Textarea, required=False)
 
 class RegisterForm(forms.Form):
-    username = forms.CharField(max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-    email = forms.EmailField()
-    confirm_email = forms.EmailField()
+    username = forms.CharField(max_length=50,label="Username")
+    password = forms.CharField(widget=forms.PasswordInput,label='Password')
+    confirm_password = forms.CharField(widget=forms.PasswordInput,label='Confirm password')
+    email = forms.EmailField(label='Email')
+    confirm_email = forms.EmailField(label='Confirm email')
 
     def clean_confirm_password(self):
         if 'password' in self.cleaned_data:

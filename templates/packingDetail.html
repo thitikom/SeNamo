@@ -24,13 +24,14 @@
         <td>{% if ordered_product.3 %}
             already sent {{ ordered_product.3 }}<br>
         {% else %}
-            <input type="radio" name="{{ ordered_product.1 }}" value="send" />send
-            <input type="radio" name="{{ ordered_product.1 }}" value="out" />wait for more product<br>
+            <input type="radio" name="{{ ordered_product.1 }}" value="send" /> send
+            <input type="radio" name="{{ ordered_product.1 }}" value="out" style="margin-left: 10px;"/> wait for more product<br>
         {% endif %}</td></tr>
     {% endfor %}
 </table>
-    <input type="submit" value='COMMIT' class="sexy-button"/>
-        <a href="/backoffice/packing" class="sexy-button">BACK</a>
+       <div align='right' style="padding-right: 10px; margin-top: 10px;"><a href="/backoffice/packing" class="sexy-button">BACK</a>
+    <input type="submit" value='COMMIT' class="sexy-button"/></div>
+
     </form>
 </div>
 {% endblock %}

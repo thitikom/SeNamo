@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}User Register{% endblock %}
 {% block content %}
-
+<h1>  Register</h1>
 <form action="/register" method="post" class='regisform'>
     {% csrf_token %}
     <table border="0px" align="left">
     {{ form.as_table }}
-    <tr><td colspan="2" align="center"><input type="submit" value="Register"div class="sexy-button"/></td></tr>
+    <tr><td colspan="2" align="center"><a href="/register" class="sexy-button">Clear</a> <input type="submit" value="Register"div class="sexy-button"/></td></tr>
     </table>
 
 </form>

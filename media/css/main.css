@@ -395,6 +395,15 @@ a.user_block:visited{
 
 }
 
+.regisform {
+    margin-left: 40px;
+
+}
 .regisform th {
-    text-align: left;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.regisform tr {
+    height: 40px;
 }
