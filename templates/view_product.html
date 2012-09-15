@@ -18,7 +18,7 @@
     </span>
     <br>
     <span class='description'>
-        {{ product.description }}
+        {{ product.description | linebreaksbr}}
     </span>
     <span id='add_to_cart_zone'>
         <br>price: ${{ product.price }},  point: {{ product.point }} pts.<br>
