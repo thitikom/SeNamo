@@ -287,7 +287,7 @@ def register_user(request):
                 password = form.cleaned_data['password']
                 email = form.cleaned_data['email']
                 user = User.objects.create_user(username,email,password)
-                messages.add_message(request, messages.SUCCESS, "You've successfully registered.")
+                messages.add_message(request, messages.INFO, "You've successfully registered.")
                 context = RequestContext(request,{
                     'messages' : messages
                 })
@@ -318,7 +318,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                messages.add_message(request, messages.INFO, 'Successfully Logged in.')
+                messages.add_message(request, messages.INFO, '334Successfully Logged in.')
             else:
                 messages.add_message(request, messages.ERROR, 'Your account is inactive. Please contact Administrator.')
         else:
