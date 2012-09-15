@@ -199,3 +199,7 @@ body{
 a.user_block:visited{
     color:#ffffff;
 }
+
+.reflected {
+    -webkit-box-reflect: below -13px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(255,255,255,0.2)));
+}
