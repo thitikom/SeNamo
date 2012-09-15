@@ -401,6 +401,9 @@ def checkout_payment(request):
     if not total_point and not total_price:
         messages.add_message(request, messages.ERROR, 'Cannot checkout! nothing in cart.')
         return HttpResponseRedirect('/cart')
+    if total_point > user_profile.point:
+        messages.add_message(request, messages.ERROR, 'Not enough points, you got %d pts.'%(user_profile.point))
+        return HttpResponseRedirect('/cart')
     if request.method == 'GET':
         context = RequestContext(request, {'form': credit_card_form(),
                                            'oldcard': show_card_no(user_profile.creditcard),
