@@ -1,5 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+{% extends "backoffice_base.html" %}
+
+{% block title %}Employee Packing Detail{% endblock %}
+
 <head>
     <title>Packing List</title>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
@@ -10,33 +12,62 @@
         }
     </style>
 </head>
+
+{% block userblock %}
+</div>
+<span id='user_block'>
+                {% if not user.is_authenticated %}
+                <a href='/login'>Login</a>
+                {% else %}
+                 <div id='empDetails'>
+                     Welcome!<br>
+                     Mr.{{ fullname }}<br>
+                     {% if manager and clerk %}
+                     {{ manager }}, {{ clerk }}<br>
+                     {% else %}
+                     {% if manager %} {{ manager }}<br>{% endif %}
+                     {% if clerk %}{{ clerk }}<br>{% endif %}
+                     {% endif %}
+                 </div>
+                <a href='/logout'>Logout</a>
+                {% endif %}
+        </span>
+</div>
+{% endblock %}
+
+{% block content %}
 <body>
 <h1>Back Office : Packing Order ID : {{ order_id }}</h1>
 
-    <div>
-        {{ order_id }}-------------------------{{ order_date }}<br>
-        {{ name }}<br>
-        {{ address.firstline }},{{ address.secondline }}<br>
-        {{ address.town }},{{ address.country }},{{ address.zipcode }}<br>
-        {{ tel }}
-        {{ email }}<br><br>
-        Ordered Product---------amount-----------status<br>
-        <form action="/backoffice/packing/{{ order_id }}" method="post">
-            {% csrf_token %}
-            {% for ordered_product in ordered_product_list %}
-                {{ ordered_product.0 }}. {{ ordered_product.1 }}--------{{ ordered_product.2 }}
-                {% if ordered_product.3 %}
-                    already sent {{ ordered_product.3 }}<br>
-                {% else %}
-                    <input type="radio" name="{{ ordered_product.1 }}" value="send" />send
-                    <input type="radio" name="{{ ordered_product.1 }}" value="out" />wait for more product<br>
-                {% endif %}
+<div>
+    {{ order_id }}-------------------------{{ order_date }}<br>
+    {{ name }}<br>
+    {{ address.firstline }},{{ address.secondline }}<br>
+    {{ address.town }},{{ address.country }},{{ address.zipcode }}<br>
+    {{ tel }}
+    {{ email }}<br><br>
+    Ordered Product---------amount-----------status<br>
+    <form action="/backoffice/packing/{{ order_id }}" method="post">
+        {% csrf_token %}
+        {% for ordered_product in ordered_product_list %}
+        {{ ordered_product.0 }}. {{ ordered_product.1 }}--------{{ ordered_product.2 }}
+        {% if ordered_product.3 %}
+        already sent {{ ordered_product.3 }}<br>
+        {% else %}
+        <input type="radio" name="{{ ordered_product.1 }}" value="send" />send
+        <input type="radio" name="{{ ordered_product.1 }}" value="out" />wait for more product<br>
+        {% endif %}
 
-            {% endfor %}
-            <input type="submit" value='commit' />
-        </form>
+        {% endfor %}
+        <input type="submit" value='commit' />
+    </form>
 
-    </div>
+</div>
 
 </body>
+{% endblock %}
+
 </html>
+
+
+
