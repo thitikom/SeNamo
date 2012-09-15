@@ -5,33 +5,33 @@
 
 
 {% block content %}
-<h1>Back Office : Packing Order ID : {{ order_id }}</h1>
-
+<h1>Packing Order</h1>
 <div>
-    {{ order_id }}-------------------------{{ order_date }}<br>
-    {{ name }}<br>
-    {{ address.firstline }},{{ address.secondline }}<br>
-    {{ address.town }},{{ address.country }},{{ address.zipcode }}<br>
-    {{ tel }}
-    {{ email }}<br><br>
-    Ordered Product---------amount-----------status<br>
+<h2>Order-{{ order_id }}</h2> <div align="right">Order date : {{ order_date }}</div>
+<table>
+    <tr><td align="right">Name</td><td>{{ name }}</td></tr>
+    <tr><td align="right">Address</td><td> {{ address.firstline }},{{ address.secondline }},
+        {{ address.town }},{{ address.country }},{{ address.zipcode }}</td></tr>
+    <tr><td align="right">Tel</td><td>{{ tel }}</td></tr>
+    <tr><td align="right">Email</td><td>{{ email }}</td></tr>
+</table><br>
     <form action="/backoffice/packing/{{ order_id }}" method="post">
         {% csrf_token %}
-        {% for ordered_product in ordered_product_list %}
-        {{ ordered_product.0 }}. {{ ordered_product.1 }}--------{{ ordered_product.2 }}
-        {% if ordered_product.3 %}
-        already sent {{ ordered_product.3 }}<br>
+<table id="packing">
+    <tr align="left"><th>Ordered Products</th><th>Amount</th><th>Status</th></tr>
+    {% for ordered_product in ordered_product_list %}
+    <tr><td>{{ ordered_product.0 }}.{{ ordered_product.1 }}</td><td>{{ ordered_product.2 }}</td>
+        <td>{% if ordered_product.3 %}
+            already sent {{ ordered_product.3 }}<br>
         {% else %}
-        <input type="radio" name="{{ ordered_product.1 }}" value="send" />send
-        <input type="radio" name="{{ ordered_product.1 }}" value="out" />wait for more product<br>
-        {% endif %}
-
-        {% endfor %}
-        <input type="submit" value='commit' div class="sexy-button"/>
+            <input type="radio" name="{{ ordered_product.1 }}" value="send" />send
+            <input type="radio" name="{{ ordered_product.1 }}" value="out" />wait for more product<br>
+        {% endif %}</td></tr>
+    {% endfor %}
+</table>
+    <input type="submit" value='commit' class="sexy-button"/>
     </form>
-
 </div>
-
 {% endblock %}
 
 

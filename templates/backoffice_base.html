@@ -37,8 +37,9 @@
     </div>
     <div class="clearfix"></div>
     <div id="middle" class="clearfix">
-    <div id='sidemenu'>
         {% block sidemenu %}
+        {% if clerk or manager %}
+        <div id='sidemenu'>
             <div id="wrapper">
                 <ul class="ac-menu">
                     {% if manager%}
@@ -56,9 +57,10 @@
                     {% endif %}
                 </ul>
             </div><!--end accordian-->
-
+            </div>
+            {% endif %}
         {% endblock %}
-    </div>
+
     <div id="content">
         {% block content %}
 
