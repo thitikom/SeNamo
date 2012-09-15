@@ -366,3 +366,9 @@ body{
 a.user_block:visited{
     color:#ffffff;
 }
+
+.footnote {
+    text-align: center;
+    color: gray;
+
+}
