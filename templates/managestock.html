@@ -16,7 +16,8 @@
                 {% else %}
                     class="alert"
                 {% endif %}
-                {% endif %}>
+                {% endif %}
+                >
             <form action='/backoffice/managestock/{{ product.0 }}' method='post'>
                 {% csrf_token %}
             <td>
