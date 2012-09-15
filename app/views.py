@@ -647,7 +647,7 @@ def edit_profile(request):
             profile.birthday = data['birth_date']
             profile.sex = data['sex']
             profile.creditcard = data['creditcard']
-
+            profile.tel = data['tel']
             profile.save()
             user.save()
 
