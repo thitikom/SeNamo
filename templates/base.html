@@ -13,11 +13,13 @@
         </div>
         <div id="logo-image">
             <img src="/media/images/logo.png" height="100"/>
+            {% block search_bar %}
             <form id="search_form" action='/search' method="get">
                 <input id="id_q" type="text" name="q" maxlength="50">
                 {#{{ search_form.category }}#}
                 <input type="submit" value='go' />
             </form>
+            {% endblock %}
         </div>
 
 
