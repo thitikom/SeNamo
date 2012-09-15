@@ -170,6 +170,7 @@ def proceedPacking(request, order_id):
                 updateStat = request.POST.get(ordered_product.product.name)
                 if updateStat == 'send':
                     ordered_product.ship_time = datetime.datetime.now()
+                    ordered_product.status='send' #arm add
                     ordered_product.save()
                     upAmountProduct = ordered_product.product
                     upAmountProduct.amount = upAmountProduct.amount - ordered_product.amount

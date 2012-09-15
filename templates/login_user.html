@@ -3,6 +3,7 @@
 
 {% block userblock %}{% endblock %}
 {% block sidemenu %}{% endblock %}
+{% block search_bar %}{% endblock %}
 {% block content %}
     <style>
         body{
@@ -11,6 +12,7 @@
         }
     </style>
 <form action="/login" method="post">
+    <h1>Login</h1>
     {% csrf_token %}
     {% if next %}
         <input type="hidden" name="next" value="{{ next }}" />
