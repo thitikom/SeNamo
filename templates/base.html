@@ -30,7 +30,7 @@
                 {% if not user.is_authenticated %}
                     <a href='/login'>Login</a> | <a href='/register'>Register</a>
                 {% else %}
-                    Welcome, <a href="/profile/">{{ user.username }}</a><br>
+                    Welcome, {{ user.username }} (<a href="/profile/">profile</a>)<br>
                     <a href="/cart"><img src="/media/img/cart.jpg" height="15px" /></a>
                     {{ user.get_profile.point }} pts. | <a href='/logout'>Logout</a>
                 {% endif %}

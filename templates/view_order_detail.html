@@ -17,7 +17,7 @@
         <tr class='table_header'><td>Product</td><td>Price</td><td>Point</td><td>Quantity</td><td>Total</td><td>status</td></tr>
         {% for product_io in products_list %}
             <tr>
-                <td>{{ product_io.0.product.name }}</td>
+                <td><a href='/product/{{product_io.0.product.id}}'>{{ product_io.0.product.name }}</a></td>
                 <td>{{ product_io.0.product.price }}</td>
                 <td>{{ product_io.0.product.point }}</td>
                 <td>{{ product_io.0.amount }}</td>
