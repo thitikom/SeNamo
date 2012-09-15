@@ -42,14 +42,16 @@
             {% for message in messages %}
                 <div class="tn-box tn-box-active{% if message.tags %} {{ message.tags }}{% endif %}">
                     <p>{{ message }}</p>
-                    <div class="tn-progress"></div>
+{#                    <div class="tn-progress"></div>#}
                 </div>
             {% endfor %}
-    {% else %}
-        <div class="tn-box tn-box-active error">
-            <p>This is test noti.</p>
-{#            <div class="tn-progress"></div>#}
-        </div>
+{#    {% else %}#}
+{#        <div class="tn-box tn-box-active error">#}
+{#            <p>This is test noti.</p>#}
+{#        </div>#}
+{#        <div class="tn-box tn-box-active info">#}
+{#            <p>This is test noti.</p>#}
+{#        </div>#}
     {% endif %}
     </section>
 
