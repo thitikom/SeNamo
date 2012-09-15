@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Welcome to E-Comerce Site{% endblock %}
+{% block title %}Welcome to E-Comerce Store{% endblock %}
 
 {% block content %}
-<span class='biggest_header'>Welcome to E-Commerce Website.</span><br>
+<span class='biggest_header'>Welcome to E-Commerce Store Website.</span><br>
 {% for product in product_list %}
     <ul class="product_block">
         <a href="/product/{{ product.id }}/"><img src="/media/{{ product.image }}" height="60" /></a><br>

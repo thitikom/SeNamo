@@ -1,5 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'backoffice_base.html' %}
 {% block title %}Add new product{% endblock %}
+
+{% block userblock %}
+</div>
+<span id='user_block'>
+                {% if not user.is_authenticated %}
+                <a href='/login'>Login</a>
+                {% else %}
+                 <div id='empDetails'>
+                     Welcome!<br>
+                     Mr.{{ fullname }}<br>
+                     {% if manager and clerk %}
+                     {{ manager }}, {{ clerk }}<br>
+                     {% else %}
+                     {% if manager %} {{ manager }}<br>{% endif %}
+                     {% if clerk %}{{ clerk }}<br>{% endif %}
+                     {% endif %}
+                 </div>
+                <a href='/logout'>Logout</a>
+                {% endif %}
+        </span>
+</div>
+{% endblock %}
+
 {% block content %}
     {% if success_msg %}
         {{ success_msg }}
