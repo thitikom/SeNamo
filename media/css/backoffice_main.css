@@ -21,6 +21,7 @@
     display: block;
     position: relative;
     height: auto;
+    margin-top: 10px;
 }
 
 #content {
@@ -190,7 +191,7 @@ body{
 
 #logo-image{
     margin-left: 10px;
-    width: 10%;
+    position: relative;
     float:left;
 }
 

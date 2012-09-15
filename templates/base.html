@@ -8,20 +8,21 @@
 </head>
 <body>
 <div id="container">
-    <div id="header">
+    <div id="header" class="clearfix">
         <div id="header-left">
             <div id="logo" class="clearfix">E-Commerce Store</div>
         </div>
         <div id="logo-image">
-            <img src="/media/images/logo.png" height="100"/>
-            {% block search_bar %}
+            <img src="/media/images/logo.png" height="80"/>
+
+        </div>
+        {% block search_bar %}
             <form id="search_form" action='/search' method="get">
                 <input id="id_q" type="text" name="q" maxlength="50">
                 {#{{ search_form.category }}#}
                 <input type="submit" value='go' />
             </form>
-            {% endblock %}
-        </div>
+        {% endblock %}
 
 
         <span id='user_block'>
@@ -37,6 +38,7 @@
         </span>
 
     </div>
+    <div class="clearfix"></div>
     <section>
     {% if messages %}
             {% for message in messages %}
@@ -55,6 +57,8 @@
     {% endif %}
     </section>
 
+
+    <div id="middle" class="clearfix">
     <div id='sidemenu'>
     {% block sidemenu %}
         <div id="wrapper">
@@ -88,6 +92,8 @@
 
     {% endblock %}
     </div>
+    </div>
+    <div class="clearfix"></div>
 </div>
 </body>
 </html>
