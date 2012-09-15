@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'login_base.html' %}
 {% block title %}Log in{% endblock %}
 
 {% block userblock %}{% endblock %}
@@ -17,7 +17,7 @@
     {% if next %}
         <input type="hidden" name="next" value="{{ next }}" />
     {% endif %}
-<table border="0px">
+<table border="0px" align="center">
     <tr><td>Username</td>
    <td> <input type="text" name="username" value="{{ username}}" /></td>
     </tr><tr><td>Password</td>

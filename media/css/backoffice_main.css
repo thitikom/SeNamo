@@ -287,3 +287,25 @@ a.button-list-dot:hover,a.button-list:active
     color: #FFFFFF;
     background-color: #000068;
 }
+
+#login-block {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10%;
+    position: relative;
+    width: 300px;
+    min-height:200px;
+    padding-left:5px;
+    padding-right:5px ;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #3f3f3f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+    -moz-box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+    box-shadow: inset 0px 1px 0px 0px rgba(255,255,255, .1), 0px 1px 0px 0px rgba(0,0,0, .1);
+}
