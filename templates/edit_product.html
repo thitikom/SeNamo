@@ -16,12 +16,9 @@
     <p>{{ form.image }}</p>
     <p>amount: {{ form.amount }}</p>
     <p>order supply status: {{ form.orderSupStatus }}</p>
-    <input type="submit" value="submit"  class="sexy-button"/>
+    <input type="submit" value="submit"  class="sexy-button"/><a href="/product/{{ pid }}/delete" class="sexy-button">delete</a>
 </form>
 
-<div>
-    <a href="/product/{{ pid }}/delete" class="sexy-button">Delete this product</a>
-</div>
 
 {% endblock %}
 <!--
