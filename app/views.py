@@ -12,7 +12,7 @@ from django.conf import settings
 import requests
 
 def index(request):
-    product_list = Product.objects.all()
+    product_list = Product.objects.order_by('?')[0:12]
     category_list = Category.objects.all()
     context = RequestContext(request,{
         'product_list':product_list,
