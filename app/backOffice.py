@@ -154,12 +154,20 @@ def packing(request):
         return managestock(request)
 
     order_list = Order.objects.exclude(status='Shipped')
+    list = []
+    for order in order_list:
+        if order.status != 'Wait for more products':
+            list.append((order.id, order.timestamp, order.status ))
+
+    for order in order_list:
+        if order.status == 'Wait for more products':
+            list.append((order.id, order.timestamp, order.status ))
 
     dataContext = RequestContext(request,
         {
             'fullname' : user.get_full_name(),
             'clerk':'Clerk',
-            'list': order_list,
+            'list': list,
         }
     )
     if is_manager:
