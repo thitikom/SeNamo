@@ -18,7 +18,7 @@
         <span id='user_block'>
             {% block userblock %}
                 {% if not user.is_authenticated %}
-                    <a href='/login' class="user_block">Login</a>
+                   <!-- <a href='/login' class="user_block sexy-button">Login</a> -->
                 {% else %}
                     <div id='empDetails'>
                         Welcome!<br>
@@ -30,7 +30,7 @@
                             {% if clerk %}{{ clerk }}<br>{% endif %}
                         {% endif %}
                     </div>
-                    <a href='/logout' class="user_block">Logout</a>
+                    <a href='/logout' class="user_block sexy-button">Logout</a>
                 {% endif %}
             {% endblock %}
         </span>
