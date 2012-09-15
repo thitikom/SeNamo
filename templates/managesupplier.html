@@ -4,10 +4,15 @@
 
 {% block content %}
 <h1>Supplier Management</h1>
-    <a href="/supplier/new">Add new Supplier</a><br>
-    {% for supplier in supplier_list %}
-        {{ supplier.company_name }} / {{ supplier.contact }}
-        <a href="/supplier/{{ supplier.id }}/edit">Edit</a><br>
-    {% endfor %}
+    <table id="packing">
+    <tr><th>Company Name</th><th>Contact</th></tr>
+        {% for supplier in supplier_list %}
+            <tr>
+            <td>{{ supplier.company_name }} </td>
+                <td> {{ supplier.contact }} </td>
+           <td> <a href="/supplier/{{ supplier.id }}/edit" class="sexy-button">Edit</a></td>
+            </tr>
+        {% endfor %}
+    </table>
 
 {% endblock %}
