@@ -8,13 +8,8 @@
 <table id="packing"><tr><th>Order ID</th><th>Ordered Date</th><th>Status</th><th>Action</th></tr>
 {% for order in list %}
     <tr {% if order.2 == "Wait for more products" %} class="alt" {% endif %}>
-        <td>{{ order.0 }}</td><td>{{ order.1 }}</td><td>{{ order.2 }}</td><td><form action="/backoffice/packing/{{ order.id }}">
-        {% csrf_token %}
-
-        <input type="submit" value="Proceed" div class="sexy-button">
-
-
-    </form></td></tr>
+        <td>{{ order.0 }}</td><td>{{ order.1 }}</td><td>{{ order.2 }}</td><td><a href="/backoffice/packing/{{ order.0 }}" class='sexy-button'>
+            Proceed</a></td></tr>
 {% endfor %}
 </table>
 {% endblock %}

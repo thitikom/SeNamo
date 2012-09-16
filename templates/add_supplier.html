@@ -12,7 +12,6 @@
 
     <form action="/supplier/new" method="POST">
         {% csrf_token %}
-        <p>add new supplier</p>
         <p>company name: {{ form.company_name }}</p>
         <p>contact: {{ form.contact }}</p>
         <input type="submit" value="Submit" class="sexy-button">
