@@ -172,6 +172,17 @@ a.menubox:hover,a.menubox:active
     color:#000000;
     background-color: #979797;
 }
+#packing tr.alert td
+{
+    color:#000000;
+    background-color: #ef5757;
+}
+
+#packing tr.warning td
+{
+    color:#000000;
+    background-color: #efaa23;
+}
 
 .clearfix::after {
     visibility: hidden;
