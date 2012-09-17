@@ -762,7 +762,7 @@ def edit_profile(request):
             profile.addr_country    = address['country']
             profile.addr_zipcode    = address['zip_code']
             profile.save()
-            messages.add_message(request, messages.ERROR, "Profile edited.")
+            messages.add_message(request, messages.INFO, "Profile edited.")
             return HttpResponseRedirect('/profile/')
         else:
             data = form.data
